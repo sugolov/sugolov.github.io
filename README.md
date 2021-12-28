@@ -1,2 +1,2 @@
 # sugolov.github.io
-Personal webpage
+webpage
