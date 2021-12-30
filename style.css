@@ -1,0 +1,60 @@
+
+body {
+background-color: #eeeeee;
+font-family: Helvetica, Sans-Serif;
+color: #000000;
+font-size: 1.5em;
+
+margin-right: 20vw;
+margin-left: 20vw;
+margin-top: 5vh;
+margin-bottom: 10vh;
+}
+
+div.title{
+justify-content: space-around;
+margin-top: 5vh;
+margin-bottom: 10vh;
+display: inline;
+}
+
+.topnav {
+display: grid;
+justify-content: center;
+grid-template-columns: 10vw 10vw 10vw 10vw;
+margin-top: 5vh;
+margin-bottom: 5vh;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+display: inline-grid;
+justify-content: center;
+padding: 5px 5px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+background-color: #4E93FB;
+color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+background-color: #000000;
+color: white;
+}
+
+a {
+text-decoration: none;
+color: black;
+font-style: italic;
+font-weight: bold;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
