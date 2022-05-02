@@ -58,3 +58,18 @@ font-weight: bold;
   margin-right: auto;
   width: 50%;
 }
+
+.column {
+  text-align: center;
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+img {margin: auto;}
