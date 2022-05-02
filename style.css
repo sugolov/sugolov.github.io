@@ -21,7 +21,7 @@ display: inline;
 .topnav {
 display: grid;
 justify-content: center;
-grid-template-columns: 10vw 10vw 10vw 10vw;
+grid-template-columns: 10vw 10vw 10vw;
 margin-top: 5vh;
 margin-bottom: 5vh;
 }
