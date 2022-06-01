@@ -1,0 +1,925 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[lmargin =0.75 in, 
+			rmargin=0.75in, 
+			tmargin=0.75in,
+			bmargin=0.75in]{geometry}
+\geometry{letterpaper}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{blindtext}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{cool}
+\usepackage{thmtools}
+\usepackage{hyperref}
+\graphicspath{ }					%path to an image
+
+%-------- sexy font ------------%
+%\usepackage{libertine}
+%\usepackage{libertinust1math}
+
+%\usepackage{mlmodern}				% very nice and classic
+\usepackage[utopia]{mathdesign}
+%\usepackage[T1]{fontenc}
+
+
+%\usepackage{mlmodern}
+%\usepackage{eulervm}
+%\usepackage{tgtermes} 				%times new roman
+%-------- sexy font ------------%
+
+
+% Problem Styles
+%====================================================================%
+
+
+\newtheorem{problem}{Problem}
+
+
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{fact}{Fact}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+
+\newtheorem{manualprobleminner}{Problem}
+
+\newenvironment{manualproblem}[1]{%
+	\renewcommand\themanualprobleminner{#1}%
+	\manualprobleminner
+}{\endmanualprobleminner}
+
+\newcommand{\penum}{ \begin{enumerate}[label=\bf(\alph*), leftmargin=0pt]}
+	\newcommand{\epenum}{ \end{enumerate} }
+
+% Math fonts shortcuts
+%====================================================================%
+
+\newcommand{\N}{\mathbb{N}}                           % Natural numbers
+\newcommand{\Z}{\mathbb{Z}}                           % Integers
+\newcommand{\R}{\mathbb{R}}                           % Real numbers
+\newcommand{\C}{\mathbb{C}}                           % Complex numbers
+\newcommand{\F}{\mathbb{F}}                           % Arbitrary field
+\newcommand{\Q}{\mathbb{Q}}                           % Arbitrary field
+\newcommand{\PP}{\mathcal{P}}                         % Partition
+\newcommand{\M}{\mathcal{M}}                         % Mathcal M
+\newcommand{\eL}{\mathcal{L}}                         % Mathcal L
+\newcommand{\T}{\mathcal{T}}                         % Mathcal T
+\newcommand{\U}{\mathcal{U}}                         % Mathcal U\\
+\newcommand{\V}{\mathcal{V}}                         % Mathcal V
+
+% symbol shortcuts
+%====================================================================%
+
+\newcommand{\lam}{\lambda}
+\newcommand{\imp}{\implies}
+\newcommand{\all}{\forall}
+\newcommand{\exs}{\exists}
+\newcommand{\delt}{\delta}
+\newcommand{\eps}{\epsilon}
+\newcommand{\ra}{\rightarrow}
+
+\newcommand{\ol}{\overline}
+\newcommand{\f}{\frac}
+\newcommand{\lf}{\lfrac}
+\newcommand{\df}{\dfrac}
+
+% bracketting shortcuts
+%====================================================================%
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\babs}[1]{\Big|#1\Big|}
+\newcommand{\bound}{\Big|}
+\newcommand{\BB}[1]{\left(#1\right)}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\artanh}{\mathrm{artanh}}
+\newcommand{\Med}{\mathrm{Med}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Corr}{\mathrm{Corr}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\Range}[1]{\mathrm{range}(#1)}
+\newcommand{\Null}[1]{\mathrm{null}(#1)}
+\newcommand{\lan}{\langle}
+\newcommand{\ran}{\rangle}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\inn}[1]{\lan#1\ran}
+\newcommand{\op}[1]{\operatorname{#1}}
+\newcommand{\bmat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\pmat}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
+
+\newcommand{\amogus}{{\bigcap}\kern-0.8em\raisebox{0.3ex}{$\subset$}}
+\newcommand{\Note}{\textbf{Note: }}
+\newcommand{\Aside}{{\bf Aside: }}
+%restriction
+%\newcommand{\op}[1]{\operatorname{#1}}
+%\newcommand{\done}{$$\mathcal{QED}$$}
+
+%====================================================================%
+
+
+\setlength{\parindent}{0pt}      	% No paragraph indentations
+\pagestyle{fancy}
+\fancyhf{}							% fancy header
+
+\setcounter{secnumdepth}{0}			% sections are numbered but numbers do not appear
+\setcounter{tocdepth}{2} 			% no subsubsections in toc
+
+%template
+%====================================================================%
+%\begin{manualproblem}{1}
+%Spivak.
+%\end{manualproblem}
+
+%\begin{proof}[Solution]
+%\end{proof}
+
+%----------- or -----------%
+
+%\begin{problem} 		
+%\end{problem}	
+
+%\penum
+%	\item
+%\epenum
+%====================================================================%
+
+
+\newcommand{\Course}{STA302}
+\newcommand{\hwNumber}{}
+
+%preamble
+
+\title{{\Course} notes}
+\date{\today}
+
+\chead{\Course}
+
+\cfoot{\thepage}
+
+
+%====================================================================%
+
+\begin{document}
+	
+	\maketitle
+	
+	STA302F in Summer 2022 with Mohammad Khan. Feel free to email  \href{mailto://anton.sugolov@mail.utoronto.ca}{\bf anton.sugolov@mail.utoronto.ca} if there are any mistakes, or edit the tex \href{https://sugolov.github.io/blog/files/sta302.pdf}{\bf here}.
+	
+	\tableofcontents
+
+\newpage
+	
+	\section{May 9: Lecture 1}
+	\subsection{Syllabus}
+	
+	This is a course on linear regression. The focus is using R to do data analysis, and build the mathematical foundation for regression. We will understand how prediction works later, which is the foundation for data science.\\
+	
+	{\bf Marking} 
+	\begin{itemize}
+		\item 2 HW - 15\% each, due June 1, June 15
+		\item Test - 25\% on May 25
+		\item Exam - 45\% during June 22-27
+	\end{itemize}
+	
+	{\bf Books} J. Sheather, A Modern Approach to Regression w/ R and D. Montgomery, Linear Regression Analysis.
+	
+	\subsection{Review}
+	
+	\begin{definition}
+		A {\bf sample space} $S$ is the set of possible events. 
+		A {\bf random variable} is a function $X \colon S \to \R$ assigning a number to elements of the sample space.
+	\end{definition}
+
+	Constants can also be pseudo random variables. These are called {\bf degenerate random variables} that have a {\bf degenerate distribution} since they have infinite cdf.
+	
+	\begin{definition}
+		For an event $A \subset S$, we define the {\bf indicator function} $I_A$ as
+		$$
+			I_A(s) = \begin{cases}
+				1, & s\in A \\
+				0, & s\notin A
+			\end{cases}
+		$$
+	\end{definition}
+
+	These are important since we later use them to create dummy variables in linear regression. When we write an inequality involving random variables, we mean that it holds for all elements of the sample space. I.e. $X \geq Y \imp X(s) = Y(s), \all s \in S$.\\
+	
+	\begin{example}
+		Consider $S = \{1,2,3,4,5,6\}$. For $s \in S$, $X(s) = s$, let $Y(s) = X(s) + I_6(s)$. Then $Y = X$ for all $s \in S$ except $6$, where $Y = 7,\, X = 6$. 
+	\end{example}
+	
+	
+	\begin{definition}
+		{\bf Discrete r.v.} are functions from a countable sample space, and {\bf continuous r.v.} are functions from an uncountable sample space. There are also {\bf mixture} random variables, which are continuous/discrete for different parts of the sample space. Random variables can be univariate and multivariate as well.
+	\end{definition}	
+	
+	\begin{example}
+		The multinomial distribution is an example of a discrete multivariate random variable.
+	\end{example}
+	
+	\begin{definition}
+		If $X$ is a random variable, the p.d.f. is the derivative of the c.m.f. As well, $\PP(a \leq X \leq b) = \int_a^b f(x)dx$ where $f(x)$ is pdf. Similar thing holds for discrete r.v.
+	\end{definition}
+
+	\begin{proposition}
+		The expectation of two random variables is linear. For $Z = aX + bY$, $X,Y$ r.v., then $E(Z) = aE(X) + bE(Y)$.
+	\end{proposition}
+
+	\begin{definition}
+		The {\bf variance} of $X$ is $V(X) = E(X - \mu_x)^2$. The {\bf sample variance} $s^2 = \f{\sum (x_i - \ol{x})^2}{n-1}$. Note we divide by $n-1$ so that it is an unbiased estimator (STA261).
+	\end{definition}
+
+	Some properties:
+	\begin{itemize}
+		\item $V(X) \geq 0$
+		\item $V(aX + b) = a^2V(x)$
+		\item $V(X) = E(X^2) - E(X)^2$
+		\item $V(X) \leq E(X^2)$
+		\item $\sigma_X = \sqrt{V(X)}$
+	\end{itemize}
+	\Note In linear regression, the variance of the predicted variable depends on the slope of regression line but not on the intercept (second property).\\
+	
+	Let $X_1, X_2, Y$ be r.v. and $A$ be an event. Let $Z = aX_1 + bX_2$. Then
+	\begin{itemize}
+		\item $E(Z \mid A) = aE(X_1 \mid A) + bE(X_2 \mid A)$
+		\item $E(Z \mid Y = y) = aE(X_1 \mid Y = y) + bE(X_2 \mid
+		Y = y)$
+		\item $E(Z \mid Y ) = aE(X_1 \mid Y ) + bE(X_2 \mid
+		Y)$
+	\end{itemize}
+	\begin{proposition}(Laws of Total Expecation and Variance)
+		$E(E(Y \mid X)) = E(Y)$ and $V(X) = V(E(X \mid Y)) + E(V(X \mid Y))$.
+	\end{proposition}
+
+	We will see that linear regression is a conditional r.v., and the above will be very useful. For $X_1, \ldots, X_n$ i.i.d. random variables, $x_1 \ldots x_n$ realizations, then $\ol{x} = \f{\sum x_i}{n}$. The {\bf sample average} $\ol{X} = \f{\sum X_i}{n}$ is a random variable. In general, any function of $n$ i.i.d. random variables is a random variable, and called a {\bf sampling statistic} that follows a {\bf sampling distribution}.
+	
+	\begin{thm}(Central Limit Theorem)
+		For $X_1, \ldots, X_n$ i.i.d. $f(x, \theta)$, $E(X), V(x) < \infty$, then $\f{\ol{X} - \mu}{\sigma / \sqrt{n}} \to N(0,1)$ converges in distribution for sufficiently large $n$.
+	\end{thm}
+	\begin{proof}
+		Proof with moment generating functions.
+	\end{proof}
+	\begin{example}
+		In the Cauchy distribution, this does not hold since it has infinite mean and variance.
+	\end{example}
+	\begin{definition}
+		The {\bf covariance } $\Cov(X,Y) = E[(X - \mu_x)(Y - \mu_Y)] = E(XY) - E(X)E(Y)$. Covariance quantifies the relationship between two variables, i.e. how much one varies with the other. The {\bf correlation } $\Corr(X,Y) = \f{Cov(X,Y)}{\sqrt{V(X)V(Y)}}$.
+	\end{definition}
+	\begin{itemize}
+		\item Covariance is an inner product, variance is norm.
+		\item $V(X + Y) = V(X) + V(Y) + 2\Cov(X,Y)$.
+		\item If $X \perp Y$, $V(X+Y) = V(X) + V(Y)$. 
+		\item  In general, $V(\sum_i X_i) = \sum_i V(X_i) + 2 \sum_{i < j}\Cov(X_i,X_j)$.
+	\end{itemize}
+	These will be useful in regression, where we try to identify relationships between r.v.s.\\
+	
+	{\bf Definitions in statistics} \\ 
+	
+	In probability, we are given a mathematical model to work with. In statistics, we infer properties of a mathematical model. The steps of data analysis are: state the problem, identify what data is needed, decide on a model and collect data, clean data, estimate parameters of the model, and carry out appropriate tests, draw conclusions.
+	
+	\subsection{Introduction to Regression}
+	
+	\begin{definition}
+		The {\bf corelation coefficient}
+		$$
+			\rho_{X,Y} = \f{\sum_i (x_i - \ol{x}) (y_i - \ol{y})}{\sqrt{\sum_i (x_i - \ol{x})^2} \sqrt{\sum_i (y_i - \ol{y})^2} } = \f{\Cov(X,Y)}{s_x s_y}
+		$$
+	\end{definition}
+
+	The above value is somewhat like the $\cos(\theta)$ between the vectors $X,Y$; recall dot product. When we discuss corelation, we talk about linear relations only; the linear association between $X,Y$. We can see this by considering $X$ and $ Y = X^2$.	Corelation is symmetric, it does not indicate the direction of the symmetry (which causes which/causation). Corelation only says the influence on the change of one variable when the other changes; think about moving along non-orthogonal vectors and projecting.\\
+	
+	Galton investigated the effect of fathers heights on their sons height. Galton termed {\bf regression} as a `regression' of heights towards the mean; on average, heights of sons move towards the mean, so the average height across generations is the same.\\
+	
+	In a linear regression, we assume there is a linear relation $Y = \beta_0 + \beta_1 X + \eps$ between the random variables $X, Y$ where $\eps$ is an error random variable. The deviation not captured by linearity is incorporated to $\eps$. Given two values of $X$, it is not guaranteed that the value of $Y$ is the same. But for a unique $X$ we get {\bf unique average} $Y$. We want $E(Y \mid X = x) = \beta_0 + \beta_1 X$; the relationship between the mean of $Y$ and a specific value of $X$ is linear. Note $E(\eps) = 0$. We call $X$ the {\bf explanatory, predictor, independent} variable and $Y$ as the {\bf response, outcome, dependent} variable. Suppose we are given paired data $(x_1, y_1), \ldots, (x_n, y_n)$. We try to fit a linear regression to model the relationship between $X$ and $Y$:
+	$$
+		Y = \beta_0 + \beta_1 X + \eps	\text{ and want }	E(Y \mid X = x) = \beta_0 + \beta_1 X
+	$$ 
+	The values of $\beta_0, \beta_1$ are not yet known and need to be estimated. In the sample, the error $e_i$\ replaces $\eps_i$. The line best predicting $Y$ as $X$ changes should minimize the squares of the errors $e_i = y_i - \hat{y_i}$ where $\hat{y_i}  = b_0 + b_1 x_i$ where $b_0, b_1$ are the intercept and slope of the regression line. We minimize the squares $\sum_i e_i^2$. The $e_i$ are referred to as {\bf residuals}; minimize residual sums squared. Note
+	$$
+		RSS(b_0, b_1) = \sum_i e_i^2 = \sum_{i=1}^n (y_i  - \hat{y_i})^2 = \sum_{i=1}^n (y_i - b_0 - b_1 x_i)^2
+	$$
+	\Aside What value of $a$ minimizes (1) $\sum \abs{x_i - a}$, and which minimizes (2) $\sum (x_i - a)^2$? Answer: (1) $a = \Med(X)$, (2) $a = \ol{x}$. We do not minimize the sum of the residuals, since this must always be $0$. We minimize the RSS with respect to $b_0, b_1$.
+		$$\pderiv[1]{RSS}{b_0} = -2\sum_i (y_i - b_0 - b_1 x_i),\, \pderiv[1]{RSS}{b_1} = -2\sum_i x_i(y_i - b_0 - b_1 x_i)$$
+	so setting these to 0, we get the { \bf normal equations}
+	$$
+		\sum_{i} y_i = b_0n + b_1 \sum_{i} x_i,\ \ 	\sum_{i} x_iy_i =  b_0 \sum_{i} x_i + b_1 \sum_{i} x_i^2
+	$$
+	Solving these, we get
+	$$
+		\hat{\beta_0} = b_0 = \ol{y} - \hat{\beta_1}\ol{x},\qquad \	\hat{\beta_1} = b_1 = \f{\sum_i x_i y_i - n\ol{x}\ol{y}}{\sum x_i^2 - n\ol{x}^2} = \f{\sum(x_i - \ol{x})(y_i - \ol{y})}{\sum(x_i - \ol{x})^2} = \f{S_{X,Y}}{S_X}
+	$$
+	The intercept is the average value of the response when $X=0$.
+	
+	\subsection{Class Afterthoughts/Questions}
+	When the errors have $E(\eps = 0)$, then $V(\eps) = E(\eps^2) - E(\eps)^2 = E(\eps^2)$. By minimizing this in the sample, we minimize the variance of the errors (?)
+	
+	\section{May 11: Lecture 2}
+	{\bf Clarifying last class:} $\hat{y_i}$ is the conditional mean of $y_i$. When this is true, then $\sum_i e_i = 0$. That is, we estimate $\hat{y_i}$ so that $\sum_i e_i = 0$. 
+	
+	\subsection{Regression continued}
+	We continue discussing linear regression; fitting a linear relation assuming it exists. The aim is to infer the true values of $\beta_0, \beta_1$ by inspecting their sampling distributions. We also make some assumptions regarding the error terms; the properties of their distributions ($\eps$ is r.v.).
+	
+	\subsubsection{Assumption: Linearity}
+	The conditional mean of $Y \mid X = x$ is linear with respect to $X$. However, the relationship $E(Y \mid X)$ and $X$ does not have to be linear, but the linearity assumption is linearity in the parameters.Our relationship must be realistic given the context; introducing linearity may produce unrealistic relationships.\\
+	
+	{\bf R simulation: } When generating random dataset, we set a seed so our results are reproducible. Always start with a seed in assignments. Note the $Y$ variable is the transformation $\beta_0 + \beta_1 \log X + \eps$. Introducing linear relationship between $X$ and $Y$ is inaccurate. It is linear in the parameters $\beta_0, \beta_1$ however.\\
+	
+	{\bf Qs:} Chaos in random number generation? Look up random number generation algorithms. How do we quantify linearity in a data set? Mostly with plots but is there better way?
+	
+	\subsubsection{Assumption: Independence}
+	The errors $\eps_i$ are independent. That is, the deviations from the mean are not related; they are i.i.d. r.v. This reduces predictive capibilities in some areas, but we can relax this assumption later (generalized least squares).
+	
+	\subsubsection{Assumption: Homoscedasticity (equal variance)}
+	The error variance does not change depending on $X$. That is $V(\eps \mid X = x) = \sigma^2$ and is independent of $x$. In the R codes, we see that variance of errors increases with $X$, which decreases predictive power as $X$ increases. Moreover, this implies some of the variation in the errors is explained by $X$, which violates our assumption. Variance {\bf cannot} depend of $X$. $\eps \perp X$. This is relaxed in GLS.\\
+	
+	 In multiple linear regression, we talk about the Gauss-Markov assumption, but we need to make some assumptions about how $\eps_i$ is distributed in order to make inferences.
+	
+	\subsubsection{Assumption: Normality}
+	$\eps \sim N(0, \sigma^2)$. The previous assumptions are required to obtain the least squares estimates, but normality is not required. Under this assumption, we can make confidence intervals and tests, and have nice properties following from normal distribution.\\
+	
+	There are more assumpitons in general, but these are most important.
+	
+	\subsubsection{More about variance of $\eps$}
+	We have estimated $\beta_0$, $\beta_1$ using least squares. However, we have another parameter to estimate; $V(\eps) = \sigma^2$. From afterthoughts, $V(\eps) = E(\eps^2) = \sigma^2$. We take the average of $e_i^2$ using this, since we want summary measure. The mean residual squared (MRS) can be calculated as $s^2 = \df{\sum_i e_i^2}{n-2}$. We show this estimator of $E(\eps^2)$ is unbiased as homework; prove this!.
+	
+	\subsection{Inferences about the regression model}
+	
+	\subsubsection{Conditional expectation and variance of $\hat{\beta_1}$}
+	Recall $\beta_1 = \df{\sum(x_i - \ol{x})(y_i - \ol{y})}{\sum(x_i - \ol{x})^2}$
+	\begin{proposition}
+		$\sum(x_i - \ol{x})(y_i - \ol{y}) = \sum_i (x_i - \ol{x}) y_i$
+	\end{proposition}
+	\begin{proof}
+		\begin{align*}
+			\sum(x_i - \ol{x})(y_i - \ol{y}) &=\sum ( x_i y_i - \ol{x} y_i - \ol{y} x_i + \ol{x}\ol{y}) \\
+			&= \sum ( x_i y_i - \ol{x} y_i) - n \ol{y} \ol{x} + n\ol{x}\ol{y} \\
+			&= \sum ( x_i - \ol{x})y_i
+		\end{align*}
+	\end{proof}
+	A symmetric sum can be established for $\sum_i (y_i - \ol{y}) x_i$. However, the above is needed to simplify conditional expectation calculations. We may also show $\sum ( x_i - \ol{x})x_i = \sum (x_i - \ol{x})^2$. The idea of both of these proof is making the substitution $n\ol{x} = \sum x_i$.
+	\begin{proposition}
+		$\sum ( x_i - \ol{x})x_i = \sum (x_i - \ol{x})^2$
+	\end{proposition}
+	\begin{proof}
+		\begin{align*}
+			\sum (x_i - \ol{x})x_i &=  \sum (x_i^2 - \ol{x}x_i)\\
+			&= \sum (x_i^2 - 2\ol{x}x_i) + n\ol{x}^2\\
+			&= \sum (x_i - \ol{x})^2
+		\end{align*}
+	\end{proof}
+	Other way of writing: $\sum (x_i \ol{x})^2 = \sum x_i^2 - n\ol{x}^2$. Now, we calculate {\bf conditional expectation of $\hat{\beta_1}$}
+		$$
+			E(\hat{\beta_1} \mid X = x_i) = E\BB{\f{
+					\sum(x_i - \ol{x})y_i}{
+					\sum(x_i - \ol{x}^2)
+				}
+			\mid X = x_i
+			} 
+		= \f{
+			\sum (x_i - \ol{x})E(Y_i \mid X = x_i)
+		}{
+			\sum (x_i - \ol{x})^2
+		}
+		$$
+		Substituting $E(Y_i \mid X_i = x) = \beta_0 + \beta_1 x$, then
+		$$
+			E(\hat{\beta_1} \mid X = x_i) = 
+		\f{
+				\sum_i (x_i - \ol{x}) \beta_0 
+		}{
+			\sum (x_i - \ol{x})^2
+		} 
+		+ \f{
+			\sum_i (x_i - \ol{x}) \beta_1 x_i
+		}{
+			\sum (x_i - \ol{x})^2
+		} = \f{
+			 \beta_1 \sum_i (x_i - \ol{x})^2
+		}{
+			\sum (x_i - \ol{x})^2 
+		} = \beta_1
+		$$
+		Since $\sum(x_i - \ol{x}) = \sum x_i - n \ol{x} = 0$ and by above prop., $\sum_i (x_i - \ol{x}) x_i = \sum (x_i - \ol{x})^2 $. Therefore $\hat{\beta_1}$ does not depend on $X$, and has expected value of $\beta_1$; it is an unbiased estimator of $\beta_1$. That is, $	E(\hat{\beta_1} \mid X = x_i) = 	E(\hat{\beta_1} ) = \beta_1$. Next, we may calculate $V(\hat{\beta_1})$. First, $V(Y_i \mid X = x_i) = \sigma^2$, that is, the variance of the error.
+		\begin{align*}
+			V(\hat{\beta_1} \mid X = x_i) = \BB{\f{
+					\sum(x_i - \ol{x})y_i}{
+					\sum(x_i - \ol{x}^2)
+				}
+				\mid X = x_i
+			} 
+			= \f{
+				\sum_i (x_i - \ol{x})^2V(Y_i \mid X = x_i)
+			}{
+				(\sum_i (x_i - \ol{x})^2)^2
+			} 
+			= \f{
+			\sigma^2
+			}{
+			\	\sum (x_i - \ol{x})^2
+			}
+			=	\f{\sigma^2}{S_{X,X}}
+		\end{align*}
+	
+		\subsubsection{Inferences for variance of $\hat{\beta_1}$}
+	
+		Since $\eps_i \sim N(0, \sigma^2)$, then $Y_i \mid X \sim N(\beta_0 + \beta_1 X, \sigma^2)$. Letting $c_i = \f{\sum(x_i - \ol{x})}{\sum(x_i - \ol{x})^2}$ then $\hat\beta_1 = \sum c_iy_i$. Observe that this is a {\bf linear combination} of normally distributed random variables, so $\hat\beta_1$ is normally distributed! Thus
+		$$
+			\hat\beta_1 \mid X = x_i \sim N\BB{\beta_1, \f{\sigma^2}{S_{X,X}}}
+		$$
+		We can construct a $1-\alpha$ confidence interval for $\beta_1$ which has extremes $\hat\beta_1 \pm Z_{1-\alpha/2} \df{\sigma}{\sqrt{S_{X,X}}}$. When $\sigma^2$ is unknown, we construct a $t$-confidence using $S^2 = \df{\sum e_i^2}{n-2}$.
+		We therefore make a confidence interval with critical values
+		$$
+			\hat\beta_1 \pm t_{1-\alpha/2, n-2} \df{s^2}{\sqrt{S_{X,X}}}
+		$$
+		Note our assumption of normality of errors.\\
+		
+		{\bf Clarification} $S_{X,X} = \sum (x_i - \ol x)^2$ and $S_{X,Y} = \sum (x_i - \ol x)(y_i - \ol y)$.\\
+		
+		Recall, the {\bf p-value} can be calculated as $p = \PP(Z \geq \abs{z})$ or $p = \PP(T \geq \abs{t})$ where $z,t$ are the calculated test statistics. The p-value is the probability of obtaining a sample that provides strong evidence against the hypothesized value of $H_0: \beta_1$, set by threshold $\alpha$. $\alpha$ is the probability of making a type one error with repeated sampling.
+		
+		\begin{example}
+			$\sum x_i = 4035,\, \sum y_i = 4041,\, \sum e_i^2 = 4753.125,\, \sum x_i^2 = 1005535,\, \sum x_iy_i = 864910,\, t_{0.975, 18} =2.10$.
+			
+			We need to calculate $\hat\beta_1, s, S_{X,X}$ from this information; recall $\hat\beta_1 \pm t_{1-\alpha/2, n-2} \df{s}{\sqrt{S_{X,X}}}$. The interval becomes $(0.18121, 0.33728)$. {\bf Verify as homework.}
+		\end{example}
+		Do exercises from Montgomery (unassigned, do by chapter) and Sheather. Problems are similar to this, and this will appear on the midterm.
+		
+		\subsubsection{Properties of $\beta_0$}
+		
+		The conditional expectation of $\beta_0 \mid X$. Since $\hat\beta_0 = \ol y - \hat \beta_1 \ol x$. Using this,
+		$$
+			E(\hat\beta_0 \mid X = x_i) = \f{\sum E(y_i \mid X = x_i)}{n} - \beta_1 \ol x = \BB{\f{n\beta_0 + n\beta_1 \ol x}{n}} - \beta_1 \ol{x} = \beta_0
+		$$
+		Therefore $\hat \beta_0$ is an unbiased estimator of $\beta_0$. Now for the variance, (minor abuse of notation)
+		$$
+			V(\hat\beta_0 \mid X = x_i) = V(ol y - \hat \beta_1 \ol x \mid X = x_i) = V(\ol y \mid x_i) + \ol x^2 V(\hat\beta_1 \mid x_i) - 2 \ol x \Cov(\ol{y}, \hat\beta_1 \mid x_i)
+		$$
+		Calculating each term separately,
+		$$
+			V(\ol y \mid X = x_i) = V\BB{\f{\sum y_i}{n} \mid X = x_i} =  \f{\sum \sigma^2}{n^2} = \f{\sigma^2}{n}
+		$$
+		To calculate covariance term, we use substitutions involving $\hat\beta_1 = \sum c_iy_i$ with $c_i$ defined before
+		\begin{align*}
+			\Cov(\ol{y}, \hat\beta_1 \mid X =  x_i) &= \Cov\BB{\f{\sum_i y_i}{n}, \sum c_iy_i \mid X = x_i} 
+			= \f1n \sum_i \Cov(y_i, c_iy_i \mid X = x_i)
+			\intertext{Recall $\Cov(X, aY) = a \Cov(X,Y)$. Also, given a particular $x_i$, $c_i$ is a constant.}
+			&= \f1n \sum_i c_i \Cov(y_i, y_i \mid X = x_i) =  \f1n \sum_i c_i V(y_i \mid X = x_i) = \f1n \sum_i c_i \sigma^2 = 0
+		\end{align*}
+		From last section, $V(\hat\beta_1 \mid x_i) = \ol x^2 \f{\sigma^2}{S_{X,X}}$. Therefore
+		$$
+		V(\hat\beta_0 \mid X = x_i) = \sigma^2 \BB{\f1n + \f{\ol x^2}{S_{X,X}}}, \text{ and } \hat\beta_0 \mid X = x_i \sim N\BB{\beta_0, \sigma^2 \BB{\f1n + \f{\ol x^2}{S_{X,X}}}}
+		$$
+		Therefore the $(1-\alpha)$ confidence for $\beta_0$ is
+		$$
+			\hat \beta_0 \pm Z_{1 - \alpha/2} \sigma \sqrt{\f1n + \f{\ol x^2}{S_{X,X}}} 
+		$$
+		(fill in when $\sigma^2$ is unknown )
+		
+		\subsubsection{Confidence interval for the regression line}
+		
+		Denote $x^*, y^*$ as an observation not currently in the sample. We use the model built with the current observations to see how far $y^*$ observation can vary. It can easily be shown that 
+		$$E(\hat y^* \mid X = x^*) = \beta_0 + \beta_1 x^*$$
+		Where $X = x^*$ new observation, $y^*$ unknown. As well, $\hat y^*$ is the predicted value of $y^*$ paired with $x^*$. Often, we are interested in calculating the variance of $E(Y \mid X = x^*) = \hat y^* \mid X = x^*$ and confidence interval for $E(Y \mid X = x^*)$. That is, calculating the variance and confidence of the regression line at each point. Note $E(\hat y^* \mid X = x^*) = \beta_0 + \beta_1 x^* = E(Y\mid X = x^*)$ implies the sample regression is an unbiased estimator of the true Linear relationship between $X,Y$. The variance can be calculated as 
+		\begin{align*}
+			V(\hat y^* \mid X = x^*) &= V(\hat \beta_0 + \hat \beta_1 x^*) = V(- \ol y + \hat\beta_1(x^* - \ol x))  \\
+			&=  V(\ol y) + (x^* - \ol x)^2V(\hat \beta_1) = \f{\sigma^2}{n} + \f{\sigma^2(x^* - \ol x)^2 }{S_{X,X}} \\
+			&=  \sigma^2 \BB{ \f1n + \f{(x^* - \ol x)^2}{S_{X,X}} }
+		\end{align*}
+		This is interpreted as the variance of the true location of the regression line at $X = x^*$. Note variance increases quadratically as $x^*$ moves further from $\ol x$.
+		
+		\subsubsection{Prediction error and interval}
+		Assuming we fit a regression line between $X,Y$ with some sample. If a new data point $X = x^*$ is given, our predicted $\hat y^*$ lies exactly on the line in the model we have fitted, but $y^*$ associated with $x^*$ may deviate from the line. How much does this $y$ vary? $y^* - \hat y^*$ is called the {\bf prediction error} for $X = x^*$. We calculate its expectation and variance.\\
+		
+		For expectation, the $*$ is redundant, so we write
+		$E(y - \hat y \mid X = x^*)$. We can easily show this is $0$ since $y - \hat y = 0$.
+		Therefore 
+		$$
+			V(y^* - \hat y^* \mid X = x^*) = V(y - \hat y \mid X = x^*) = \sigma^2 \BB{
+				1 + \f1n + \f{(x^* - \ol x)^2}{S_{X,X}}
+			}
+		$$
+		We just add the variance of $y$ and variance of $\hat y$ by expansion of variance and since $\Cov(\hat y, y) = 0$. The observation $y$ is independent of the previous sample by assumption. The prediction interval is built in the same way as before using $t$ distribution. The prediction interval is how much we expect the true value to deviate from the regression line.
+		
+		{\bf R simulation:} 
+		
+		The confidence interval is for the regression line. The prediction interval is for a new predicted value given $x^*$; how far $y^*$ can deviate from the predicted $\hat y^*$.
+		
+		\begin{example}
+			Calculate summary measures for the production data (in slides hw)
+		\end{example}
+	
+		\section{May 16: Lecture 3}
+		
+		{\bf Clarification } In the derivations from last class, we used
+		$$
+			\Cov \BB{ \f{\sum Y_i}{n}, \sum c_i y_i \mid X = x_i} = \f1n \sum \Cov(y_i, c_i y_i \mid X = x_i)
+		$$
+		since $\Cov(Y_i, Y_j) = 0$ by independence of $Y_i, Y_j$.\\
+		
+		Understand theory and problem solving procedure for midterms. Data analysis will mostly be with R.		
+		
+		\subsubsection{Assignment Task 1}
+		The purpose of the assignment is using R for inference of parameters given simulated data. Use your student id as a seed. After data is generated, run the LM model. Repeating this procedure, get sampling distribution for $\hat\beta_i, \sigma^2$, and compare these to true variances. 
+		
+		\subsection{Analysis of variance (ANOVA)}
+		
+		So far we have discussed inference about specific parameters, and hypothesis testing for their true values. For example, if we fail to reject $H_0 : \beta_1 = 0$, then there is no linear relationship between $X,Y$. In this case, $Y = \beta_0 + \eps$, $V(Y) = V(\eps) = \sigma^2$, so $\eps$ explains all the variance of $Y$. Usually, $V(Y) = \beta_1^2 V(X) + \sigma^2$, since $X \perp \eps$. Therefore when the above holds, part of the variance is given by $V(X)$. If most of the variation in $Y$ is explained by $X$, then predictions are very accurate. We discuss this in ANOVA. \\
+		
+		In the slides, points that are less scattered about the regression line have more of their variance explained by $X$.\\
+		
+		As the residual variance $\sigma^2$ increases, the variation of $Y$ is less explained by $X$. This increases prediction error. We want to answer how well the regression line might explain the variation we observe in the responses. ANOVA is another way of testing the significance of the regression line. The total varation of $Y$ is explained by the {\bf total sum of squares}, the numerator of $s_Y$
+		$$
+			SST = \sum (y_i - \ol y)^2
+		$$
+		This can be decomposed by 
+		\begin{align*}
+			\sum (y_i - \ol y)^2 &= \sum (y_i - \hat y_i + \hat y_i - \ol y)^2 = \sum (y_i - \hat y_i)^2 + \sum (\hat y_i - \ol y)^2 + 2 \sum (y_i - \hat y_i)(\hat y_i - \ol y)
+		\end{align*}
+		Where the third term becomes 
+		\begin{align*}
+			\sum (y_i - \hat y_i)(\hat y_i - \ol y) &= \sum (\hat y_i (y_i - \hat y_i) - \ol y(y_i - \hat y_i)) = \sum \hat y_i e_i - \ol y \sum e_i = 0
+		\end{align*}
+		Since $\sum e_i = 0$ and $\sum x_i e_i = 0$ by the second normal equation, which gives $\sum \hat y_i e_i = 0$. Hint: $\sum (\beta_0 + \beta_1 x_i)e_i = \beta_0 \sum e_i + \beta_1 \sum x_i e_i$.
+		Therefore the total variation of $Y$ can be divided into 
+		$$
+			\sum (y_i - \ol y)^2  = \sum (y_i - \hat y_i)^2 + \sum (\hat y_i - \ol y)^2
+		$$
+		The term on the left is the {\bf residual sum square}, $(n-2)s^2$. The second term explains the variance in $\hat y_i$, or the variation in fitted values from the regression. We may easily show $\sum \f{\hat y_i}{n} = \ol y$. The second term on the right is the {\bf regression sum squared}. The total variation in $Y$ has been decomposed to come from the regression line, and from random errors.\\
+		
+		{\bf Degrees of Freedom.} This is the number of summed square normals. The proof for $\f{(n-1)s^2}{\sigma^2} \sim \chi_{n-1}^2$ shows where one of the `standard normal squares' are lost. ($s^2$ is sample variance). For each parameter we fix, we lose a degree of freedom. When $\ol y$ is fixed, we are free to have $n-1$ values, and are forced to choose one to get the fixed $\ol y$. That is, $y_n$, the $n$-th observation is fixed for a fixed $\ol y$. This is why sample variance, $\sum (y_i - \ol y)^2 / n-1$, uses $n-1$ degrees of freedom.\\
+		
+		In the above SST, the {\bf RSS} $\sum (y_i - \hat y_i)^2 $ has $n-2$ degrees of freedom since $\hat y_i = \hat \beta_0 + \hat \beta_1 x_i$ uses two estimated parameters. Since $\sum (y_i - \ol y)^2$ has $n-1$ degrees of freedom, then the $SS_{reg}$ $\sum (\hat y_i - \ol y)^2$ must have 1 degree of freedom. This follows since the sum depends only on $\beta_1$ given fixed $x_i$:
+		\begin{align*}
+			\sum (\hat y_i - \ol y)^2 
+			= \sum (\hat \beta_0 + \hat \beta_1 x_i - \ol y^2) 
+			= \sum (\ol y - \hat \beta_1 \ol x + \hat \beta_1 x_i - \ol y^2) 
+			= \sum \hat \beta_1^2 (x_i - \ol x)^2
+		\end{align*}
+		We need degrees of freedom in order to test hypothesis. We will later show
+		$$
+			\f{SS_{reg}}{\sigma^2} \sim \chi_1^2,\, \f{RSS}{\sigma^2} \sim \chi_{n-2}^2
+		$$
+ 		Under $H_0: \beta_0 = 0$ then $F_0 \sim F_{1, n-2}$. We want $SS_{reg}$ as close to the SST as possible. The F-test here detects how close $SS_{reg}$ is to TSS. The closer it is the bigger the value of $F_0$. We can show $t^2_{n-2} = F_{1, n-2}$. We can also  show
+ 		$$
+ 			E(SS_{reg}) = \sigma^2 + S_{X,X}\beta_1^2
+ 		$$
+		So when $\beta_1 = 0$, the regression sum squared have variance equal to $\sigma^2$. Below is an ANOVA table:
+		
+		\begin{table}[ht]
+			\centering
+			\begin{tabular}{lrrrrr}
+				\hline
+				Sources of Variation & Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ 
+				\hline
+				Regression & 1 & $SS_{reg}$ & $MS_{reg} = \f{SS_{reg}}{1}$  & $F_0 = \f{MS_{reg}}{MRSS}$ & etc \\ 
+				Residuals & n-2 & $RSS$ & $MRSS_{reg} = \f{RSS}{n-2}$ &  &  \\ 
+				\hline
+				Total & n-1 & SST &&&
+			\end{tabular}
+		\end{table}
+		In general, the F-test measures whether the means of two groups measure significantly. The F statistic is the ratio of explained variance (regression model attributes to $V(X)$) to unexplained variance (variance of $e_i$). Under the null, our data reflects the intercept only model $Y = \beta_0 + \eps$, and we test the departure from this.
+		
+		\subsubsection{The Coefficient of Determination}
+		
+		Another measure to assess whether the regression line explains enough of the variability in the response is the {\bf coefficient of determination, $R^2$}. This gives the proportion of the total sample variability in the response that has been explained by the regression model.
+		$$
+			R^2 = \f{SS_{reg}}{SST} \text{ or } 1- R^2 = \f{RSS}{SST}
+		$$
+		Note $0 \leq R^2 \leq 1$. If $R^2$ is close to 1, it is an important predictor of $Y$. If it is close to 0, then it offers little predictive power for $Y$. In simple linear regression, $\rho^2 = R^2$ where $\rho$ is Pearson corelation coefficient.
+	
+		\subsubsection{Categorical predictors}
+		
+		So far we have required $X$ to be continuous. However, $X$ could be categorical. ($X$ smoking status vs. $Y$ blood pressure). Here the predictor is binary and the output is continuous. How would we test if the mean blood pressure varies between these groups?\\
+		
+		We did this in STA261 with a two-sample t-test, and by homoescadicity we do one with equal variance. We may also use regression, by using {\bf dummy variables} which are indicator variables. Setting $0$ for non-smokers, $1$ for smokers,
+		$$
+			E(Y \mid X = 0) = \beta_0,\, E(Y \mid X = 1) = \beta_0 + \beta_1
+		$$
+		Using ANOVA this is essentially a t-test. $F_{1,n-2} \sim t^2_{n-1}$ so by squaring the $t$ statistic we get $F$ statistic; a significant $F$ statistic indicate the change in means given by $\beta_1$ is significant. Therefore using hypothesis test with ANOVA for $\beta_1 = 0$, we get a test for differing means.\\
+		
+		The `slope' becomes the change in average. We can say $\beta_1$ reflects the average difference between two groups. The slope provides the magnitude of the difference, while the hypothesis test tells us whether the difference is statistically significant. \\
+		
+		With categorical variables, $R^2$ may be low but the test will give significance.
+		
+		\subsection{Multiple Linear Regression}
+		
+		So far we have only had one predictor $X$, but we generalize to $X_1, \ldots, X_n$. That is
+		$$
+			Y = \beta_0 + \beta_1 X_1 + \ldots + \beta_p X_p + \eps
+		$$
+		This implies $Y$ is related to $X_1, \ldots X_p$ linearly. However, the predictor produces a $p$-dimensional subspace instead of a line. See image in `Elements of Statistical Learning 2e'; with $Y$ regressed on $ X_1, X_2$ we get a regression plane.\\
+		
+		The conditional mean of $Y$ is given by $E(Y \mid X_1, \ldots, X_p) = \beta_0 + \beta_1 X_1 + \ldots + \beta_p X_p $. For the sample dataset, 
+		$$
+			y_i = \beta_0 + \beta_1x_{i,1} + \ldots + \beta_p x_{p,1} + e_i
+		$$
+		So we minimize $RSS(\beta_0, \ldots, \beta_p) = \sum (y_i - \sum^p \beta_j x_{ij})^2$. Differentiating with respect to each $\beta_j$,
+		$$
+			\pderiv[1]{RSS}{\beta_0} = \sum -2 (y_i - \sum^p \beta_j x_{ij}) 
+			\qquad 
+			\pderiv[1]{RSS}{\beta_j} \sum -2 (y_i - \sum^p \beta_j x_{ij})x_{ij}
+		$$
+		Setting these to $0$, we get $p+1$ normal equations in $p+1$ unknowns, giving us a unique solution and therefore minimum, since it is the minimum for each $\beta_j$.
+		
+		\subsubsection{Matrix Notation}
+		In order to simplify notation we use matrices. For this we write 
+			$$\mathbf{Y} = \mathbf{X} \beta + \eps$$
+		$\mathbf{Y}$ is an $n \times 1$ vector, $\mathbf{X}$ is an $n \times (p+1)$ matrix, with the first column being a vector of $1$s. $\beta$ is $(p+1)\times 1$ vector, $\eps$ is $n \times 1$ vector.\\
+		
+		We denote the transpose of matrix $\mathbf{A}$ as $\mathbf{A'}$. If $\mathbf{A}$ is a square matrix with $\mathbf{A} = \mathbf{A'}$ then it is symmetric (corrseponds to self adjoint operator). If $\mathbf{A}$ is invertible, we denote its inverse with $\mathbf{A^{-1}}$. A matrix is {\bf orthogonal} if $\mathbf{A^{-1}} = \mathbf{A'}$; column vectors are orthogonal. An {\bf idempotent} matrix satisfies $\mathbf{A^2} = \mathbf{A}$. Some important properties are that $$(\mathbf{A}+\mathbf B)' = \mathbf A' + \mathbf B'\, \text{ and } (\mathbf A \mathbf B)' = \mathbf B' \mathbf A'$$
+		
+		\begin{example}
+			The projection matrix $P : \R^n \to \R^n$ of rank $p \leq n$ onto a subspace is a square matrix that is symmetric and idempotent. 
+		\end{example}
+		
+		\section{May 18: Lecture 4}
+		
+		\subsection{More properties}
+		\begin{definition}
+			If $Y = (Y_1, \ldots, Y_n)$ is a random vector, then 
+			$
+				E(Y) = (E(Y_1), \ldots, E(Y_n))
+			$. The {\bf covariance matrix} of $Y$ is denoted
+			$$
+				V(Y) = 
+				\pmat{ 
+				V(Y_1) & \Cov(Y_1, Y_2) & \ldots & \Cov(Y_1, Y_n) \\
+				\Cov(Y_2, Y_1) & V(Y_2) & \ldots & \Cov(Y_2, Y_n) \\
+				\vdots && \ddots & \vdots \\
+				\Cov(Y_n, Y_1) & \Cov(Y_n, Y_2) & \ldots & V(Y_n)
+				 }
+			$$ That is each entry $a_{i,j} = \Cov(Y_i, Y_j)$. It is created by $\Cov \{(Y - E(Y))(Y-E(Y))'\}$, the outer product. 
+		\end{definition}
+		
+		\begin{proposition}
+			If $A$ is a constant matrix, $X$ a random vector, then $E(AX) = A E(X)$
+		\end{proposition}
+		\begin{proposition}
+			If $b$ is a constant vector, $Y$ a random vector, then $V(b'Y) = b'V(Y)b$.
+		\end{proposition}
+		
+		\subsection{Multiple Linear Regression Continued}
+		Above, we wrote $\mathbf{Y} = \mathbf{X} \beta + \eps$, that is  $y_i = \beta_0 + \beta_1 x_{i, 1} + \ldots + \beta_p x_{i, p} + \eps_i$ in matrix form. Explicitly,
+		$$
+		\pmat{
+			y_1 \\ y_2 \\ \vdots \\ y_n	
+			} =
+		\pmat{1 & x_{1,1} & x_{1,2} & \ldots & x_{1,p} \\
+			1 & x_{2,1} & x_{2,2} & \ldots & x_{2,p} \\
+			\vdots && \ddots && \vdots \\
+			1 & x_{n,1} & x_{n,2} & \ldots & x_{n,p} 
+		} \pmat{ \beta_0 \\ \beta_1 \\ \vdots \\ \beta_p} + \pmat{\eps_1 \\ \eps_2 \\ \vdots \\ \eps_n}
+		$$
+		$\mathbf Y, \eps \in \R^n, \beta \in \R^{p+1}$, and $\mathbf X$ is $n \times (p+1)$ dimensional.\\
+	
+		As before, we would like to minimize $\sum_i^n e_i^2$ given values in $X$. This evaluates to the scalar
+		$$RSS(\beta) = \sum_i^n e_i^2 = e'e = (Y - X\beta)'(Y - X \beta) = Y'Y - 2Y'X\beta + \beta'X'X\beta$$
+		Where $Y'X\beta = \beta'X'Y$ since the transpose of a scalar is the same scalar. Note $RSS : \R^{p+1} \to \R$ Differentiating with respect to $\beta$,
+		$$
+			\pderiv[1]{RSS}{\beta} = \pderiv[1]{}{\beta} (Y'Y - 2\beta'X'Y + \beta'X'X\beta) = -2X'Y + 2X'X \beta
+		$$
+		Setting this to $0$, we see $\hat \beta = (X'X)^{-1}X'Y$. In the case of simple LR, 
+		$$
+			X = \pmat { 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n},\, Y = \pmat{y_1 \\ \vdots \\ y_n} \imp 
+			X'X = \pmat{ n & \sum x_i \\ \sum x_i & \sum x_i^2} = n \pmat{ 1 & \ol x \\ \ol x & \f1n \sum x_i^2 }
+		$$
+		We can compute $\det X'X = n^2 \cdot \BB{\df1n \sum x_i^2 - \ol x^2} = n \cdot \sum (x_i - \ol x)^2 = n \cdot S_{X,X}$. Therefore 
+		$$
+			(X'X)^{-1} = \pmat{
+					\df{\sum x_i^2}{n \cdot S_{X,X}} & - \df{\ol x}{S_{X,X}} \\
+					- \df{\ol x}{S_{X,X}} & \df{1}{S_{X,X}}
+						}
+		$$
+		Multiplying by $\sigma^2$, we see this is the {\bf covariance matrix for $\hat\beta_0, \hat\beta_1$; $\Cov(\hat\beta_0, \hat\beta_1) = \df{-\sigma^2 \ol x}{S_{X,X}}$}. {\bf Important for midterm!}
+		\begin{definition}
+			The {\bf projection} of $Y$ on $X$ is given by $\hat Y = X \hat \beta = X(X'X)^{-1}X'Y = H Y$. We call $H$ the {\bf hat} or {\bf projection} matrix. Note it is $n \times n$, idempotent, and symmetric!
+		\end{definition}
+		We let $e = Y - \hat Y = Y - X(X'X)^{-1}X'Y = (I - H) Y$
+		\begin{proposition}
+			$H$ and $I-H$ are both idempotent.
+		\end{proposition}
+		Note that $HX = X$; this is easily checked by tracing definition and cancelling inverses. We can partition the first $k$ and last $p+1 - k$ columns of $X$ into matrix $[X_1, X_2]$. Then $HX = [HX_1, HX_2] = X = [X_1, X_2]$. As well, $\tr(H) = p+1$ and $\dim \text{range} H = p+1$. 
+		
+		\subsubsection{Assumptions in Multiple LR}
+		
+		$E(Y \mid X) = X \cdot \beta$. Linearity, independence, homoescadicity, normality hold as assumptions for our model (same as before). We assume $\eps \sim N(0, \sigma^2 I)$. Then $Y \mid X \sim N(X \beta , \sigma^2 I)$. Now we discuss the distribution of $\hat\beta$.
+		$$
+			E(\hat \beta \mid X) = E((X'X)^{-1}X'Y \mid X) = (X'X)^{-1}X'X\beta = \beta
+		$$
+		so the estimator is consistent. For the variance, we carry out adjoints as in previous property
+		$$
+			V(\hat \beta \mid X) 
+			= V((X'X)^{-1}X'Y \mid X) 
+			= (X'X)^{-1}X' \sigma^2 I X (X'X)^{-1}
+			= (X'X)^{-1} \sigma^2
+		$$
+		This is just the covariance matrix of $\hat \beta$! Look back to our example above. That is 
+			$$C = (X'X)^{-1} \imp c_{ij} = \sigma^2 \Cov(\beta_i, \beta_j)$$
+		Least squares estimates are the {\bf best linear unbiased estimators} according to the Gauss-Markov Theorem (which is stated later). The following assumptions are required for the theorem: (1) the errors $\eps_i$ are independent, (2) $E(\eps) = 0$, (3) $V(\eps) = \sigma^2$. Note normality is {\bf not} assumed. \\
+		
+		As in simple LR, the $\hat \beta_j$ are normally distributed; $\hat \beta_j \sim N(\beta_j, \sigma^2 c_{j,j})$. We can test hypotheses for $\beta_j$ in the usual way. Given $H_O : \beta_j^0$, then we can calculate $Z = \f{\hat\beta_j - \beta_j^0}{\sqrt{c_{j,j}} \sigma }$ and use a z-test. 		
+		
+		
+		
+	\section{May 30: Lecture 5}
+	
+		\subsubsection{Term Test}
+		
+		Higher than expected. Expect lots of multiple linear regression questions in the final, like Question 5 on TT. Practice from Chapter 3 in Montgomery.
+		
+		\subsection{ANOVA for Multiple Linear Regression}
+		
+		\subsubsection{Expectation of RSS, sample variance}
+		
+		The RSS for MLR is $\sum(y_i - \hat y_i ) = e'e$. Recall $e = (I-H)y$ since $Y - \hat Y = Y - H Y = (I-H)Y$, where $H = X(X'X)^{-1}X'$.	Therefore 
+			$$
+				RSS = y' [ I - X(X'X)^{-1}X'] y =  y' [ I - H] y
+			$$
+		In MLR, we have $p+1$ parameters to estimate so reasoning with degrees of freedom, the {\bf sample variance} $s^2 = \df{RSS}{n-p-1} = \df{\sum e_i^2}{n-p-1}$. We show this by first calculating expectation of RSS by proving a theorem, and substituting $A = I-H$. Please see last lecture for properties of expectation and variance.
+
+	
+		\begin{thm}
+			If $y$ is $n \times 1$ random vector, with mean vector $\mu$ and covariance matrix $V$, and $A$ is a matrix of constants, then
+			$$E(y'Ay) = \tr(AV) + \mu'A \mu$$
+		\end{thm}
+	
+		\begin{proof}
+			 We multiply and use linearity of expectation, expansion of covariance
+			\begin{align*}
+				E(RSS) &= E[Y'AY] = E\BB{ \sum_i^n \sum_j^n a_{i,j} y_i y_j } =   \sum_i^n \sum_j^n a_{i,j} E\BB{ y_iy_j }
+				\intertext{Expanding with covariance, and with $(\sigma_{i,j}) = Cov(Y) = V$}
+				&= \sum_i^n \sum_j^n a_{i,j} \BB{\Cov(y_i, y_j) + E(y_i)E(y_j)}
+				= \sum_i^n \sum_j^n a_{i,j} \sigma_{i,j}  + \sum_i^n \sum_j^n a_{i,j}  \mu_i \mu_j  \\
+				&= \tr(A V ) + \mu' A \mu			
+			\end{align*}
+		\end{proof}
+	
+		\begin{proposition}
+			$E(RSS) = (n-p-1)\sigma^2 + \mu' A \mu$ where $A = I-H$
+		\end{proposition}
+	
+		\begin{proof}
+		Using the above,
+			Set $A = I-H, V = \sigma^2 I$, then 
+				$$\tr(AV) = \tr[(I-H) \sigma^2 I] = \sigma^2 \tr(I-H)$$
+			Expanding, $ \tr(I-H) = \tr(I_n) - \tr(H) = n - p - 1$; where $\tr(H) = \tr(X(X'X)^{-1}X') = \tr(X'X(X'X)^{-1}) = \tr I_{p+1} = p+1$ since $(X'X)^{-1}$ is $(p+1) \times (p+1)$.
+		\end{proof}
+		{\bf This will be on the final!}
+		\begin{proposition}
+			 $\mu' A \mu = 0$, where $A = I-H$, $\mu = X \beta$.
+		\end{proposition}
+		\begin{proof}
+			\begin{align*}
+				\mu' A \mu &= (X\beta)'(I - X(X'X)^{-1}X')X\beta = \beta'X'X\beta - \beta'X'X(X'X)^{-1}X'X\beta\\ 
+				&= \beta'X'X\beta - \beta'X'X'\beta \\
+				&= 0
+			\end{align*}
+		\end{proof}
+		
+		\begin{proposition}
+			$E(RSS) = (n-p-1)\sigma^2$
+		\end{proposition}
+	
+		This follows from substitution into the past 3 statements. The following proposition also easily follows.
+		
+		\begin{proposition}
+			$E(MRSS) = E(\f{RSS}{n-p-1}) = \sigma^2$
+		\end{proposition}
+		
+		\subsubsection{$RSS$ and $SS_{reg}$ for Multiple LR} 
+		
+		By Gauss-Markov assumptions, $\eps_i \sim N(0, \sigma^2)$, and so $\f{\eps_i}{\sigma} \sim N(0,1)$ by $Z$-score. Also this gives $\f{1}{\sigma} \eps \sim N(0, I)$. Note	\footnote{The slides use $Q = I - H$, but we use $A$ as before.}	
+		$$e = Y - X \hat\beta = Y - HY = AY$$ 
+		Our underlying model is assumed to be $Y = X\beta + \eps$, so therefore $Ay = AX\beta + A\eps$. Expanding and since $HX = X$, 
+		$
+		AX\beta = (I - H) X \beta = 0
+		$ 
+		so $e = Ay = A \eps$. That is our observed errors are the difference $\eps - H\eps$; the error vector minus its projection. This proves the following fact
+		
+		\begin{fact}
+			$e = (I - H) \eps$.
+		\end{fact}
+		
+		We also showed $A = I-H$ is {\bf symmetric and idempotent}; this implies 
+			$$A'A = A^2 = A$$
+		Then 
+		$$
+			RSS = (y - \hat y)'(y - \hat y) =  e'e = \eps' A' A \eps = \eps A \eps  = \sigma^2 Z'AZ
+		$$
+		This implies $\df{RSS}{\sigma^2} = Z'AZ$.
+		
+		\begin{thm}
+			If $A$ is a symmetric and idempotent $n \times n$ matrix and $Z \sim N(0, I)$, then $Z'AZ \sim \chi^2(\tr(A))$
+		\end{thm}
+			
+		No proof, try it yourself for practice. However, notice $Z'Z \sim \chi^2(n)$ and use a nice basis for a projection operator. Recall $A = I-H$ so this gives 
+		$$\df{RSS}{\sigma^2} \sim \chi^2(\tr(A)) = \chi^2(n-p-1)$$
+	
+		\begin{proposition}
+			$\ol y = (1'1)^{-1} 1' y$.
+		\end{proposition}
+		
+		Therefore we may rewrite the regression sum of squares involving $y$ and $H$.
+		
+		\begin{proposition}
+			$SS_{reg} = y' [H - 1(1'1)^{-1}1']y$
+		\end{proposition}
+		\begin{proof}
+		First, write $$
+			SS_{reg} = [\hat y - 1 \ol y]' [\hat y - 1 \ol y] = y' [H - 1(1'1)^{-1}1]'[H - 1(1'1)^{-1}1']y
+		$$
+		Now we show $[H - 1(1'1)^{-1}1]'[H - 1(1'1)^{-1}1'] = H - 1(1'1)^{-1}1'$. Expanding,
+		\begin{align*}
+			[H - 1(1'1)^{-1}1']'[H - 1(1'1)^{-1}1'] 
+			&= H^2 - 1(1'1)^{-1}1'H - H 1(1'1)^{-1}1' + 1(1'1)^{-1}1' 1(1'1)^{-1}1'\\
+			\intertext{Note since $HX = X$ and $1$ is a column in $X$, then $H\cdot \mathbf 1 = \mathbf 1$, and taking transposes a similar result holds.}
+			&= H - 1(1'1)^{-1}1' - 1 (1'1)^{-1}1' + 1(1'1)^{-1}1' \\
+			&= H - 1 (1'1)^{-1}1'
+		\end{align*}
+		\end{proof}
+		This gives us a way to express the regression sum squared using $y, H$ and a constant matrix. We use this to show that the regression sum squared, and residual sum squared from above are independent.
+		
+		\begin{proposition}
+			The regression sum of squares $SS_{reg} = y' [H - 1(1'1)^{-1}1']y$ and residual sum of squares $RSS = y' [ I - H] y$ are {\bf independent}.
+		\end{proposition}
+		
+		We do this by computing $[H - 1(1'1)^{-1}1'] \sigma^2 I [I - X(X'X)^{-1}X'] = \sigma^2(H-B)(I-H) = 0$ as an exercise.
+		
+		\subsubsection{ANOVA Table for MLR}
+		
+		
+		\begin{table}[ht]
+			\centering
+			\begin{tabular}{lrrrrr}
+				\hline
+				Sources of Variation & Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ 
+				\hline
+				Regression & $p$ & $SS_{reg}$ & $MS_{reg} = \f{SS_{reg}}{p}$  & $F_0 = \f{MS_{reg}}{MRSS}$ & etc \\ 
+				Residuals & $n-p-1$ & $RSS$ & $MRSS_{reg} = \f{RSS}{n-p-1}$ &  &  \\ 
+				\hline
+				Total & $n-1$ & SST &&&
+			\end{tabular}
+		\end{table}
+	
+		By independence, and since $SS_{reg} \sim \chi^2(p)$, $RSS \sim \chi^2(n-p-1)$, then we have 
+		$$\f{SS_{reg}/p}{RSS/n-p-1} \sim F(p, n-p-1)$$
+		We may perform an $F$ test with the null hypothesis $$H_0: \beta_0 = \beta_1 = \ldots = \beta_p = 0 \text{ and } H_1: \beta_i \neq 0 \text{ for some } i$$
+		Significance in the statistic gives evidence for at least one predictor being valid; at least some $X_i$ explains a significant proportion of the variance in $Y$.\\
+		
+		Recall that the coefficient of determination $R^2 = \f{SS_{reg}}{SST}$. As the number of variables increases, so does $R^2$, since more predictors decrease $RSS$. 
+		$$
+			RSS = \sum (y_i - \beta_0 - \beta_1 x_i - \ldots - \beta_px_p)^2
+		$$ 
+		where an additional predictor will decrease each term in the sum. Note when we have $n$ predictors for the sample size, we have a perfect fit and $R^2 = 1$. Geometrically, projection plane induced by $H = X(X'X)^{-1}X'$ is the whole space. In short, we get many predictors but none of them good and we overfit. We account for the number of predictors using an adjusted $R^2$
+			$$
+				R^2_{adj}  = 1 - \f{RSS / n-p-1}{SST / n-1}
+			$$
+		The interpretation is exactly the same, but is a more robust statistic in multiple linear regression due to the previous issues.
+		
+		\subsection{Partial F-test}
+		
+		One of the most important tests in an MLR is the partial F-test. In ANOVA we do a test for the full model; we identify whether there is any significant predictor. The {\bf partial F-test} identifies whether a subset of predictors still significantly predicts the response. However, the {\bf null hypothesis is that the reduced model is better} than the full model. Remember that we consider the ratio of the error sum squared; a significant increase in errors after removing predictors indicates a worse model, and larger $F$-statistic.\\
+		
+		Suppose we have two models. The {\bf full} $Y = \beta_0 + \beta_1 X_1 + \ldots + \beta_p X_p + \eps$. We test whether the model still explains the response when we remove the first $k$ predictors; we consider the {\bf reduced} $Y = \beta_{k+1} X_{k+1} + \ldots + \beta_p X_p + \eps$. First, write 
+			$$RSS(\text{reduced}) - RSS(\text{full}) = y'[H - H_1]y$$ 
+		Without proof, but similar to for $RSS$ before, 
+		$$RSS(\beta_2 \mid \beta_1)/\sigma^2 = (RSS(\text{reduced}) - RSS(\text{full})) / \sigma^2 \sim \chi^2(k)$$
+		Thus 
+		$$\df{RSS(\beta_2 \mid \beta_1)/\sigma^2}{RSS(\text{full}) / n-p-1} \sim F(k, n-p-1)$$
+		We test
+		$$
+			H_0 : \text{ reduced model is better fit}, \quad H_1: \text{ full model is better fit }
+		$$
+		A large $F$ value suggests that the reduced model explains much less variability than the full model, and fits the data worse. This implies we should be rejecting the null, so predictors cannot be removed from the model. Small values imply that both reduced and full models explain a similar amount of variability, so the additional predictors may not be necessary.\\
+		
+		Opposite test hypotheses occur, since we test ratios of {\bf residuals}; high ratio means large residuals in reduced model.
+		
+		\subsection{Diagnostic checking}
+		
+		The three assumptions of linear regression are (1) linearity, (2) homoscedasticity, (3) independence of the errors, with normality also being one. One of the most important tasks is {\bf checking the assumptions} in our data. This is called diagnostic checking. Anscombe's datasets give an example of why checking these assumptions is important; the models give the same predictors but differ greatly in their structure. \\
+		
+		Suppose we fit $Y = \beta_0 + \beta_1 X + \eps$. The fitted regression $\hat y = \hat \beta_0 + \hat \beta_1 X$ produces the estimate for $E(Y \mid X)$. $e$ is an unbiased estimate for $\eps$. A good way to check is to plot the residuals, there should be no pattern and should be a random scatter plot. We can also plot residuals against $\hat y$ as in multiple LR. Assumptions hold if there is {\bf no pattern}. Other relationships, like a quadratic one, will become apparent in the residuals. The following steps are best practice:
+		\begin{enumerate}
+			\item Assess model assumptions using residual plot. There should be no pattern.
+			\item Determine which data points have $x$-values with large effect on $Y$. ({\bf Leverage points.})
+			\item Determine which points are outliers in their responses.
+			\item Assess the influence of bad leverage points on the fitted model.
+			\item Examine whether constant error variance assumption is reasonable. (Do residuals vary with $X$?)
+			\item If data is collected over prolonged period of time, see if it is corelated with time.
+			\item For small sample size or prediction intervals, assess whether normality of errors is reasonable. (Normality tests?)
+		\end{enumerate}
+		
+		
+		
+		
+			
+	
+		
+		
+
+\end{document}
