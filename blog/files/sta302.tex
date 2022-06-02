@@ -913,7 +913,129 @@
 			\item If data is collected over prolonged period of time, see if it is corelated with time.
 			\item For small sample size or prediction intervals, assess whether normality of errors is reasonable. (Normality tests?)
 		\end{enumerate}
+	
+	 If this is successful, then our assumptions are valid and our predictors can be trusted. If the assumptions fail, our analysis is invalid.
 		
+	\section{June 1: Lecture 6}
+	
+	\subsection{Leverage Points}
+	
+	{\bf Leverage points} are observations that are highly influential on the fitted regression line. Leverage points occur due to an a value of $X=x$ far from $\ol x$. The corresponding $Y=y$ greatly influences the line for a given $X=x$. Such a pair $x,y$ that greatly changes the least square estimates is a {\bf bad} leverage point. For extreme $x$, if $y$ is close to the fitted line it is a good leverage point, but if it is far it is a bad one. An {\bf outlier} is an observation that takes an extreme $y$ value for an $x$ that is not far from $\ol x$. 
+	
+	\subsubsection{Numerical Summary}
+	Recall
+	$$
+		\hat\beta_0 = \ol y - \hat \beta_1 \ol x \qquad \hat\beta_1 = \sum_j^n \f{x_j - \ol x}{S_{X,X}} y_j = \sum_j^n c_jy_j
+	$$
+	Then
+	\begin{align*}
+		\hat y_i &= \hat \beta_0 + \hat \beta_1 x_i = \ol y + \hat \beta_1 (x_i - \ol x) = \sum_j^n \BB{\f{y_j}{n} + \f{(x_j - \ol x) (x_i - \ol x)}{S_{X,X}} y_j} \\
+		&= \sum_j^n \BB{\f{1}{n} + \f{(x_j - \ol x) (x_i - \ol x)}{S_{X,X}} } y_j = \sum_j^n h_{i,j} y_j
+	\end{align*}
+	This $h_{i,j}$ is the entry in the hat matrix $H$. When $i = j$, then $\displaystyle h_{i,i} = \f{1}{n} + \f{ (x_i - \ol x)^2}{S_{X,X}}$. We show $\sum_j^n h_{i,j} = 1$. Further, we can write $\hat y_i = h_ii y_i + \sum_{j \neq i} h_{i,j}y_j$. If we have $h_{i,i} \approx 1$, then $\hat y_i$ is close to $y_i$, and it is a leverage point. It can also be shown $\text{mean}(h_{i,i}) = \f2n$ (by definition). Using this, a popular way to identify a leverage point is to check if $h_{i,i} > \f4n$, or twice the mean. This is a useful rule of thumb.\\
+	
+	Leverage is concerned with a single observation far from the rest of the data in the $x$-space. We have two ways of dealing with bad leverage points. We can (1) remove the data point or (2) fit a different regression model. A quadratic or logarithmic transformation of $X$ may be needed.
+	
+	\subsection{Standardized Residuals and Influential Points}
+	
+	In the real world, often people work in {\bf sensitivity analysis}. This is essentially identifying influential points, which we discuss.\\
+	
+	Residuals reflect the difference between observed and predicted response. We might want to use them to measure the influence a leverage point will have on the estimated line. It turns out that the estimated residuals do not always have the same variance; $V(e_i)$ is not the same for all $i$. Actually, we find $V(e_i) = \sigma^2(1-h_{i,i})$. We prove this.
+	\begin{proposition}
+		$\sum_{j=1}^n h_{i,j}^2 = h_{i,i}$
+	\end{proposition}
+	\begin{proof}
+		\begin{align*}
+			\sum_{j=1}^n h_{i,j}^2 
+			&= \sum_{j=1}^n \BB{ \f1n +  \f{(x_j - \ol x) (x_i - \ol x)}{S_{X,X}} }^2 = \sum_{j=1}^n \BB{\f1{n^2} + \f2n \f{(x_j - \ol x) (x_i - \ol x)}{S_{X,X}} + \f{(x_j - \ol x)^2 (x_i - \ol x)^2}{S_{X,X}^2}} \\
+			&= \f1{n} + \f2n \f{\sum_{j=1}^n(x_j - \ol x) (x_i - \ol x)}{S_{X,X}} + \f{\sum_{j=1}^n(x_j - \ol x)^2 (x_i - \ol x)^2}{S_{X,X}^2}  \\
+			&= \f1n + \f{ (x_i - \ol x)^2}{S_{X,X}} = h_{i,i}
+		\end{align*}
+	\end{proof}
+	We use this in the last steps to prove the following.
+	\begin{proposition}
+		\label{e_var}
+		$V(e_i) = \sigma^2(1-h_{i,i})$
+	\end{proposition}
+	\begin{proof}
+			\begin{align*}
+				V(e_i) &= V\BB{y_i(1-h_{i,i}) + \sum h_{i.j}y_j} = (1-h_{i,i})^2V(y_i) + \sum_{i \neq j} h_{i,j}^2 V(y_j) \\
+				&= \sigma^2 \BB{ (1-h_{i,i})^2 + \sum_{i \neq j} h_{i,j}^2 } = \sigma^2 \BB{ (1-h_{i,i})^2 + \sum_{i}^n h_{i,j}^2 - h_{i,i}^2} \\
+				&= \sigma^2 \BB{ 1 - 2 h_{i,i} + h_{i,i}^2 + h_{i,i} - h_{i,i}^2} =  \sigma^2(1-h_{i,i})
+			\end{align*}
+	\end{proof}
+	We can now discuss the variation in each residual using our hat matrix. We see that the estimated residuals are not actually independent, event though we assume that the errors are. If $e_i$ were independent, we would expect $Var(e_i) = \sigma^2$. However, we have an extra term of $-\sigma^2 h_{i,i}$, which indicates the variance of a residual depends on its distance from $\ol x$. Residuals are correlated, but the correlation is small.\\
+	
+	This makes it difficult to know whether the patterns we see are due to model violations or variance of the residuals. To overcome this issue, we {\bf standardize} the residuals by dividing by their {\bf standard error}. By prop. \ref{e_var}, 
+	$$
+		\text{se}(e_i) = s\sqrt{1 - h_{i,i}} \imp r_i = \f{e_i}{s\sqrt{1 - h_{i,i}}}
+	$$
+	Where  $s^2 = \f{\sum e_i^2}{n-2}$. Note $r_i \sim t(n-2)$, so these are also called `studentized' residuals. If high leverage points exist, it is more important to look at plots of standardized residuals; we can just check if $r_i \in [-2,2]$ or $[-4,4]$. It is expected that the variance of $r_i$ will be larger for center values of $X$, and smaller for remote values. Then looking at the plot, we can identify whether a residual corresponds to an outlier; we plot standardizes residual against dependent variable.
+	
+	\begin{example}
+		In our Treasury Bond example, we identify three bad leverage points by plotting studentized residual against dependent variable. Viewing these in detail, we find that they are `flower bonds', so we remove them from the analysis. The remaining points are more or less linear, but a slight bend may give evidence that it is a logarithmic relationship.
+	\end{example}
+
+	\subsubsection{Cook's Distance}
+	
+	How can we quantify the influence a small number of observations on the regression line with a single statistic? In 1977, Cook provided the following expression to calculate the influence of a single point on the regression line.
+	
+	\begin{definition}
+		The {\bf Cook's distance} for $(x_i, y_i)$ is given by
+		$$
+		D_i = \f{(\hat y_{j (i)} - \hat y_j)^2}{2s^2} = \f{r_i^2}{2} \cdot \f{h_i}{1-h_i}
+		$$
+		where the subscript $i$ references the predicted value from a model fit without $(x_i, y_i)$. Thus $\hat y_{j (i)}$ denotes the $j$th fitted value based on the fit when the $i$th observation is deleted from the fit.
+	\end{definition}
+
+	There are similar metrics in MLR which we discuss later. The second expression is easier to work with since it does not require refitting of any models. Large Cook's distance means large $r_i$ or large $h_{i,i}$. We use the cutoff $D_i > \df4{n-2}$ as a rough cutoff guideline, but identifying unusual $D_i$ is most important.
+	
+	\begin{example}
+		In the previous Treasury Bond example, the 3 unusual observations have a very high Cook's distance when plotted, and are valid to be removed.
+	\end{example}
+
+	\subsubsection{Normality of the errors}
+	
+	We need to assume $\eps_i$ is normally distributed to perform $F$, $t$, and $Z$ tests, as well as construct confidence intervals. We will verify the normality assumption using residual plots. First, we can show $\sum h_{i,j} = 1$ and $\sum x_jh_{i,j} = x_i$,
+	\begin{proposition}
+		$e_i = \eps_i - \sum_j^n h_{i,j} \eps_j$
+	\end{proposition}
+ 	\begin{proof}
+ 		$$
+ 		e_i = y_i - \hat y_i = y_i - \sum_j^n h_{i,j}y_j = 
+ 		\beta_0 + \beta_1 x_i + \eps_i - 
+ 		\sum_j^n h_{i,j}(\beta_0 + \beta_1 x_j + \eps_j) 
+ 		= \eps_i - \sum_j^n h_{i,j} \eps_j
+ 		$$
+ 	\end{proof}
+	In small sample sizes, the second term may dominate, and the residuals may look normal even if the $\eps_i$ are not.
+	As $n$ increases, the second term in the last equation has a smaller variance than the first term, so the first term dominates the last equation. For large samples, the residuals can be used to assess normality of the samples.\\
+	
+  	A common way to assess normality is via a {\bf QQ-plot}; the studentized errors are plotted against their quantiles. If the quantiles match that of a normal distribution, the plot is close to the $y=x$ line.	We must also check that the constant variance assumption is met; we cannot use inferential tools if it is not true. 
+  	
+  	\subsubsection{Variance stabilizing transformations}
+  	
+  	In the slides example, constant variances is violated. For inference, our prediction intervals depend on $X$. A transformation of $Y$ can stabilize the variance: make it not depend on $X$.\\
+  	
+  	When we are counting events, as in the slides (28) example, we typically fit a Poisson distribution. In a Poisson distribution, the mean and variance are both $\lambda$. Since in regression we model the conditional mean $E(Y \mid X) = \lambda_X$, we have also a conditional variance: $\lambda_X$ changes by $X$, so should the variance. The {\bf square root transformation} can help in this situation.\\
+  	
+  	Taking the function of a random variable, $f(Y) \approx f(E(Y)) + f'(E(Y))(Y-E(Y))$. Taking the variance, we get
+  	$$
+  		V(f(Y)) = \BB{f'(E(Y)}^2V(Y)
+  	$$
+  	since $E(Y)$ is a constant, and using variance properties. This way of approximating variance is called the {\bf delta method}. In the Poisson example, $E(Y \mid X) = V(Y \mid X) = \lambda(x)$. Letting $f(Y) = \sqrt(Y)$, then
+  	$$
+  		V(Y^{0.5} \mid X) = \BB{0.5 E(Y \mid X)^{-0.5}}^2V(Y \mid X) = \BB{\f12}^2 \lambda(x)^{-1} \lambda(x) = \f14
+  	$$
+  	which makes $V(f(Y) \mid X)$ constant. In the example, $X,Y$ are both counts, so we perform the square root transformation on both and keep the same units. The variance stabilizing transformation stabilizes prediction error across the predictor variable. Our predictions may vary, but we keep the transformed model. We may not always get count data, so depending on the relationship between variance and mean we might use (table)\\
+  	
+  	We need to make sure that interpretability is not lost: in practical data a transformation is chosen empirically. There is no specific rule.
+  	
+  	
+  	
+  	
+  	
+	
 		
 		
 		
