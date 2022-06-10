@@ -932,7 +932,7 @@
 		\hat y_i &= \hat \beta_0 + \hat \beta_1 x_i = \ol y + \hat \beta_1 (x_i - \ol x) = \sum_j^n \BB{\f{y_j}{n} + \f{(x_j - \ol x) (x_i - \ol x)}{S_{X,X}} y_j} \\
 		&= \sum_j^n \BB{\f{1}{n} + \f{(x_j - \ol x) (x_i - \ol x)}{S_{X,X}} } y_j = \sum_j^n h_{i,j} y_j
 	\end{align*}
-	This $h_{i,j}$ is the entry in the hat matrix $H$. When $i = j$, then $\displaystyle h_{i,i} = \f{1}{n} + \f{ (x_i - \ol x)^2}{S_{X,X}}$. We show $\sum_j^n h_{i,j} = 1$. Further, we can write $\hat y_i = h_ii y_i + \sum_{j \neq i} h_{i,j}y_j$. If we have $h_{i,i} \approx 1$, then $\hat y_i$ is close to $y_i$, and it is a leverage point. It can also be shown $\text{mean}(h_{i,i}) = \f2n$ (by definition). Using this, a popular way to identify a leverage point is to check if $h_{i,i} > \f4n$, or twice the mean. This is a useful rule of thumb.\\
+	This $h_{i,j}$ is the entry in the hat matrix $H$. When $i = j$, then $\displaystyle h_{i,i} = \f{1}{n} + \f{ (x_i - \ol x)^2}{S_{X,X}}$. We show $\sum_j^n h_{i,j} = 1$. Further, we can write $\hat y_i = h_{i,i} y_i + \sum_{j \neq i} h_{i,j}y_j$. If we have $h_{i,i} \approx 1$, then $\hat y_i$ is close to $y_i$, and it is a leverage point. It can also be shown $\text{mean}(h_{i,i}) = \f2n$ (by definition). Using this, a popular way to identify a leverage point is to check if $h_{i,i} > \f4n$, or twice the mean. This is a useful rule of thumb.\\
 	
 	Leverage is concerned with a single observation far from the rest of the data in the $x$-space. We have two ways of dealing with bad leverage points. We can (1) remove the data point or (2) fit a different regression model. A quadratic or logarithmic transformation of $X$ may be needed.
 	
@@ -970,13 +970,13 @@
 	$$
 		\text{se}(e_i) = s\sqrt{1 - h_{i,i}} \imp r_i = \f{e_i}{s\sqrt{1 - h_{i,i}}}
 	$$
-	Where  $s^2 = \f{\sum e_i^2}{n-2}$. Note $r_i \sim t(n-2)$, so these are also called `studentized' residuals. If high leverage points exist, it is more important to look at plots of standardized residuals; we can just check if $r_i \in [-2,2]$ or $[-4,4]$. It is expected that the variance of $r_i$ will be larger for center values of $X$, and smaller for remote values. Then looking at the plot, we can identify whether a residual corresponds to an outlier; we plot standardizes residual against dependent variable.
+	Where  $s^2 = \df{\sum e_i^2}{n-2}$. Note $r_i \sim t(n-2)$, so these are also called `studentized' residuals. If high leverage points exist, it is more important to look at plots of standardized residuals; we can just check if $r_i \in [-2,2]$ or $[-4,4]$. It is expected that the variance of $r_i$ will be larger for center values of $X$, and smaller for remote values. Then looking at the plot, we can identify whether a residual corresponds to an outlier; we plot standardizes residual against dependent variable.
 	
 	\begin{example}
 		In our Treasury Bond example, we identify three bad leverage points by plotting studentized residual against dependent variable. Viewing these in detail, we find that they are `flower bonds', so we remove them from the analysis. The remaining points are more or less linear, but a slight bend may give evidence that it is a logarithmic relationship.
 	\end{example}
 
-	\subsubsection{Cook's Distance}
+	\subsection{Cook's Distance}
 	
 	How can we quantify the influence a small number of observations on the regression line with a single statistic? In 1977, Cook provided the following expression to calculate the influence of a single point on the regression line.
 	
@@ -988,13 +988,13 @@
 		where the subscript $i$ references the predicted value from a model fit without $(x_i, y_i)$. Thus $\hat y_{j (i)}$ denotes the $j$th fitted value based on the fit when the $i$th observation is deleted from the fit.
 	\end{definition}
 
-	There are similar metrics in MLR which we discuss later. The second expression is easier to work with since it does not require refitting of any models. Large Cook's distance means large $r_i$ or large $h_{i,i}$. We use the cutoff $D_i > \df4{n-2}$ as a rough cutoff guideline, but identifying unusual $D_i$ is most important.
+	A high Cook's distance means the model is a  {\bf bad fit} for the $i$-th observation, since there is a large residual or it sits far from the centre of the predictors.	There are similar metrics in MLR which we discuss later. The second expression is easier to work with since it does not require refitting of any models. Large Cook's distance means large $r_i$ or large $h_{i,i}$. We use the cutoff $D_i > \df4{n-2}$ as a rough cutoff guideline, but identifying unusual $D_i$ is most important.
 	
 	\begin{example}
 		In the previous Treasury Bond example, the 3 unusual observations have a very high Cook's distance when plotted, and are valid to be removed.
 	\end{example}
 
-	\subsubsection{Normality of the errors}
+	\subsection{Normality of the Errors}
 	
 	We need to assume $\eps_i$ is normally distributed to perform $F$, $t$, and $Z$ tests, as well as construct confidence intervals. We will verify the normality assumption using residual plots. First, we can show $\sum h_{i,j} = 1$ and $\sum x_jh_{i,j} = x_i$,
 	\begin{proposition}
@@ -1011,13 +1011,13 @@
 	In small sample sizes, the second term may dominate, and the residuals may look normal even if the $\eps_i$ are not.
 	As $n$ increases, the second term in the last equation has a smaller variance than the first term, so the first term dominates the last equation. For large samples, the residuals can be used to assess normality of the samples.\\
 	
-  	A common way to assess normality is via a {\bf QQ-plot}; the studentized errors are plotted against their quantiles. If the quantiles match that of a normal distribution, the plot is close to the $y=x$ line.	We must also check that the constant variance assumption is met; we cannot use inferential tools if it is not true. 
+  	A common way to assess normality is via a {\bf QQ-plot}; the studentized errors are plotted against their quantiles. If the quantiles match that of a normal distribution, the plot is close to the $y=x$ line, and the normality assumption is valid. We must also check that the constant variance assumption is met; we cannot use inferential tools if it is not true. 
   	
-  	\subsubsection{Variance stabilizing transformations}
+  	\subsection{Variance stabilizing transformations}
   	
   	In the slides example, constant variances is violated. For inference, our prediction intervals depend on $X$. A transformation of $Y$ can stabilize the variance: make it not depend on $X$.\\
   	
-  	When we are counting events, as in the slides (28) example, we typically fit a Poisson distribution. In a Poisson distribution, the mean and variance are both $\lambda$. Since in regression we model the conditional mean $E(Y \mid X) = \lambda_X$, we have also a conditional variance: $\lambda_X$ changes by $X$, so should the variance. The {\bf square root transformation} can help in this situation.\\
+  	When we are counting events, as in the Slide 28 example, we typically fit a Poisson distribution. In a Poisson distribution, the mean and variance are both $\lambda$. Since in regression we model the conditional mean $E(Y \mid X) = \lambda_X$, we have also a conditional variance: $\lambda_X$ changes by $X$, so should the variance. The {\bf square root transformation} can help in this situation.\\
   	
   	Taking the function of a random variable, $f(Y) \approx f(E(Y)) + f'(E(Y))(Y-E(Y))$. Taking the variance, we get
   	$$
@@ -1027,14 +1027,318 @@
   	$$
   		V(Y^{0.5} \mid X) = \BB{0.5 E(Y \mid X)^{-0.5}}^2V(Y \mid X) = \BB{\f12}^2 \lambda(x)^{-1} \lambda(x) = \f14
   	$$
-  	which makes $V(f(Y) \mid X)$ constant. In the example, $X,Y$ are both counts, so we perform the square root transformation on both and keep the same units. The variance stabilizing transformation stabilizes prediction error across the predictor variable. Our predictions may vary, but we keep the transformed model. We may not always get count data, so depending on the relationship between variance and mean we might use (table)\\
+  	which makes $V(f(Y) \mid X)$ constant. In the example, $X,Y$ are both counts, so we perform the square root transformation on both and keep the same units. The variance stabilizing transformation stabilizes prediction error across the predictor variable. Our predictions may vary, but we keep the transformed model. We may not always get count data, so depending on the relationship between variance and mean we might use different transformations:
   	
-  	We need to make sure that interpretability is not lost: in practical data a transformation is chosen empirically. There is no specific rule.
+  	\begin{center}
+  		\begin{tabular}{ c c }
+  			\hline
+  			Relationship & Transformation \\
+  			\hline
+  			$\sigma^2 \propto E(Y)(1-E(Y))$ & $y^* = \sin^{-1}(\sqrt{y})$ \\
+  			$\sigma^2 \propto E(Y)^2$ & $y^* = \log y$ \\ 
+  			$\sigma^2 \propto E(Y)^3$ & $y^* = y^{-\f12}$ \\
+  			$\sigma^2 \propto E(Y)^4$ & $y^* = y^{-1}$ \\
+  			\hline
+  		\end{tabular}
+  	\end{center}
+  	
+  	We can verify that the delta method is variance stabilizing. We need to make sure that interpretability is not lost: in practice a transformation is chosen empirically. There is no exact rule about which transformation is best for a set of data. Transformations of $X$ are discussed later.
+  	
+  	\section{June 6: Lecture 7}
+  	
+  	\subsubsection{Assignment 2 Instructions}
+  	The idea is to create a regression model, and defend validity of the model using concepts learned in class. We use the NHANES dataset, including demographic information. We do both inference and prediction using this regression model; create training and test sets. We create a {\bf cross sectional} dataset, where each individual is considered independent. We will elaborate about the theory next Monday. \\
+  	
+  	Word limit 1000 excluding captions and figures. Maximum 5 tables and figures. Up to 3 additional tables and figure should be included in an appendix if they are relevant to the analysis. {\bf Due June 18.}
+  	
+  	\subsection{Transformation for Non-Linearity}
+  	
+  	The final thing we discuss in simple linear regression are transformations for non-linearity. We have seen these before in variance stabilizations. These transformations are also applied when there is non-linearity so that we get some linear relationship after transformation. For example, consider the true model
+  	$$
+  		Y = \beta_0 X^{\beta_1}
+  	$$
+  	
+  	Then transforming $Y^\star = \log(Y)$ and $X^\star = \log(X)$ (natural log) then
+  	$$
+  		Y^\star = \log \beta_0 + \beta_1 X^\star
+  	$$
+  	Then $Y^\star$ is linear with the new transformed $X^\star$. We can now use least squares to fit a relationship between $Y^\star, X^\star$, and recover $\beta_0$ with $\exp$.
+  	
+  	\begin{example}
+  		In slide example, maximum salary regressed on score is a good linear fit, but the standardized residuals show a quadratic curve-like relationship; there is an assumption-violating pattern. Assuming the underlying model is $Y = \beta_0 X^{\beta_1}$, we fit a linear relationship, and find that the new standardized residuals show some pattern.
+  	\end{example}
+  	
+  	\subsection{The Box-Cox Transformation}
+  	To remain interpretable, the scaling of $X, Y$ must be the same. In order to best get rid of non-linearity, we use the {\bf Box-Cox transformation}.\\
+  	
+  	We have often seen some kind of {\bf power transformation} on $Y$:
+  	$$
+  		\psi(y,\lambda) = y^\lambda 
+  	$$ 
+  	instead of $y$. To determine the most appropriate value of $\lam$, we use {\bf maximum likelihood estimation}. We assumed $Y = \beta_0 + \beta_1X + \eps,\, \eps \sim N(0, \sigma^2)$ so that 
+  	$$
+  		Y \mid X \sim N(\beta_0 + \beta_1X, \sigma^2)
+  	$$
+  	Therefore 
+  	$$
+  		\mathcal{L}(\beta_0, \beta_1, \sigma^2) = \prod_{i}^{n} \f{1}{\sqrt{2\pi\sigma^2}} \exp\BB{-\f12 \f{(y_i - \beta_0 - \beta_1 x_i)^2}{\sigma^2}} = \BB{2\pi\sigma^2}^{-\f{n}2} 
+  		\exp\BB{-\f1{2 \sigma^2 } RSS}
+  	$$
+  	Therefore maximum likelihood estimate is the same as when $RSS$ is minimized; the estimate for $\beta_0, \beta_1$ we first developed. For the Box-Cox transformation, we fit the model parameters $\beta_0, \beta_1$ to transformed $RSS$: 
+  	$$RSS = \sum_i^n (\psi(y_i, \lam) - \beta_0 - \beta_1 x_i)^2$$ 
+  	For this expression, we minimize the fitted $RSS$ over all possible $\lam$ numerically; since we cannot do so analytically. In other words, for some $\lam$, fit $\beta_0, \beta_1$ so that $RSS$ is minimized, and take this minimum over all possible $\lam$. Problems arise when $\lam = 0$, where the response becomes constant. We therefore use $\psi(y, \lambda) = \f{y^\lambda - 1 }\lam$, since $\lim_{\lam \to 0}\f{y^\lambda - 1 }\lam = \log y $. However, small change of $\lam$ greatly changes $\psi$, so we set
+  	$$
+  		\psi(y, \lambda) = \begin{cases}
+  			\df{\text{gm}(Y)^{\lam - 1}y^\lambda - 1 }\lam & \lam \neq 0 \\
+  			\text{gm}(Y)\log(Y) & \lam = 0
+  		\end{cases}
+  	$$
+  	where $gm(Y) = \exp \BB{ \f1n \sum_i^n \log(Y_i)}$.
+  	This is the {\bf Box-Cox transformation}. Adding geometric mean is not always necessary. We can also tranform the predictor variable:
+  	$$
+  		\psi(X, \lambda) = 
+  		\begin{cases}
+  			\df{X^\lambda - 1 }\lam & \lam \neq 0 \\
+  			\log(X) & \lam = 0
+  		\end{cases}
+  	$$
+  	That is, fit $E(Y \mid X) = \alpha_0 + \alpha_1 \psi(X, \lambda)$, and find maximum of maximized MLE for all possible $\lam$.
+  	Note we do not multiply by G.M., since we do not need to stabilize $X$. We now have $\psi(Y, \lambda_Y), \psi(X, \lambda_X)$ where we maximized MLE for these values of $\lambda_y$, $\lambda_X$. We can replace {\bf both} $X,Y$ with $\psi(Y, \lambda_Y), \psi(X, \lambda_X)$, and maximize, to choose the best transformation. 	This is a nightmare for interpretation though. In the example, $\lambda_Y = 0$, $\lambda_X = 0.5$ seems to create the best fit. \\
+  	
+  	Although these transformations are terrible for interpretability, they increase the predictive power of the model. The problem of interpretability vs. predictability is a major one in data science. In a predictive model, we use these transformations since they help correct modelling assumptions and improve predictive power. Usually log or square root transformations correct a skew in either variable, and the choice depends on the data. 
   	
   	
   	
   	
   	
+  	
+  	\subsection{Diagnostics in Multiple Linear Regression}
+  	
+  	Checking the model assumptions is actually simpler in MLR than in SLR.
+  	
+  	\subsubsection{Leverage Points}
+  	
+  	A {\bf leverage point} is one that lies far from the rest of the observations with respect to its predictor values. The least squares procedure fits a plane that minimizes the distance between each point and this plane. While it does not mean that a leverage point will be influential to the model fit, this potential to influence the line is why we identify these points.
+  	
+  	Recall that the projection of $Y$ onto $X$, 
+  		$$
+  			\hat Y = X \hat \beta = X(X'X)^{-1}X' Y = HY
+  		$$
+  	
+  	where $H$ is an $n \times n$ matrix with rank $p+1$, where $p+1$ is the number of $\beta_i$. We denote $H = (h_{i,j})_{1 \leq i,j \leq n}$. Then 
+  	$$\hat Y = HY \imp \hat y_i = \sum_{j}^n = h_{i,j}y_j $$
+  	If an observation is a leverage point, the fitted value is strongly attracted to the observed value. We concern ourselves with the diagonal elements of the hat matrix $h_{i,i}$. Unlike simple LR, $h_{i,j}$ are not easy to calculate, so we rely on software for the hat matrix. An observation is a leverage point if $h_{i,i} > 2 \f{p+1}{n}$.
+  	
+  	\begin{example}
+  		\verb*|model.full| in R
+  	\end{example}
+  
+  	\subsubsection{Standardized Residuals}
+  	
+  	Recall $e = (I-H)Y \imp e_i = (1-h_{i,i}) y_i - \sum_{i\neq j} h_{i,j} y_j$. We can standardize the residuals similar to SLR. We can show $V(e_i) = (1-h_{i,i}) \sigma^2$, so it is best to standardize when they have constant variance. We do this by
+  	$$
+  		r_i = \f{e_i}{s\sqrt{1- h_{i,i} }}
+  	$$ 
+  	where $s$ comes from the MLR version, $s = \sqrt{\df{RSS}{n-p-1}}$.
+  	Like in SLR, these can be used to detect outliers and QQ-plot to test normality assumptions. However, it is difficult to test their relationship with the predictors since there are many of them, so plots against individual predictors are used. Any pattern shows that assumptions are violated.
+  	
+  	\subsubsection{Influential Observations}
+  	
+  	We saw already that we need to be concerned with leverage points and outliers. If both of these observations have the potential to influence the regression line, then we need a way to determine which observations we should be concerned with. Such observations are {\bf influential observation} for the regression line. We quantify the amount of influence each observation has in three ways.
+  	
+  	\begin{definition}
+  		In MLR, the {\bf Cook's distance} is
+  		$$
+  			D_i = \f{(\hat Y_{(i)} - \hat Y )'(\hat Y_{(i)} - \hat Y )}{(p+1)S^2} = \BB{\f{r_i^2}{p+1}} \cdot \BB{
+  					\f{h_{i,i}}{1-h_{i,i}}}
+  		$$
+  	\end{definition}
+  	A point can be an {\bf influential observation} if the model fits the $i$-th observation poorly, giving a large Cook's Distance. While the Cook's distance looks at the effect of a single observation on all fitted values, we can quantify the effect on its own fitted value. This is quantified with 
+  	\begin{definition}
+  		The {\bf DFFITS statistic} 
+  		$$
+  			DFFITS_i = \f{y_i - \hat y_{i(i)}}{\sqrt{S^2_{(i)} h_{i,i}}}
+  				= \BB{\f{h_{i,i}}{1-h_{i,i}}}^{\f12}\f{e_i}{s_{(i)} \sqrt{1-h_{i,i}}}
+  		$$
+  		where $\hat y_{i(i)}$ is the predicted value for the observation $i$ if it {\bf not} included in the model.
+  	\end{definition}
+  	If the residual with the observation removed is very large, then it does not lie close to the fitted regression. The equivalent expression looks similar to the Cook's distance, but does not provide many advantages compared to Cook's distance. Cook's distance is more important. With DFFITS, an observation is considered influential if $\abs{\text{DFFITS}_i} > 2 \sqrt{\df{p+1}{n}}$.\\
+  	
+  	Another statistic for identifying influential points if the  {\bf DF BETAS}. It directly quantifies the effect of the $i$-th observation on the least squares 
+	\begin{definition}
+		The {\bf DF BETAS} are calculated as
+		$$\text{DFBETAS}_i = \f{\hat\beta_j - \hat \beta_{j(i)}}{\sqrt{S^2_{(i)}) (X'X)^{-1}_{j,j}}}$$ Here $\beta_{j(i)}$ is the estimated coefficient for predictor $j$ when $i$ is not included in the data. This statistic is calculated for all $n$ observations. A large change in the predictors when observation $i$ is removed means the observation greatly influences the fit of the regression line.
+		Typically the $i$-th observation is influential if $\abs{\text{DFBETAS}_i} > \df2{\sqrt{n}}$.
+	\end{definition}
+	
+	All of the above statistics may give different significant observations, but we should not disregard any of them.
+	
+	\subsubsection{Non-Linearity}
+	
+	We have again assumed the relationship is linear. If the true relationship is non-linear: $E(Y \mid X) = g(\beta_0 + \beta_1 X_1 + \ldots + \beta_p X_p)$ then we still use Box-Cox to transform $X,Y$. We can transform the response $Y$, or transform both. To transform $Y$, we still use 
+	
+	$$
+	\psi(y, \lambda) = \begin{cases}
+		\df{\text{gm}(Y)^{\lam - 1}y^\lambda - 1 }\lam & \lam \neq 0 \\
+		\text{gm}(Y)\log(Y) & \lam = 0
+	\end{cases}
+	$$
+	where $\lam$ is chose by maximizing the MLE where $y_i$ is replaced with $\psi(y_i, \lam)$.
+	
+	Summary: in diagnostics we have leverage points or outliers, we calculate cooks distance, DFFITS, if there is nonlinearity we can choose a transformation according to box-cox.
+	
+	\subsection{Corelated Predictors}
+	
+	{\bf In sum:} What if $X'X$ is not invertible? When does this occur, and what do we do?\\
+	
+	In Task 2 of A1, we saw that fitting an SLR to corelated predictors lead to biased sampling distributions of the predictor with smaller variance. Total corelation of $X_i, X_j$ leads to linear dependence of columns in $X'X$, making it non-invertible, and so we cannot fit a model. \\
+	
+	When predictors are corelated, then that affects their individual relationship with the outcome. Predictors could be weakly, moderately, or strongly correlated. If $\Corr \approx 1$, we cannot obtain a least squares estimate. Even with moderate correlation, we might still have to be careful, since multicolinearity and non-full rank matrix may occur. This affects prediction etc. \\
+	
+	When $X = [X_1, \ldots, X_p]$ is the covariance matrix, if for some $t_i$, $\sum t_j X_j = 0$ the columns are linearly dependent; $(X'X)^{-1}$ is not invertible. But if corelations between predictors are very high, then $\det(X'X)$ will be close to $0$ and issues may occur.\\
+	
+	Assuming we have a linear model $y = \beta_1 x_1 + \beta_2 x_2 + \eps$, it is not difficult to see
+	
+	\begin{example}
+		Assuming we have a linear model $y = \beta_1 x_1 + \beta_2 x_2 + \eps$, we see
+		$$X'X \hat \beta = X'y \imp \pmat{1 & r_{12} \\ r_{21} & 1} \pmat{\hat \beta_1 \\ \hat \beta_2} = \pmat{r_{1y} \\ r_{2y}}$$ where $r_{12} = \Corr(X_1, X_2)$ and $r_{j,y} = \Corr(X_j, Y)$. Thus $\det X'X = 1 - r_{12}^2$. As $r_{12} \to 1$ then this determinant gets small, and $X'X$ becomes singular. Moreover, $V(\hat \beta) \to \infty$ since $V(\hat \beta \mid X) = (X'X)^{-1}\sigma^2$. So for high $r_{12}$, our confidence intervals become very wide and unreliable.
+	\end{example}
+
+	We cannot remove the extra linearly dependent variable; as we saw in the midterm, this creates bias in the other predictor. Let's assume $C = ({X'X})^{-1}$ and $V(\hat \beta_j \mid X) = \sigma^2 C_{j,j}$. When we have $>2$ predictors, it can be shown that 
+	$$C_{j,j} = \f{1}{1-R_j^2}$$ 
+	where $R_j^2$ is the coefficient of multiple determination of $X_j \sim X_1 \ldots X_n$.  $C_{j,j}$ is the {\bf variance inflation factor}. The first thing we check is $\text{VIF} > 5$, if so we deal with such variables separately or at least address them.
+	
+	\section{June 8: Lecture 8}
+	
+	\subsection{Handling Multicolinearity}
+	
+	To handle multicolinearity we can either collect more data, or re-specify the model. By removing one of the correlated predictors, the effect of multicolinearity should be reduced. However, if the wrong predictor is removed, then it may reduce the predictability of the model. 
+	
+	\subsection{ANCOVA: Analysis of Covariance}
+	
+	We discussed dummy variables; if $X = 0,1$ then 
+	$$E(Y \mid X) = \beta_0 + \beta_1 X \imp E(Y \mid X = 0) = \beta_0,\quad E(Y \mid X = 1) = \beta_0 + \beta_1$$
+	What if we have multiple categorical predictors (age, sex, etc.)? Then we create multiple categorical predictors, $X_1, X_2$ and fit the MLR model $E(Y \mid X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2$. As a specific case, 
+	$$E(Y \mid X_1 = 0, X_2 = 1) = \beta_0 + \beta_2$$
+	In order to view the significance of each categorical predictor, we do ANOVA.When $X_1$ is categorical, $X_2$ is continuous and we fit an MLR model, then 
+	$$E(Y \mid X_1 = 0, X_2) = \beta_0 + \beta_2X_2,\qquad E(Y \mid X_1 = 1, X_2) = \beta_0 + \beta_1 + \beta_2X_2$$
+	We get two lines with the same slope, but the intercept changes with the categorical $X_1$. Often $X_2$ is referred to as the {\bf effect}. However, given a change in the categorical predictor, we may expect a more rapid increase in $X_2$. I.e. smoking may cause blood pressure to increase more rapidly with age. Then we have 
+	$$E(Y \mid X_1 = 0, X_2) = \beta_0 + \beta_2X_2,\qquad E(Y \mid X_1 = 1, X_2) = (\beta_0 + \beta_1) + (\underbrace{\beta_{1,2}}_{\text{interaction effect}} + \beta_2)X_2$$
+	$\beta_{1,2}$ is often called the {\bf interaction effect}, or the {\bf difference in difference} parameter, while the parameters $\beta_1, \beta_2$ are the {\bf main effects}. Our underlying model is 
+	$$E(Y \mid X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2X_2 + \underbrace{\beta_{1,2}X_1X_2}_{\text{interaction}}$$
+	the regression lines are no longer parallel. Slopes should be interpreted separately for the categorical $X_1$.
+	
+	\begin{example}
+		We look at the travel dataset in Slide 44. Given the categorical $D$ for a cultural trip, or an adventure trip, as age increases the categorical predictor gives opposite effects on the regression line. I.e. the slope and intercepts change dramatically; cultural trips become more popular with age, and opposite for adventure trips. Intepretation of $\beta_0$ is average amount spent on adventure when age is $0$, where adventure is set to $0$ in the categorical variable.
+	\end{example}
+
+	Depending on the travel group that these belong to, there is an different effect on the regression line. The indicator variable should be added to the model. We may then check whether the interaction term is significant with a t-test. 
+	
+	\subsection{Model Selection}
+	
+	If we have $n$ predictors for $n$ observations, then we get a perfect fit since our projection space can be the whole plane. We cannot just keep adding variables to our model, since we can overfit on the test set. We now move to prediction and predictive modeling; the first step to avoid overfitting is through model selection.\footnote{At the most basic level, linear models are a form of machine learning. Once we `learn' model parameters, we can predict $Y$ for a new dataset.}\\
+	
+	As we saw in multicolinearity, it is difficult to decide which predictors to include in a model. This general process is {\bf model selection}, also called {\bf variable selection}. What makes a model `best' depends on the purpose of the model; prediction, interpretation, etc. If interpretability is best, prediction accuracy is secondary, and fewer significant variables are best. For prediction, adding variables is important; more predictors lead to predictions with lower bias with larger variance. We consider some criteria for choosing possible subsets of $p$ predictors.
+	
+	\subsubsection{Adjusted $R^2$}
+	
+	Recall that as you increase the number of predictors, then the multiple coefficient of determination $R^2$ also increases. We therefore choose the smallest model that maximizes $R^2_{adj}$, but this may overfit and should be used with caution.
+	
+	\subsubsection{Akaike's Information Criterion}
+	
+	\begin{definition}
+		{\bf Akaike's infromation criterion} is given by
+		$$
+			-2 \BB{\ell(\hat\beta, \hat \sigma^2) - (p+2)} 
+		$$
+		where $\ell$ is the log likelihood of the model.
+	\end{definition}
+	
+	 A large $\ell$ will decrease the AIC, but too many parameters increase the AIC. We want to choose the model with the lowest AIC. Rewriting, we see the relationship
+	 $$\ell = \f{n}2 \log(2\pi \sigma^2) - \f1{2\sigma^2}RSS \imp AIC \propto n \log\BB{\f{RSS}{n}} + 2p$$
+	 
+	 \subsubsection{Corrected Akaike's Information Criterion}
+	 
+	 AIC has the tendency of overfitting or some situations, particularly when the penalty $p+2$ or $2p$ is not strong enough. This happens with small samples or the number of parameters is a large fraction of the sample size. In this case, we use the following metric
+	 \begin{definition}
+	 	The {\bf corrected AIC} is written 
+	 	$$
+	 		AIC_C = AIC + \f{2(p+2)(p+3)}{n-p-1}
+	 	$$
+	 	and is preferred to the AIC when $\df{n}{p+2} \leq 40$.
+	 \end{definition}
+ 	The `best' model is also the one with the lowest $AIC_C$.
+	
+	\subsubsection{Bayesian Information Criterion}
+	\begin{definition}
+		The {\bf Bayesian Information Criterion} is written 
+		$$
+		BIC = - 2 \ell + (p+2)\log(n)
+		$$
+	\end{definition}
+	This penalizes parameters more than $AIC$, and therefore prefers simpler models than AIC. It can also be simplified as
+	$$
+		BIC \propto  n \log\BB{\f{RSS}{n}} + (p+2)\log(n)
+	$$
+	The model with lowest $BIC$ is preferred.
+	
+	\begin{example}
+		From the lecture slides, we fit models with various predictors, and notice that a particular subset has lowest $AIC, AIC_c, BIC$ and high $R^2_{adj} = 93\%$, so we use this model.
+	\end{example}
+
+	\subsection{Stepwise Variable Selection}
+	
+	 For $n$ possible predictors, there are $2^n$ possible models, so we cannot practically try all possible combinations. We use {\bf forward stepwise selection}: we try the SLR $Y \sim X_i$, and choose the most significant variable. Then we add less and less significant variables $X_j$ in $Y \sim X_i, X_j$, until $BIC$ stops decreasing. Similarly, in {\bf backward stepwise selection} we can delete predictors one at a time from $Y \sim X_1, \ldots, X_p$ until $BIC$ is minimized. \\
+	 
+	 Both ways are equivalent to choosing the predictor with the lowest $p$-value. Adding variables with low $p$-value increases probability of type I error, but removing increases type II error. Type II error is `less controversial' than type I, so this method is preferred. Ideally, both forwards and backwards addition will give the same model, but in practice this often does not happen. To do the full form of {\bf stepwise variable selection}, we go both back and forth, adding and removing variables. Diagnostics after stepwise selection should also be done, and to note how much they change in comparison to before selection, but do not need to be published.\\
+	 
+	 While these are quite helpful, the estimated coefficients that we get from a post-selection model will actually be biased estimators. This can result in enlarged test statistics $t, F$ that are larger than they should be. We need to determine whether a model is reasonable for prediction purposes, that is validate it.
+	 
+	 \subsection{Bias-Variance Decomposition}
+	 
+	 So far we discussed inference: estimating true population relationships, and prediction: how well the fitted model predicts new data. Prediction is the basis of machine learning.\\
+	 
+	 In ML, the {\bf bias-variance tradeoff} is important. We first discuss the concept of learning and testing datasets. The {\bf training dataset} is used for model fitting, but the {\bf testing} dataset is used to check predictions. Training and and testing sets must be independent; samples must be partitioned between the two. {\bf Overfitting} to training data occurs when a model performs much worse on the test data. 
+	 
+	 \begin{definition}
+	 	Suppose we want to predict an {\bf unobserved} $y_0$ at the test point $x_0$. Let $y_0 = f(x_0)$ be the true, possibly non-linear, relationship, and our linear prediction be denoted $\hat y_0$. Then the {\bf mean squared error} is given by
+	 	$$
+	 	MSE(x_0) = E_\tau [f(x_0) - \hat y_0]^2 = E_\tau [\hat y_0 - E_\tau(\hat y_0)]^2 +  [ E_\tau(\hat y_0) - f(x_0)]^2 = V(\hat y_0) + [ E_\tau(\hat y_0) - f(x_0)]^2
+	 	$$
+	 	where $\tau$ is the conditional training data, and the second term is the squared bias.
+	 \end{definition}
+ 	In machine learning, the mean squared error is a commonly used loss function, measuring the deviation of prediction from training data. This decomposition becomes very useful in this context. Minimizing MSE minimizes bias or variance or both for $\hat y_0$ given training set $\tau$. Bias indicates how accurate predictions are, and variance gives how much predictions change from sample to sample. L.S. estimates are unbiased for the true model, but the variance can be very large when there are lots of predictors for limited observations.
+	 
+	 \subsection{Shrinkage Methods}
+	 
+	  Recall the purpose of model selection. When there are too many variables prediction variance increases, and interpretability suffers. We discussed stepwise variable selection, but this does not work when $n \leq p$. \\
+	  
+	  One idea is to apply some constraint that shrinks less important parameter estimates to $0$. {\bf Ridge regression} shrinks the coefficients by imposing a penalty on their size, but does {\bf not} make them $0$, and is {\bf not} used for variable selection. In ridge regression,
+	  $$
+	  	\hat \beta = \arg\min_\beta \left\{ \sum_i^n \BB{y_i - \beta_0 - \sum_{j=1}^p x_{i,j} \beta_j} + \lambda \sum_{j=1}^p \beta_j^2  \right\}
+	  $$
+	  which is equivalent to 
+	  $$
+	  	\arg\min_\beta \sum_i^n \BB{y_i - \beta_0 - \sum_{j=1}^p x_{i,j} \beta_j} \text{ and } \norm{\hat \beta}_2^2 \leq t,\, t\in \R
+	  $$
+	 	Ridge regression is used to estimate coefficients of models when the predictors are highly corelated. The additional penalty on the model adds a degree of bias, but reduces the high variance caused by multicolinearity: part of the bias-variance tradeoff. In MLR, we write
+	 	$$RSS(\lam) = (Y - X\beta)'(Y - X\beta) + \lambda \beta'\beta$$
+	 and minimizing the $RSS$ produces
+	 $$\hat \beta = (X'X + \lambda I)^{-1}X'Y$$
+	  
+	  An important method for variable selection is a similar minimization subject to the {\bf LASSO: Least Absolute Shrinkage and Selection Operator}:
+	  $$
+	  \hat \beta = \arg\min_\beta \left\{ \sum_i^n \BB{y_i - \beta_0 - \sum_{j=1}^p x_{i,j} \beta_j} + \lambda \sum_{j=1}^p \abs{\beta_j}  \right\}
+	  $$
+	  This has no closed form solution, and must be found numerically. The minimal $\hat \beta$ gives values where many $\beta_j$ are $0$, and therefore less important, so we may remove the corresponding predictors. It is equivalent to
+		$$
+			\arg\min_\beta \sum_i^n \BB{y_i - \beta_0 - \sum_{j=1}^p x_{i,j} \beta_j} \text{ and } \norm{\hat \beta}_1 \leq t,\, t \in \R
+		$$
+	Lasso can fail to do grouped selection of predictors with multicolinearity to reduce variance, and instead just selects one. A mixed regularization, using the strengths of both ridge and LASSO, with mixing parameter $\alpha$ was proposed to be
+	$$
+		\lambda \BB{(1-\alpha) \sum_{i=1}^p \beta_i^2 + \alpha \sum_{i=1}^p \abs{\beta_i}} = \lambda \BB{ (1-\alpha) \norm{\beta}_2^2 + \alpha \norm{\beta}_1 } 
+	$$
+	In all cases, $\lam$ is chosen by cross validation.
 	
 		
 		
