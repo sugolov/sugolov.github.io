@@ -1334,11 +1334,138 @@
 		$$
 			\arg\min_\beta \sum_i^n \BB{y_i - \beta_0 - \sum_{j=1}^p x_{i,j} \beta_j} \text{ and } \norm{\hat \beta}_1 \leq t,\, t \in \R
 		$$
-	Lasso can fail to do grouped selection of predictors with multicolinearity to reduce variance, and instead just selects one. A mixed regularization, using the strengths of both ridge and LASSO, with mixing parameter $\alpha$ was proposed to be
+	Lasso only selects $n$ variables, cannot select $p \geq n$ variables. Lasso can fail to do grouped selection of predictors with multicolinearity to reduce variance, and instead just selects one: it cannot select all of them, like ridge can.
+	\begin{example}
+		Choosing age categories, one particular category may be chosen, with predictor for other categories being $0$ due to LASSO shrinkage. However, we lose information, since other age ranges may be associated with other variables.
+	\end{example}
+	
+	 We use a linear combination of shrinkage methods to fix this. A mixed regularization, the {\bf elastic net penalty}, was introduced using the strengths of both ridge and LASSO, with {\bf elastic net  mixing parameter $\alpha$}
 	$$
 		\lambda \BB{(1-\alpha) \sum_{i=1}^p \beta_i^2 + \alpha \sum_{i=1}^p \abs{\beta_i}} = \lambda \BB{ (1-\alpha) \norm{\beta}_2^2 + \alpha \norm{\beta}_1 } 
 	$$
-	In all cases, $\lam$ is chosen by cross validation.
+	In all cases, $\lam$ is chosen by cross validation, or can be chosen with the \verb*|glmnet| package in R.
+	
+	\newpage
+	\section{June 13: Lecture 9}
+	
+	The final lecture for the assignment. We discuss assignment after model validation, and revisit multicolinearity. 
+	
+	\subsection{Model Validation}
+	
+	Model validation happens through analyzing how the model generalizes to test data. We discuss whether we overfit to training data, and how the model performs with new data. One independent test is often not enough to validate a model, since we may have leverage points or outliers. We need many test sets, but this is often not possible. We have two goals:
+	\begin{enumerate}
+		\item {\bf Model selection:} Estimating performances of different predictors to find the most predictive ones
+		\item {\bf Model validation:} Estimating the prediction error on new data
+	\end{enumerate}
+	\begin{example}
+		If our sample is $n=100$, we can partition the set into $k=10$ groups. The first 9 datasets may be used for model fitting, the 10th is used to check prediction error. Using every set of 10 datapoints as test set, but others as training set, we do \bf{cross-validation}. This is {\bf 10 fold cross validation}.
+	\end{example}
+	\begin{definition}
+		Choosing different partitions of data set as training data, and the rest as training data, for different partitions, is {\bf cross validation}.
+	\end{definition}
+	Resampling methods allow us to classify or predict a response accurately, but we skip bootstrap for now. Cross validation is important for the assignment!\\
+	
+	{\bf Cross validation algorithm:}
+	\begin{itemize}
+		\item Randomly split the data into $k$ equal parts. 
+		\item Fit the model with $k-1$ training parts, predict the outcomes for the last test part.
+		\item use all $k$ parts as a test set.
+		\item The prediction accuracy can be checked with mean absolute bias or {\bf mean squared error}. 
+		\item The predictions an be plotted with observed values to check the accuracy of the estimates visually.
+	\end{itemize}
+
+	For cross validation, we will be using the \verb*|ols| code from \verb*|rms| package in \verb*|R|.
+	
+	\begin{definition}
+		The estimator of the {\bf mean squared error} is given by
+		$$
+			MSE = \f{\sum (y_i - \hat y_i)^2}{n}
+		$$
+	\end{definition}
+
+	\begin{example}
+		In the slides, we construct model and do validation. We choose $\lam$ for regularization using cross-validation. See this week's R code.
+	\end{example} 
+
+	\subsubsection{Requirements for Assignment}
+	Literature review/EDA, model fitting, diagnostics, variable selection. We only show the diagnostics for the very last model. Show only the steps that matter in this assignment. Improperly captioned and labelled tables lose marks: practice writing a real report. 
+	
+	\subsubsection{Clarifications}
+	
+	\begin{itemize}
+		\item Issues may have started around variable transformations. Try showing $\sin^{-1}(\sqrt{y})$ is appropriate for the binomial case, when $\sigma^2 \propto E(Y)(1-E(Y))$.
+		\item In the Box-Cox transformation we use the Newton-Raphson numerical method to obtain $\lambda$ for the most appropriate power transformation.
+	\end{itemize}
+
+	\section{June 15: Lecture 10}
+	
+	\subsection{Assignment Hints}
+	
+	When running \verb*|vif| in the project, we get a \verb*|GVIF| column. Recall when we calculate the variance inflation factor, we define vif for $X_i$ as $\df{1}{1-R_i^2}$ where $R_i^2$ is the coefficient of determination of $X_i \sim X_1, \ldots, X_n$. The GVIF has the exact same interpretation of VIF, but for the general case with categorical predictors. \\
+	
+	\Note LASSO in this case is bad, since it does not work well with many categorical variables.
+
+	\subsection{Generalized and Weighted Least Squares}
+	
+	Inference for our model parameters require the Gauss-Markov assumption. The Gauss-Markov theorem assumes $V(\eps) = \sigma^2 I$. This is a strong assumption: instead of this we can assume $V(\eps) = \sigma^2 V$ where $V$ is a cov. matrix, and has non-zero off diagonal elements. Note there is covariance between $\eps_i, \eps_j$ and variance is non-constant.\\
+	
+	In this case we cannot minimize $(Y - X\beta)'(Y-X\beta)$. This will not provide the correct minimum since it assumes homoscedasticity. We minimize
+	$$
+		\arg \min_\beta (Y - X\beta)'V^{-1}(Y-X\beta)
+	$$
+	Since $\sigma^2V$ is a covariance matrix, it must be symmetric and positive definite. Then there exists an $n \times n$ symmetric matrix $K$ so that $K'K = KK = V$: it admits a square root. We define new variables 
+	$$Z = K^{-1}Y, B=K^{-1}X, \gamma = K^{-1}\eps \text{ so that } Z = B\beta + \gamma$$
+	First note $E(\gamma) = E(K^{-1} \eps ) = K^{-1}E(\eps) = 0$.
+	Then 
+	\begin{align*}
+		V(\gamma) &= E\BB{(\gamma - E(\gamma))(\gamma - E(\gamma))'} = E\BB{\gamma\gamma'} \\
+		&= K^{-1}E(\eps\eps')K^{-1} = K^{-1}\sigma^2V'K^{-1} = \sigma^2 I 
+	\end{align*}
+	So the transformed variables satisfy the Gauss-Markov assumptions. However, the matrix $V$ is very difficult to estimate. Minimizing the RSS for the transformed variables with GM assumptions,
+	$$RSS(\beta) = \gamma'\gamma \eps'V^{-1}\eps = (Y-X\beta)'V^{-1}(Y-X\beta)$$
+	and it can be shown that (fill in)\\
+
+	Now assume in the case of generalized least squares, the covariance terms between elements are zero but variances are unequal. Then we may represent $\sigma^2V = \sigma^2W^{-1}$ where $W$ is the weight matrix. We therefore have {\bf weighted least squares}. Then $\hat \beta = (X'WX)^{-1}X'WY$ and $V(\hat \beta) = \sigma^2 (X'WX)^{-1}$. \\
+	
+	When homoescadicity is violated, the variance of $\eps$ also depends on $X$. (fill this in bro)
+	
+	\subsection{Polynomial Regression}
+	
+	In linear regression, we mean linear with respect to $\beta$: linear in parameters. This makes sense from a statistical point of view, since we minimize $RSS$ which is wrt $\beta$. The relationship can be non-linear, as long as
+	$$
+		Y = \beta_0 + \beta_1 \phi_1(X_1) + \beta_2 \phi_2(X_2) + \ldots + \beta_p\phi_p(X_p)
+	$$
+	Based on this equation, we can fit $y = \beta_0 + \beta_1 x + \beta_2 x^2 + \eps$. Or $y = \beta_0 + \beta_1 x + \beta_2 x^2 + \beta_{1,1} x_1^2 + \beta_{2_2} x_2^2 \eps + \beta_{1,2} x_1x_2$.
+	
+	\subsection{Generalized Linear Model}
+	
+	We go deep into GLM and GAM in STA303. Up to this point, we have considered $Y$ to be a continuous random variable.	Assume $Y$ is a binary variable. If $Y = 0,1$, then $0<E(Y \mid X) < 1 \imp 0 < \beta_0 + \beta_1 X < 1$. However if we take $\log(E(Y \mid X))$ as our response, then $E(Y\mid X) \in (0,1)$ give $-\infty < \beta_0 + \beta_1 X < 0$. Then the ratio $\log \BB{\f{E(Y\mid X)}{1 - E(Y \mid X)}} = \beta_0 + \beta_1 X$ has a linear relationship with respect to the parameters. Calculating, we can find
+	$$
+		E(Y \mid X) = \f{\exp(\beta_0 + \beta_1 X)}{1 + \exp(\beta_0 + \beta_1X)}
+	$$
+	where this is the {\bf cdf of the logistic distribution}! This is {\bf logistic regression}.
+	We call the odds $\Omega = \f{E(Y\mid X)}{1 - E(Y \mid X)}$
+	\begin{definition}
+		A {\bf generalized linear model} is a model so that there exists a {\bf link} function $\phi$ where $$\phi(E(Y \mid X))$$ is a linear function of parameters $(\beta_i)_{0 \leq i \leq p}$. In a {\bf linear model}, $\phi = I$. 
+	\end{definition}
+		
+	\subsection{Generalized Additive Model}
+	
+	An extension of GLM. 
+	\begin{definition}
+		An {\bf additive model} is a model so that 
+		$$
+			Y = \beta_0 + \sum_{j=1}^p f_j(X_j) + \eps.
+		$$
+		we choose {\bf any} function $f_j$. In its basic form, the additive model will do poorly
+	\end{definition}
+
+	\begin{definition}
+		A {\bf generalized additive model} is a model is a a model so that there exists a {\bf link} function $\phi$ where $$\phi(E(Y \mid X))$$ is an additive model of $f_j$.
+	\end{definition}
+
+	We move to more and more flexible models.
+
 	
 		
 		
