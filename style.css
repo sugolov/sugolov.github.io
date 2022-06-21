@@ -42,12 +42,12 @@ color: black;
 /* Add a color to the active/current link */
 .topnav a.active {
 background-color: #222222;
-color: white;
+color: #dddddd;
 }
 
 a {
 text-decoration: none;
-color: white;
+color: #dddddd;
 font-style: italic;
 font-weight: bold;
 }
