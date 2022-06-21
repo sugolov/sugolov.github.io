@@ -1407,64 +1407,278 @@
 
 	\subsection{Generalized and Weighted Least Squares}
 	
-	Inference for our model parameters require the Gauss-Markov assumption. The Gauss-Markov theorem assumes $V(\eps) = \sigma^2 I$. This is a strong assumption: instead of this we can assume $V(\eps) = \sigma^2 V$ where $V$ is a cov. matrix, and has non-zero off diagonal elements. Note there is covariance between $\eps_i, \eps_j$ and variance is non-constant.\\
-	
-	In this case we cannot minimize $(Y - X\beta)'(Y-X\beta)$. This will not provide the correct minimum since it assumes homoscedasticity. We minimize
+	Inference for our least square estimates parameters for $Y = X \beta + \eps$ require the Gauss-Markov assumption. The Gauss-Markov theorem assumes $V(\eps) = \sigma^2 I$, which is a strong assumption. Instead of this we assume 
+	$$V(\eps) = \sigma^2 V$$
+	 where $V$ is a cov. matrix, and has non-zero off diagonal elements. Note there is covariance between $\eps_i, \eps_j$ and variance is not the same for every $\eps_j$. In this case we cannot minimize $(Y - X\beta)'(Y-X\beta)$. This will not provide the correct minimum since it assumes homoscedasticity. Instead, we minimize
 	$$
 		\arg \min_\beta (Y - X\beta)'V^{-1}(Y-X\beta)
 	$$
-	Since $\sigma^2V$ is a covariance matrix, it must be symmetric and positive definite. Then there exists an $n \times n$ symmetric matrix $K$ so that $K'K = KK = V$: it admits a square root. We define new variables 
-	$$Z = K^{-1}Y, B=K^{-1}X, \gamma = K^{-1}\eps \text{ so that } Z = B\beta + \gamma$$
-	First note $E(\gamma) = E(K^{-1} \eps ) = K^{-1}E(\eps) = 0$.
-	Then 
-	\begin{align*}
-		V(\gamma) &= E\BB{(\gamma - E(\gamma))(\gamma - E(\gamma))'} = E\BB{\gamma\gamma'} \\
-		&= K^{-1}E(\eps\eps')K^{-1} = K^{-1}\sigma^2V'K^{-1} = \sigma^2 I 
-	\end{align*}
-	So the transformed variables satisfy the Gauss-Markov assumptions. However, the matrix $V$ is very difficult to estimate. Minimizing the RSS for the transformed variables with GM assumptions,
-	$$RSS(\beta) = \gamma'\gamma \eps'V^{-1}\eps = (Y-X\beta)'V^{-1}(Y-X\beta)$$
-	and it can be shown that (fill in)\\
-
-	Now assume in the case of generalized least squares, the covariance terms between elements are zero but variances are unequal. Then we may represent $\sigma^2V = \sigma^2W^{-1}$ where $W$ is the weight matrix. We therefore have {\bf weighted least squares}. Then $\hat \beta = (X'WX)^{-1}X'WY$ and $V(\hat \beta) = \sigma^2 (X'WX)^{-1}$. \\
+	Since $\sigma^2V$ is a covariance matrix, it must be symmetric and positive definite. Since it is positive-definite, there exists an $n \times n$ symmetric matrix $K$ so that $K'K = KK = V$: it admits a square root.
+	\begin{definition}
+		Using $K$, the symmetric square root of the symmetric positive definite $V$ satisfying $K'K = KK = V$, define 
+			$$Z = K^{-1}Y, \qquad B=K^{-1}X,\qquad \gamma = K^{-1}\eps$$
+		where $X$, $Y$, $\eps$ are the usual MLR matrices. This gives the transformed relationship 
+		$$ Z = B\beta + \gamma $$
+	\end{definition} 
+	Our next goal is to show that the transformed variables \textit{follow the Gauss-Markov assumptions}! We begin by showing $\gamma \sim N(0, \sigma^2I)$.
+	\begin{proposition}
+		$E(\gamma) = 0$
+	\end{proposition}
+	\begin{proof}
+		$E(\gamma) = E(K^{-1} \eps ) = K^{-1}E(\eps) = 0$
+	\end{proof}
+	\begin{proposition}
+		$V(\gamma) = \sigma^2I$
+	\end{proposition}
+	\begin{proof}
+		\begin{align*}
+			V(\gamma) &= E\BB{(\gamma - E(\gamma))(\gamma - E(\gamma))'} = E\BB{\gamma\gamma'} \\
+			&= K^{-1}E(\eps\eps')K^{-1} = K^{-1}\sigma^2V'K^{-1} = \sigma^2 I 
+		\end{align*}
+	\end{proof}
+	\begin{thm}
+		$\gamma \sim N(0, \sigma^2I)$ follows from the above.
+	\end{thm}
+	\Note In practical settings, the matrix $V$ is very difficult to estimate. \\
 	
-	When homoescadicity is violated, the variance of $\eps$ also depends on $X$. (fill this in bro)
+	Minimizing the RSS for the transformed variables with GM assumptions,
+	$$RSS(\beta) = \gamma'\gamma = \eps'V^{-1}\eps = (Y-X\beta)'V^{-1}(Y-X\beta)$$
+	which gives $\hat \beta  = \arg \min_\beta (Y - X\beta)'V^{-1}(Y-X\beta)$.
+	\begin{proposition}
+		$\displaystyle \hat \beta = (X'V^{-1}X)^{-1} X'V^{-1}Y$
+	\end{proposition}
+	\begin{proof}
+		Since $Z = B\beta + \gamma$ follows the GM assumptions, we estimate $\hat \beta$ for this model and change variable.
+		\begin{align*}
+			\hat \beta &= (B'B)^{-1}B'Z = ((K^{-1}X)'K^{-1}X)^{-1}(K^{-1}X)'K^{-1}Y
+			\intertext{ $K^{-1}$ is symmetric, inverse of transpose is transpose of inverse, and $(K^{-1})^2 = V^{-1}$ (see Appendix).}
+			&= (X'(K^{-1})^2X)^{-1}X'(K^{-1})^2Y\\
+			&= \hat \beta = (X'V^{-1}X)^{-1} X'V^{-1}Y
+		\end{align*}
+	\end{proof}
+	\begin{proposition}
+		$\displaystyle V(\hat \beta) = \sigma^2 (X'V^{-1}X)^{-1}$
+	\end{proposition}
+	\begin{proof}
+		Just expand.
+		\begin{align*}
+			\text{Var}(\hat \beta) &= \text{Var}((X'V^{-1}X)^{-1} X'V^{-1}Y) 
+			\intertext{Recall for a matrix $A$, $\text{Var}(AY) = AV(Y)A'$, so we use the same on the above.}
+			&= (X'V^{-1}X)^{-1} X'V^{-1} \text{Var}(Y)V^{-1}X(X'V^{-1}X)^{-1} \\
+			&= (X'V^{-1}X)^{-1} X'V^{-1} \sigma^2 V V^{-1}X(X'V^{-1}X)^{-1} \\
+			&= \sigma^2 (X'V^{-1}X)^{-1}( X'V^{-1} X)(X'V^{-1}X)^{-1} \\
+			&=  \sigma^2 (X'V^{-1}X)^{-1}
+		\end{align*}
+	\end{proof}
+
+	Now assume in the case of generalized least squares, the covariance terms between elements are zero but variances are not equal. Then we may write
+	$$
+		\sigma^2V = \pmat{\f1{w_1} & 0 & \hdots & 0\\
+						  0 & \f1{w_2} & \hdots & 0	\\
+					  	  \vdots & \vdots & \ddots & \vdots	\\
+				  	  		0 & 0 & \hdots & \f1{w_n}}
+			  	  = \sigma^2W^{-1} 
+			  	  =  \pmat{\sigma_1^2 & 0 & \hdots & 0\\
+			  	  	0 & \sigma_2^2 & \hdots & 0	\\
+			  	  	\vdots & \vdots & \ddots & \vdots	\\
+			  	  	0 & 0 & \hdots & \sigma_n^2}
+	$$
+	\begin{definition}
+		When $\Cov(\eps_i, \eps_j) = 0, i \neq j$ then writing $\sigma^2V = \sigma^2W^{-1}$, we call $W$ the {\bf weight matrix} written
+		$$ W =\pmat{{w_1} & 0 & \hdots & 0\\
+			0 & {w_2} & \hdots & 0	\\
+			\vdots & \vdots & \ddots & \vdots	\\
+			0 & 0 & \hdots & {w_n}}$$
+		In the case where $\sigma^2V = \sigma^2W^{-1}$, we have the {\bf weighted least squares estimates}
+		$$
+			\hat \beta_W = (X'WX)^{-1} X'WY	\qquad \text{Var}(\hat \beta_w) = \sigma^2 (X'WX)^{-1}
+		$$
+	\end{definition}
+	The weights of $W$ are decided mostly from prior knowledge. When the true model is weighted, the OLS estimates are unbiased but have larger variances. 
 	
 	\subsection{Polynomial Regression}
 	
-	In linear regression, we mean linear with respect to $\beta$: linear in parameters. This makes sense from a statistical point of view, since we minimize $RSS$ which is wrt $\beta$. The relationship can be non-linear, as long as
+	In linear regression, we mean linear with respect to $\beta$: linear in parameters. This makes sense from a statistical point of view, since we minimize $RSS$ with respect to $\beta$. The relationship between $Y \sim X$ can be non-linear, as long as
 	$$
 		Y = \beta_0 + \beta_1 \phi_1(X_1) + \beta_2 \phi_2(X_2) + \ldots + \beta_p\phi_p(X_p)
 	$$
-	Based on this equation, we can fit $y = \beta_0 + \beta_1 x + \beta_2 x^2 + \eps$. Or $y = \beta_0 + \beta_1 x + \beta_2 x^2 + \beta_{1,1} x_1^2 + \beta_{2_2} x_2^2 \eps + \beta_{1,2} x_1x_2$.
+	for $\phi_i$ non-linear functions, but linear in $\beta$. We still use least squared estimates to estimates $\beta$, but treat $\tilde x_2 = \phi_2 (x_2)$.
+	\begin{example}
+		Based on this equation, with one predictor $x$ we can fit the model $y = \beta_0 + \beta_1 x + \beta_2 x^2 + \eps$. Set $\tilde x_1 = x, \tilde x_2 = x^2$ and rewrite
+		$$
+			y = \beta_0 + \beta_1 \tilde x_1 + \beta_2 \tilde x_2 + \eps
+		$$
+		Clearly $\Cov(\tilde x_1, x_2) \neq 0$, but we can use \textit{generalized least squares} estimates for $\beta_1, \beta_2$.
+	\end{example}
 	
 	\subsection{Generalized Linear Model}
 	
-	We go deep into GLM and GAM in STA303. Up to this point, we have considered $Y$ to be a continuous random variable.	Assume $Y$ is a binary variable. If $Y = 0,1$, then $0<E(Y \mid X) < 1 \imp 0 < \beta_0 + \beta_1 X < 1$. However if we take $\log(E(Y \mid X))$ as our response, then $E(Y\mid X) \in (0,1)$ give $-\infty < \beta_0 + \beta_1 X < 0$. Then the ratio $\log \BB{\f{E(Y\mid X)}{1 - E(Y \mid X)}} = \beta_0 + \beta_1 X$ has a linear relationship with respect to the parameters. Calculating, we can find
+	We go deeper into GLM and GAM in STA303. Up to this point, we have considered $Y$ to be a continuous random variable. One of the most famous examples of a GAM is when $Y \in \{0,1\}$, and our model decides which value $Y$ takes.\\
+	
+	When $Y$ is binary, we want to maximize the domain of $X$ to give an estimate for the expectation of $Y$. If $Y \in \{0,1\}$ and $E(Y \mid X) = \beta_0 + \beta_1 X$, then 
+	$$0<E(Y \mid X) < 1 \imp 0 < \beta_0 + \beta_1 X < 1$$
+	If we take 
+	$$\log(E(Y \mid X))$$ as our response, then 
+	$E(Y\mid X) \in (0,1)$ gives 
+	$$-\infty < \beta_0 + \beta_1 X < 0$$
+	The ratio 
+	$$\phi (E(Y\mid X)) = \log \BB{\f{E(Y\mid X)}{1 - E(Y \mid X)}} = \beta_0 + \beta_1 X$$ 
+	has a linear relationship with respect to the parameters, and is valid for all $X$, so that  $\beta_0 + \beta_1 X \in \R$.  Calculating, we can find
 	$$
 		E(Y \mid X) = \f{\exp(\beta_0 + \beta_1 X)}{1 + \exp(\beta_0 + \beta_1X)}
 	$$
-	where this is the {\bf cdf of the logistic distribution}! This is {\bf logistic regression}.
-	We call the odds $\Omega = \f{E(Y\mid X)}{1 - E(Y \mid X)}$
+
+	where this is the \textit{cdf of the logistic distribution}! This is  logistic regression. 
 	\begin{definition}
 		A {\bf generalized linear model} is a model so that there exists a {\bf link} function $\phi$ where $$\phi(E(Y \mid X))$$ is a linear function of parameters $(\beta_i)_{0 \leq i \leq p}$. In a {\bf linear model}, $\phi = I$. 
 	\end{definition}
+	\begin{definition}
+		{\bf Logistic regression} is a GLM with one non-constant predictor so that the link function
+		$$
+			\phi (E(Y\mid X)) = \log \BB{\f{E(Y\mid X)}{1 - E(Y \mid X)}}
+		$$
+	\end{definition}
+	Consider the logistic model, but when $X$ is a binary predictor. Denote 
+	$$E(Y \mid X = 0) = p_0, \quad \text{ and } \quad E(Y \mid X = 1) = p_1$$
+	Then $\log(\f{p_1}{1-p_1}) = \beta_0 + \beta_1,\, \log(\f{p_0}{1-p_0}) = \beta_0$. Then writing the odds ratio $\Omega = \df{p_1/(1-p_1)}{p_0/(1-p_0)}$
+	$$
+		\log\BB{\f{p_1/(1-p_1)}{p_0/(1-p_0)}} = \log\BB{\f{p_1}{1-p_1}} - \log\BB{\f{p_0}{1-p_0}} = \beta_1
+	$$
+	Then $\exp(\beta_1) = \Omega$. If there are more predictors $X_2,\ldots, X_p$, then this is true while other predictors are held constant. If we have a true model of $$Y = \beta_0 + \beta_1 X + \beta_2Z + \beta_{1,2}XZ$$
+	 where $X,Z$ are binary predictors with interaction then 
+	\begin{align*}
+		Z = 0 &\imp \Omega_X = \exp(\beta_1) \\
+		Z = 1 &\imp \Omega_X = \exp(\beta_1 + \beta_{1,2})  = \exp(\beta_1) \cdot \exp(\beta_{1,2})
+	\end{align*}
+	$\beta_{1,2}$ indicates how much the odds ratio changes with the interaction of $Z$. This is referred to as the ratio of odds ratios.
 		
 	\subsection{Generalized Additive Model}
 	
-	An extension of GLM. 
+	In GLM we used a transformation of $E(Y \mid X)$ to linearity, but this can be difficult to find many predictors. In machine learning, often $Y = f(X_1, \ldots, X_p) + \eps$ is used, but this is not interpretable. A good compromise is the additive model.
 	\begin{definition}
 		An {\bf additive model} is a model so that 
 		$$
 			Y = \beta_0 + \sum_{j=1}^p f_j(X_j) + \eps.
 		$$
-		we choose {\bf any} function $f_j$. In its basic form, the additive model will do poorly
+		where $f_j$ is {\bf any} function so that $Y$ remains a random variable. 
 	\end{definition}
-
+	These models are more flexible than the linear models, but still interpretable since $f_j$ give somewhat of a marginal relationship between $X$ and $Y$. Best transformations are determined simultaneously and without parametric assumptions for their form.
+	In its basic form, the additive model will do poorly when interactions exist, and we may consider $f_{jk}(X_j, X_k)$ to fix these. Categorical variables can be accomodated using the regression approach:
+	$$
+	Y = \beta_0 + \sum_{j=1}^p f_j(X_j) + Z\gamma + \eps.
+	$$
+	where $Z$ is the design matrix for the categorical variables, and $\gamma$ are the regression parameters for them.
+	
 	\begin{definition}
-		A {\bf generalized additive model} is a model is a a model so that there exists a {\bf link} function $\phi$ where $$\phi(E(Y \mid X))$$ is an additive model of $f_j$.
+		A {\bf generalized additive model} is a model with a {\bf link} function $\phi$ where 
+		$$\phi(E(Y \mid X)) = \beta_0 + \sum_{j=1}^p f_j(X_j) + Z\gamma + \eps$$ 
+		is an additive model of $f_j$.
 	\end{definition}
 
-	We move to more and more flexible models.
+	Some examples of generalized additive models are
+	\begin{itemize}
+		\item {\bf Regression splines:} They divide the range of $X$ into $k$ distinct regions, and within these regions a distinct polynomial is fit to the data. The polynomials have smooth transitions between the regions. These can produce an extremely flexibly fit: it is an extension of stepwise and polynomials functions.
+		\item {\bf Smoothing splines:} Similar to regression splines but arise in slightly different situation. These result from minimizing a residual sum of squares criterion subject to a smoothness penalty. Similar to shrinkage, but with different penalty.
+		\item {\bf Local regression:} Regions the space is divided in can overlap, and transition in a smooth way.
+	\end{itemize}
+
+	Take STA303!
+	
+	\section{June 20: Lecture 11}
+	
+	{\bf Final exam:} Friday, June 24 9:00am-12:00pm\\
+	
+	{\bf Clarifications}
+	\begin{enumerate}
+		\item In GLS, we have $\hat \beta = (X'V^{-1}X)^{-1}X'V^{-1}Y$ (variance proof) 
+		\item add why $X'V^{-1}X$ is symmetric
+		\item both OLS and GLS estimators are unbiased 
+	\end{enumerate}
+	
+	\subsection{Principal Component Analysis}
+	
+	Suppose there exists multicolinearity between predictors. Then $V(\hat \beta)$ becomes large and our confidence intervals are unreliable. After checking VIF, it is not straightforward to choose which predictors to remove. \\
+	
+	For prediction, when multicolinearity exists, we can use principal components regression to get good predictions. A PCA is concerned with explaining the variance covariance structure of a set of variables through a few linear combinations. It can explain most of the variation in this way. If we have $p$ highly corelated predictors, and we can explain this variablility with $k<p$ principal components, we may run the regression on the components and avoid multicolinearity issues. This often reveals underlying relationships in predictors.\\
+	
+	Suppose we have a predictor vector, given by $X = (X_1, \ldots, X_p)$ and assume they have a multivariate normal distribution with covariance matrix $\Sigma$, where $\sigma_{i,j} = \Cov(X_i, X_j)$. Since $\Sigma$ is a $p\times p$ symmetric positive definite matrix, by the real spectral theorem it has $p$ orthogonal eigenvectors, and eigenvalues $\lam_1 \geq \ldots \geq \lam_p \geq 0$. Then let 
+	$$
+	 Z = \pmat{Z_1 \\ \vdots \\ Z_p}  = A \pmat {X_1 \\ \vdots \\ X_p} =A \cdot X
+	$$
+	for a linear transformation $A$.
+	Where we write $Z_1 = \alpha_1 ' X$ for some vector $\alpha_1'$. Recall that eigenvectors corresponding to distinct eigenvalues of a symmetric matrix are orthogonal. \\
+	
+	\begin{definition}
+		Let $\Sigma$ be a covariance matrix with the random vector $X$, with eigenvector eigenvalue pairs $(\lambda_1, t_1), \ldots, (\lambda_p, t_p)$. Then we define the {\bf principal components} as
+		$$
+			Z_i = t_i^TX
+		$$
+		and have properties $V(Z_i) = t_i' \sigma t_i$ and $\Cov(Z_i, Z_j) = 0$. In other words, we change basis to the eigenvectors of the covariance matrix and get nice properties.
+	\end{definition}
+	
+	{\bf Reminder:} Use characteristic polynomial to find eigenvalues.\\
+	
+	Now, assume $\Sigma = (\sigma_{i,j})_{1 \leq i,j \leq p}$ is a covariance matrix. We know $\tr(\Sigma) = \sum_i \sigma_{i,i}$. We can also diagonalize 
+	$$\Sigma = T \Lambda T'$$
+	 where $T' = (t_1, \ldots, t_p)$ is the change of basis to the principal components, and $\Lambda$ is the diagonal matrix of eigenvalues. Since trace is independent of basis, 
+	 $$\tr(\Sigma) = \sum_i \lambda_i$$
+	  and $\sum V(X_i) = \sum V(Z_i)$. Recall that our regression was defined $Y = X \beta + \eps$. Transforming 
+	  $$Z = XT \text{ and }\alpha = T'\beta$$
+	  we may write $Y = XTT'\beta + \eps = Z \alpha + \eps$ since $TT' = I$ is the change of basis. Instead of calculating e.v. pairs for $\Sigma$, we do it for $X'X$ so 
+	  $$
+	  	X'X  = T\Lambda T' \imp Z'Z = T'X'XT = T'T\Lambda T'T = \Lambda
+	  $$
+	  
+	 We can estimate 
+	 $$\hat \alpha = (Z'Z)^{-1}Z'Y = \Lambda^{-1}Z'Y \text{ and } V(\hat \alpha) = \sigma^2 (Z'Z)^{-1} = \sigma^2 \Lambda^{-1}$$
+	 Small eigenvalues of $X'X$ indicate that the variance of the corresponding regression coefficient will be large. If all $\lam_i = 1$ then the predictors are orthogonal, but if some $\lam_i = 0$ then they are linearly dependent. For the untransformed estimators,
+	 $$
+	 	\text{Var}(\hat \beta) = \text{Var}( T\alpha) = T \lambda^{-1}T'\sigma^2
+ 	$$
+ 	Multiplying, this implies
+ 	$$
+ 		\text{Var}(\hat \beta_i) = \hat \sigma^2 \sum_{j=1}^p \f{t_{i,j}^2}{\lam_j}
+ 	$$
+	 
+	 \begin{example}
+	 	We plot eigenvalues of the components against component number, and choose the first components where the eigenvalues is decreasing rapidly: ``find the elbow". We can then use these as our predictors.
+	 \end{example}
+	
+	
+	
+	\subsection{Confounding}
+	
+	\begin{definition}
+		{\bf Confounding} is when in an assumed relationship $Y \sim X$, there exists a third variable $Z$, influencing both $X,Y$, so that there exists a spurious association between $Y$ and $X$.
+	\end{definition}
+	
+	The presence of a confounding variable introduces bias in the marginal association between $X$ and $Y$.
+	
+	\subsection{Exam Hints}
+	
+	\begin{itemize}
+		\item go through all proofs, focus on proofs of shrinkage methods and $V(e_i)$
+		\item check all given variance stabilizing transformations: see practice final
+		\item at least 2 questions exactly from the practice final
+		\item might have quesitons similar to midterm
+		\item applied questions will be calculating variances for $\hat \beta_j$ in general (see cov matrix )
+		\item working with models without intercept: trace becomes $p$ not $p+1$ (lec 4 or 5) - this will help
+		\item his favourite questions: slightly changing some information for a proof or a computation
+		\item solve as many questions as possible from chapter 2, chapter 3 in montgomery, definitely check later chapters
+		\item 1 double sided cheat sheet, no full solutions on help sheet
+		\item bring a calculator - gg
+		\item question on multicolinearity, aic bic, probably dffits dfbetas. be able to write the likelihood of normal distribution, RSS likelihood
+		\item box-cox perhaps
+		\item 8 questions
+		\item no glm, pca and such
+	\end{itemize}
+	\vspace{100pt}
+	\begin{center}
+		{\bf Fin}
+	\end{center}
+	
+	
+	
 
 	
 		
