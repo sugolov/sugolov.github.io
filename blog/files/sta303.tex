@@ -1,0 +1,574 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[lmargin =0.75 in, 
+			rmargin=0.75in, 
+			tmargin=0.75in,
+			bmargin=0.75in]{geometry}
+\geometry{letterpaper}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{blindtext}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{cool}
+\usepackage{thmtools}
+\usepackage{hyperref}
+\graphicspath{ }					%path to an image
+
+%-------- sexy font ------------%
+%\usepackage{libertine}
+%\usepackage{libertinust1math}
+
+%\usepackage{mlmodern}				% very nice and classic
+\usepackage[utopia]{mathdesign}
+%\usepackage[T1]{fontenc}
+
+
+%\usepackage{mlmodern}
+%\usepackage{eulervm}
+\usepackage{tgtermes} 				%times new roman
+%-------- sexy font ------------%
+
+
+% Problem Styles
+%====================================================================%
+
+
+\newtheorem{problem}{Problem}
+
+
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{fact}{Fact}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+
+\newtheorem{manualprobleminner}{Problem}
+
+\newenvironment{manualproblem}[1]{%
+	\renewcommand\themanualprobleminner{#1}%
+	\manualprobleminner
+}{\endmanualprobleminner}
+
+\newcommand{\penum}{ \begin{enumerate}[label=\bf(\alph*), leftmargin=0pt]}
+	\newcommand{\epenum}{ \end{enumerate} }
+
+% Math fonts shortcuts
+%====================================================================%
+
+\newcommand{\N}{\mathbb{N}}                           % Natural numbers
+\newcommand{\Z}{\mathbb{Z}}                           % Integers
+\newcommand{\R}{\mathbb{R}}                           % Real numbers
+\newcommand{\C}{\mathbb{C}}                           % Complex numbers
+\newcommand{\F}{\mathbb{F}}                           % Arbitrary field
+\newcommand{\Q}{\mathbb{Q}}                           % Arbitrary field
+\newcommand{\PP}{\mathcal{P}}                         % Partition
+\newcommand{\M}{\mathcal{M}}                         % Mathcal M
+\newcommand{\eL}{\mathcal{L}}                         % Mathcal L
+\newcommand{\T}{\mathcal{T}}                         % Mathcal T
+\newcommand{\U}{\mathcal{U}}                         % Mathcal U\\
+\newcommand{\V}{\mathcal{V}}                         % Mathcal V
+
+% symbol shortcuts
+%====================================================================%
+
+\newcommand{\lam}{\lambda}
+\newcommand{\imp}{\implies}
+\newcommand{\all}{\forall}
+\newcommand{\exs}{\exists}
+\newcommand{\delt}{\delta}
+\newcommand{\eps}{\epsilon}
+\newcommand{\ra}{\rightarrow}
+
+\newcommand{\ol}{\overline}
+\newcommand{\f}{\frac}
+\newcommand{\lf}{\lfrac}
+\newcommand{\df}{\dfrac}
+
+% bracketting shortcuts
+%====================================================================%
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\babs}[1]{\Big|#1\Big|}
+\newcommand{\bound}{\Big|}
+\newcommand{\BB}[1]{\left(#1\right)}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\artanh}{\mathrm{artanh}}
+\newcommand{\Med}{\mathrm{Med}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Corr}{\mathrm{Corr}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\Range}[1]{\mathrm{range}(#1)}
+\newcommand{\Null}[1]{\mathrm{null}(#1)}
+\newcommand{\lan}{\langle}
+\newcommand{\ran}{\rangle}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\inn}[1]{\lan#1\ran}
+\newcommand{\op}[1]{\operatorname{#1}}
+\newcommand{\logit}{\operatorname{logit}}
+\newcommand{\bmat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\pmat}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
+
+\newcommand{\amogus}{{\bigcap}\kern-0.8em\raisebox{0.3ex}{$\subset$}}
+\newcommand{\Note}{\textbf{Note: }}
+\newcommand{\Aside}{{\bf Aside: }}
+%restriction
+%\newcommand{\op}[1]{\operatorname{#1}}
+%\newcommand{\done}{$$\mathcal{QED}$$}
+
+%====================================================================%
+
+
+\setlength{\parindent}{0pt}      	% No paragraph indentations
+\pagestyle{fancy}
+\fancyhf{}							% fancy header
+
+\setcounter{secnumdepth}{0}			% sections are numbered but numbers do not appear
+\setcounter{tocdepth}{2} 			% no subsubsections in toc
+
+%template
+%====================================================================%
+%\begin{manualproblem}{1}
+%Spivak.
+%\end{manualproblem}
+
+%\begin{proof}[Solution]
+%\end{proof}
+
+%----------- or -----------%
+
+%\begin{problem} 		
+%\end{problem}	
+
+%\penum
+%	\item
+%\epenum
+%====================================================================%
+
+
+\newcommand{\Course}{course}
+\newcommand{\hwNumber}{}
+
+%preamble
+
+\title{STA303 notes}
+\date{\today}
+
+%\chead{\Course}
+
+%\cfoot{\thepage}
+
+
+%====================================================================%
+
+\begin{document}
+	
+	\maketitle
+	
+	\tableofcontents
+	
+	\vspace{100pt}
+	
+	Lecture notes for STA303 in Summer 2022 with Justin Slater.
+	
+	\section{July 6: Lecture 1}
+	
+	In simple linear regression, we model variable $Y$ to have the relationship 
+	$$E(Y \mid X) = \beta_0 + \beta_1 X,\, Y = \beta_0 + \beta_1 X + \eps$$
+	where for paired data $\{(x_i, y_i)\}_{1 \leq i \leq n}$ each realization has
+	$y_i = \beta_0 + \beta_1 x_i + e_i$ such that $E(\eps_i) = 0$. We assume $E(\eps_i) = 0, V(
+	\eps_i) = \sigma^2$ and $\eps_i$ are i.i.d.
+	In order to estimate $\beta_0, \beta_1$ we minimize 
+	$$RSS = \sum_i e_i^2 = \sum_i (y_i - \beta_0 - \beta_1 x_i)^2$$ 
+	and get that $\hat \beta_0 = \ol y - \hat \beta_1 \hat x,\, \hat \beta_1 = \df{SS_{X,Y}}{SS_{X,X}} = \df{\sum_i (x_i - \ol x)(y_i - \ol y)}{\sum_i (x_i - \ol x)^2}$. The estimators are unbiased. As well, $\hat \sigma^2 = \df{RSS}{n-2}$.
+	$$
+		V(\beta_0) = \sigma^2 \BB{\f1{n} + \df{\ol x}{SS_{X,X}}},\, V(\beta_1) = \df{\sigma^2}{SS_{X,X}}
+	$$
+	For more, please see STA302 notes.
+	
+	\section{July 6: Lecture 2}
+	
+	\subsection{Maximum Likelihood}
+	Given data, we quantify the how likely it is given model parameters using maximum likelihood estimation (STA261).
+	\begin{example}
+		Suppose $f(y_i, \theta) = \theta \exp(-y_i 
+		\theta)$. Then given the vector of realizations $y$, then
+		$$
+		L(\theta, y) = \prod_i f(y_i, \theta) = \theta^n \exp(-n\ol y \theta)
+		$$
+		We maximize $L$ with respect to $\theta$. We take logarithm of the function to simplify computation. Maximizing $\ell = \log L$ also maximizes $L$. Maximize:
+		$$
+			\ell = n \log \theta - n \ol y \theta,\quad
+		 	\pderiv[1]{\ell}{\theta} = \f{n}\theta - n\ol y = 0 \imp \hat \theta = \f1{\ol y}
+		$$
+		Moreover, $\displaystyle \pderiv[2]{\ell}{\theta} =  -\f{n}{\theta^2}$ is negative at $\hat \theta$, and is a maximum.
+	\end{example}
+	In simply linear aggression, we assume $y_i \sim N(\beta_0 + \beta_1 x_i, 
+	\sigma^2)$, so the log likelihood given $y$ is
+	$$
+		\ell(\beta_0, \beta_1, \sigma^2, y) = -\f{n}2 \log(2\pi\sigma^2) - \f1{2\sigma^2}RSS
+	$$
+	This is maximized when RSS is minimzed, so MLE estimates match RSS estimates.
+	
+	\subsection{Logistic Regression}
+	In logistic regression we model when $X$ is a continuous predictor of a binary outcome $Y$. We write $y_i \sim \text{Bern}(p_i)$, and we assume 
+	$$
+	\log \BB{\f{p_i}{1-p_i}} = \text{logit}(p_i) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_k x_{ki}
+	$$
+	Since $E(Y \mid X) = p_i$ since it is Bernoulli distributed, we see that $g(E(Y \mid X)) = \beta_0 + \beta_1 x_i$. $g$ is an example of a link function: it links the conditional expectation to a linear function of the parameters. Then
+	$$
+		p_i = \text{logit}^{-1}(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \ldots + \beta_k x_{ki}) = \df{\exp(X\beta)}{1+\exp(X\beta)}
+	$$
+	where $X$ is row vector, $\beta$ column vector. Namely, $p$ is a function of the predictor, $$p = \text{logit}^{-1}(x)$$ in the single variable case. The interpretation of coefficients is more difficult than in linear regression. Consider the single $x$ case. There are two main interpretations:
+	\begin{enumerate}
+		\item $\displaystyle\pderiv[1]{\text{logit}^{-1}(\beta_0 + \beta_1 x_{i})}{x} = \df{\beta_1 \exp(\beta_0 + \beta_1x)}{(1+\exp(\beta_0+\beta_1x))^2}$ plugging in $\ol x$, we get the change in the probability near the mean. Very similarly in the multivariable case.
+		\item Denoting odds as $\Omega_i = \f{p_i}{1-p_i}$, 
+		$\log(\Omega_1) = \beta_0 + \beta_1 x,\, \log(\Omega_2) = \beta_0 + \beta_1 (x+1)$, then
+		$$
+			\f{\Omega_2}{\Omega_1} = \exp(\beta_1)
+		$$
+		So $\exp(\beta_1)$ is the multiplicative increase in odds ratio for a one unit increase in $x$.
+	\end{enumerate}
+	We use the likelihood method to estimate the betas. When $y_i \sim Bern(p_i)$ and we have one continuous predictor, we begin with the likelihood function
+	$$
+		L(\beta_0, \beta_1, y) = \prod_i^n p_i^{y_i}(1-p_i)^{1-y_i}
+	$$
+	Taking logarithms and doing arithmetic,
+	$$
+		\ell(\beta_0, \beta_1, y) = \sum_iy_i\log p_i + (1-y_i)\log(1-p_i) = \sum_i^n - \log(1+\exp(\beta_0 + \beta_1x_i)) + \sum_i^n y_i(\beta_0 + \beta_1x_i)
+	$$
+	The equation $\displaystyle \pderiv[1]{\ell}{\beta_1} = 0$ requires a \textit{numerical solution}. In the general setting, for a parameter $\theta$ of some score $\ell '$, the numerical method we use to find the root is Newton-Raphson. Iteratively update $\theta$ using 
+	$$
+		\theta_{t+1} = \theta_{t} - \df{\ell'(\theta_t)}{\ell''(\theta_t)}
+	$$
+	until the $\theta$ corresponding to $\ell'(\theta) = 0$ is reached. With multiple parameters, we used a similar algorithm.\\
+	
+	Once we obtain maximum likelihood estimates for two models, we can decide which model is better with a {\bf likelihood ratio test}. Suppose we have
+	$$
+		M_1:\: \text{logit}(p_i) = \beta_0 + \beta_1 x_1 + \beta_2 x_2,\quad M_2:\: \text{logit}(p_i) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3x_1x_2
+	$$
+	Then if $L_1(\hat \beta_1), L_2(\hat \beta_2)$ are the full and nested likelihood of estimates from each model,
+	$$
+		-2\log\BB{\f{L_2(\hat \beta_2)}{L_1(\hat \beta_1)}} \sim \chi^2_1
+	$$
+	where the degrees of freedom is the difference in number of parameters.
+	A significant test statistic shows the model with interactions explains much more variance. $D = -2\ell(\beta)$ is called the {\bf deviance} and can be seen as a measure of model fit when considering nested models.
+	The above is just the difference 
+	$$
+		D_{\text{nested}} - D_{\text{full}} \sim \chi^2_{(\text{\# diff parameters})}
+	$$
+	If the change in deviance is too large, then nested model is much better. Deviance is analogue of residual sum square, but for models fit with MLE. The lower the deviance, the better the model fit.\\
+	
+	Residuals for logistic regression are defined similarly as linear regression:
+	$$
+		r_i = y_i - \text{logit}^{-1}(\beta_0 + \sum_i \beta_ix_i)
+	$$
+	
+	
+	\section{July 11: Lecture 3}
+	
+	\subsection{Inference of Parameters}
+	
+	In linear regression, we often assume normality for the errors, which allows us to build $Z, t$ confidence for the $\hat \beta$ estimators. In logistic regression, no equivalent assumption exists, so we use maximum likelihood to compute the variance. For a sample $y_1, \ldots, y_n$,
+	$$
+		L(y, p) = \prod_i p^{y_i}(1-p)^{1-y_i} \imp \ell(y,p) = \sum_i y_i \log p + (1-y_i)\log(1-p)
+	$$
+	Differentiating,
+	$$
+		\pderiv[1]{\ell}{p} = \f{n(\ol y - p)}{p(1-p)}, \quad \pderiv[1]{\ell}{p} = 0 \imp \hat p = \ol y
+	$$
+	and can be verified as maximum with second derivative test. The {\bf curvature} of $\ell$ contains information about the variance of our estimator $\hat p$. A high curvature $\displaystyle \pderiv[2]{\ell}{p}$ means low variance, while a flatter likelihood means higher variance. \textit{The more concave the likelihood the lower the variance}. We can use this to find the standard error.
+	
+	$$
+		I(p) = E\BB{\pderiv[2]{\ell}{p}} \imp SE(\hat \beta) \approx \f1{\sqrt{I(\hat p)}}
+	$$
+	We know
+	$$
+		\text{logit}(\hat p) = \beta_0 + \beta_1x_1 + \ldots + \beta_kx_k
+	$$
+	$I(p)$ is the {\bf Fisher information}. In the multivariable case, we get a matrix of second derivaties and an information matrix $I(\beta)$, where
+	$$
+		V(\beta_j) = \f1{\sqrt{I_{j,j}(\beta)}}
+	$$
+	For any MLE, it is invariant, asymptotically unbiased, asymptotically normal.
+	\begin{proposition}
+		{\bf Invariance:} If $f$ is a one to one function, MLE of $f(\theta)$ is $f(\theta^{MLE})$.
+	\end{proposition}
+	\begin{proposition}
+		{\bf Asymptotically unbiased:} As $n \to \inf$, $E(\theta^{MLE}) = \theta$
+	\end{proposition}
+	\begin{proposition}
+		{\bf Asymptotically normal:} As $n \to \inf$, $\theta^{MLE} \sim N \BB{\theta, \f1{I(\theta)}}$
+	\end{proposition}
+	We may now test hypotheses for $\beta$. In the case $\text{logit}(P(Y_i = 1 
+	\mid X)) = \beta_0 + \beta_1x$, we test $H_0, \beta_1 = 0$ and $H_1, \beta_1 \neq 0$ with the {\bf Wald test}:
+	$$
+		W = \f{(\beta_1^{MLE} - \beta_1^{H_0})^2}{\hat V(\beta_1^{MLE})} \sim \chi^2_1
+	$$
+	Where $U$ is the score, and $I$ is the information, we test {\bf slope to curvature ratio}. Slope at MLE is 0, but if slope at $H_0$ relative to curvature is far from $0$, then $\beta_1^{H_0}$ is likely far from the MLE. {\bf Slope test:}
+	$$
+		S = \f{U(\beta_1^{H_0})^2}{I(\beta_1^{H_0})} \sim \chi^2_1
+	$$
+	We can also do {\bf Likelihood ratio test} as discussed before. 
+	$$
+		LRT = 2 \log (\ell(\beta_1^{MLE}) - \ell(\beta_1^{H_0}))\sim \chi^2_1
+	$$
+	If $\beta_1^{H_0}$ is different from MLE, this is evidence against the null. In the limit, $n \to \inf$, all three tests are actually the same. The literature recommends likelihood ratio aka Wilks test.\\
+	
+	Wald test intervals can be built with $z$ score, but score and LR intervals require numerical solutions.
+	
+	\subsection{Validation of Logistic Regression Models}
+	
+	\begin{definition}
+		The {\bf Brier score} of a model is defined as
+		$$
+			B = \f1n \sum_i^n (\hat p_i - y_i)^2
+		$$
+		The score assess both {\bf calibration} and {\bf discrimination}.
+	\end{definition}
+
+	\begin{definition}
+		{\bf Calibration} is the ability to accurately infer $p_i$ given $x_i$
+	\end{definition}
+
+	\begin{definition}
+		{\bf Discrimination} is the ability to accurately choose $0/1$.
+	\end{definition}
+
+	A model that is good at discrimination is \textit{not necessarily} well calibrated. The analog of $R^2$ is also used in logistic regression:
+	
+	\begin{definition}
+		$$
+			R_N^2 = \f{1 - \exp(LR/n)}{1 - \exp(L^0/n)}
+		$$
+		where $LR$ is the likelihood ratio test statistic, and $L_0$ is $-2\ell_0$, the log likelihood of the null model.
+	\end{definition}
+	Similar to $R^2$, it is a measure of predictive performance: how much deviance can be explained. Another measure of discrimination is $D_{xy}$.
+	\begin{definition}
+		The {\bf Somers $D_{xy}$} measures the ability of the model to distinguish between high and low values. 
+		$$D_{xy} = 2(c-0.5)$$
+		 where $c$ is the {\bf probability of concordance}: for every 0, 1 pair it is the proportion of correct $\hat p_0 < \hat p_1$
+	\end{definition}
+	
+	$R_N^2$, $B$, improve as the number of predictors increases, but more complicated models do not generalize well. A $\beta$ closer to $0$ slightly closer to $0$ gives better predictive performance since it reduces overfitting to training data. Choosing this $\beta$ is called shrinkage. We perform shrinkage by fitting 
+	$$
+		\logit(p) = \gamma_0 + \gamma_1 X\beta
+	$$
+	and finding best $\gamma_0, \gamma_1$ on test data. We do this through resampling via bootstrap, then taking means of sampling distributions of $\gamma_0, \gamma_1$. We can also view the difference between measure on the entire data, and on sample data, to see the deviation, which is referred to as {\bf optimism}.
+	
+	\section{July 13: Lecture 4}
+
+	
+	{\bf Review:} The curvature of the likelihood tells us how certain our MLE estimates are. Standard errors that rely on MLE are based on {\bf asymptotic results}. We have three tests: Wald, score, likelihood, which are asymptotically equivalent. We discussed model validation.
+
+	\subsection{Generalized Linear Models}	
+	
+	\begin{definition}
+		A {\bf generalized linear model} is a model of a relationship between $X,Y$ which has three components
+		\begin{enumerate}
+			\item A random distribution of $Y_i \sim \text{Norm, Bern}, \ldots$
+			\item A systematic component, $\beta_0 + \beta_1 x_1 + \ldots + \beta_k x_k$
+			\item A link function so that $g(E(Y\mid X)) =\beta_0 + \beta_1 x_1 + \ldots + \beta_k x_k$
+		\end{enumerate}
+	\end{definition}
+
+	$Y$ can be distributed as anything, but in this class we understand the \textit{exponential family} of distributions.
+	
+	\begin{definition}
+		The distribution of $y$ belongs to the {\bf exponential family} if 
+		$$
+			p(y\mid \theta, \phi) = \exp\BB{\f{y\theta - b(\theta)}{\phi} + c(y, \phi)}
+		$$ 
+		$\theta$ is the {\bf canonical parameter}, $\phi$ is the {\bf scale parameter}, $b(\theta)$ is the {\bf cumulant function}, and $c(y, \phi)$ makes the integral 
+		$\int_\R p(y \mid \theta, \phi ) dy = 1$
+	\end{definition}
+
+	We show Bernoulli, Poisson, and Normal distributions are in the exponential family.
+	
+	
+	\begin{example}
+		When $y$ is normally distributed, 
+		$$
+			p(y,\mu, \sigma^2) = \f1{2\pi\sigma^2}\exp\BB{-\f{(y-\mu)^2}{2\sigma^2}}
+			=\exp\BB{\f{y\mu-\mu^2/2}{\sigma^2} - \BB{\f{y^2}{2\sigma^2} + \f12\log(2\pi\sigma^2)} }
+		$$
+		$\theta = \mu$ is the {\bf canonical parameter}, $\phi = \sigma^2$ is the  {\bf scale parameter}, $b = \f{\mu^2}{2}$ is the {\bf cumulant function}, $c =  - \BB{\f{y^2}{2\sigma^2} + \f12\log(2\pi\sigma^2)}$ is a function that makes the pdf have volume 1.
+	\end{example}
+	\begin{example}
+		The Bernoulli distribution 
+		$$
+			p(y \mid p) = \exp\BB{y \log \f{p}{1-p} + \log(1-p)}
+		$$
+		where $\theta = \text{logit}(p)$, $\phi = 1$, $b = - \log(1-p)$, $c = 0$.
+	\end{example}
+	For Bernoulli, the canonical parameter is $\log(\f{p}{1-p})$ which is the link function in logistic regression. This is the {\bf logit link}. For the normal model, the canonical parameter is $\mu$, which appears on left side of linear regression: $y \sim N(\mu, \sigma^2)$,
+	$$
+		\mu = \beta_0 + \beta_1x_1 + \ldots \beta_kx_K
+	$$
+	In this case, we call this the {\bf identity link}. In general, the canonical parameter tells us the most natural link to use in different types of regression.\\
+	
+	The mean and variance of random variables form the exponential family can eb determined using 
+	$$
+		E(Y \mid \theta, \phi) = b'(\theta),\, 
+		V(Y \mid \theta, \phi ) = \phi b''(\theta)
+	$$
+	\begin{example}
+		In the normal distribution, 
+		$$
+		b(\theta) = \f{\theta^2}{2} \imp b'(\theta) = \theta = \mu,\quad \phi b''(\theta) = \phi = \sigma^2
+		$$
+	\end{example}
+	
+	The link function $\eta_i = g(E(Y_i\mid X)$ could be any smooth and monotonic function that relates the expectation of the outcome to the linear predictor. In general, it can be defined on any domain.\\
+	
+	The canonical link $h()$ is \textit{the most natural one}. It is usually defined on all of $\R$.
+	$$
+		\eta_i = h(E(Y_i\mid X)) = \theta_i = \beta_0 + \beta_1x_1 + \ldots
+	$$
+	All we are doing is relating the expectation of $Y$ to some linear function of the predictors.
+	\begin{example}
+		The Poisson distribution is part of the exponential family:
+	$$
+		p(y, \lam) = \df{\lam^y e^{-\lam}}{y!} = \exp(y \log \lam - \lam - \log y!)
+	$$
+	$\theta = \log \lam$, $\phi = 1$. In this case, the canonical link function is given by $\theta = \log(\lam)$. By differentiating $b(\theta) \exp(\theta)$, $b'(\theta) = \lam,\, \phi b''(\theta) = \lam$.
+	\end{example}
+
+	\subsection{Poisson Regression}
+	$y_i \sim \text{Pois}(E_i\lam_i)$, then $\log(\lam_i) = \beta_0 + \beta_1x_1 + \ldots$. Here $E_i$ is the {\bf exposure} or {\bf offset}. This lets us consider lambda as a rate. 
+	
+	\begin{example}
+		If we want to comapre the risk of covid infection between provinces, and the $y$s are the cases in each province, then Ontario and Quebec will be large relative to other provinces due to larger populations. We use the offest $E_i$ in this case.
+	\end{example}
+
+	In Poisson regression, we have the link function $h = \log$. Since $V(Y) = E(Y) = \lam$, then we may standardize residuals via 
+	$$
+		z_i = \f{y_i - \hat y_i}{\sqrt{\hat y_i}}
+	$$
+	since $\sqrt{\hat y_i}$ is standard error in Poisson model. In many cases, we observe {\bf overdispersion}, when many residuals are $> \abs{2}$. By Chebyshev's inequality, 95\% of data points should lie within these bounds. A statistical test for these is 
+	$$
+		\sum_i^n z_i^2 \sim \chi^2_{n-k}
+	$$ 
+	where $k$ is the number of parameters. In the null, overdispersion does not occur. When it occurs, we estimate the overdispersion factor 
+	$$
+		\omega = \f{1}{n-k} \sum_i^n z_i^2
+	$$
+	and model $y_i \sim \text{QuasiPoiss}(\lam, \omega\lam)$ where $V(Y_i) = \omega E(Y) = \omega \lambda$. Here we do not know the likelihood function, and we need to use quasi likelihood methods. Instead, we can use negative binomial with
+	$$
+		E(Y) = \lam,\, V(Y) = \lam + \df{\lam^2}{\omega}
+	$$
+	
+	\section{July 18: Lecture 5}
+	
+	Recal that we can build a GLM when $Y$ is an exponential family distribution. For example, Normal, Poisson, and Bernoulli. All material this week is testable on midterm next week.
+	
+	\subsection{GLMs Continued}
+	
+	Last time we learned Poisson was useful for count data. Sometimes it is not appropriate, since count data can have a different structure.
+	
+	\begin{example}
+		We are interested on the effect of lymphotic infiltration on osteoid pathology. Other predictors include gender, osteoid pathology. We use group size $E_i$ as an offset for the number of successes:  $y \sim \op{Poiss}(E_i\lam_i)$. None of the predictors are significant.\\
+		$$
+			\log(\lam_i) = \log(E_i) + \beta_0 + \beta_1x_1 + \ldots
+		$$
+		
+		In the current example, the number of the outcome is capped by the number of people in each group. This means $\lam_i$ is capped at 1, which isnt consistent with Poisson, where $\lam_i \in \R^+$. Instead, we could treat the successes $y_i$ in a group of size $n$ through a binomial model.
+	\end{example}
+
+	In other count data, $y_i \sim \op{Bin}(n_i, p_i)$. $Y_i$ is also in the exponential family, and the canonical parameter is $\log\BB{\df{p_i}{1-p_i}}$. The interpretation for a one unit increase in predictors is the same as in logistic regression. 
+	When assessing the significance of predictors, Wald tests do not do well with a small number of successes and failures. This is because the estimated $\beta$ is close to $\pm \infty$, so the standard error is also big. This the {\bf Hauck-Donner effect}. We do the likelihood ratio test, since it does not rely on $\hat\beta$, it just uses their likelihood.\\
+	
+	With binomial models, we run into the same issues with over dispersion:
+	$$
+		E(y_i) = np_i,\, V(Y_i) = np_i(1-p_i)
+	$$
+	so the same parameter $p_i$ describes both. We can check for overdispersion using standardized residuals:
+	$$
+		z_i = \f{y_i - n_i\hat p_i}{\sqrt{n_i\hat p_i (1- \hat p_i)}}
+	$$ 
+	We can do the test $\sum z_i^2 \sim \chi^2_{n-k}$ where  there is no overdispersion under the null. Use $\alpha = 0.05$. For dispersion factor $\omega$, we need to fit an overdispersed binomial where
+	$$
+		V(Y) = \omega np(1-p)
+	$$
+	Fitting \verb*|family=quasibinomial| in R, we see that predictors are no longer significant.\\
+	
+	What if we wanted to use a likelihood ratio test to compare the model with an interaction to the model without interaction. Since quasi-Poisson and quasi-binomial models are not exponential, we cannot do $\chi^2$ test. In the Poisson case, we can solve this problem with negative binomial. In binomial case, we cannot. Deviances are also not $\chi^2$ distributed, they are $\omega \chi^2 $ distributed where $\omega$ is unknown. The statistic
+	$$
+		F = 
+		\df{
+				(D_{simple} - D_{complex})/(k_{simple} - k_{complex})
+		}{
+				(\sum_i z_i^2)/(n-k)
+		} = 
+		\f{(D_{simple} - D_{complex})/(k_{simple} - k_{complex})}{\hat \omega^2}
+		\sim
+		F_{(1, n-k)}
+	$$
+	The statistic $\hat \omega = \f{\sum_i z_i^2}{n-k}$ is based on the more complex model. The first degree of freedom in $F_{1, n-k}$ comes from the difference in number of predictors.
+	
+	\begin{example}
+		If we consider the Lymphotic infiltration, but separate each row into distinct trial with individual outcomes and do logistic regression, we are not able to assess over dispersion. We cannot assess the variance of $\verb*|1,0,0,1,1,0,0,1|$: it is silently overdispersed. High variance is easily seen in the binomial case.
+	\end{example}
+	
+	\subsection{Goodness of Fit Tests}
+	
+	In an ideal world, we would be able to perfectly explain data with the model, and have $\hat y_i = y_i$. If we have $n$ parameters, we can do this easily: this is a {\bf saturated model}. In the saturated model, the deviance is $0$. We cannot do the usual likelihood ratio test where $D_{model} - D_{sat} \sim \chi^2_{n-k}$, and test the null that they explain the same amount of deviance. We did not consider the case where our number of parameters grows with sample size. Then we can approximate via {\bf saddle point approximation} the statistic with
+	$$
+		\f{D_{model}}{\phi} \sim \chi^2_{n-k}
+	$$
+	where $D_{model}$ is the residual deviance, $\phi$ is the dispersion parameter, and $k$ is the number of predictors. Recall in Poisson and binomial, $\phi = 1$. We can use this to test goodness of fit of the model, but our sample must satisfy $\min y_i \geq 3, \min n_i - y_i \geq 3$: each trial has at least 3 successes and failures. There is a second goodness of fit test called the {\bf Pearson test}:
+	$$
+		\f{\sum_i z_i^2}{\phi} \sim \chi^2_{n-k}
+	$$
+	which checks overdispersion. Under the null, the model is a good fit, but significant overdispersion shows that it is not.
+	
+	\section{July 20: Lecture 6}
+	
+	\section{July 25: Lecture 7}
+	
+	\subsection{Multilevel Models}
+	
+	Some call these hierarchical, mixed, random effect, or multilevel models. The idea is more general.
+	
+	\begin{example}
+		Consider the example of trees. They take up air and lose water through their stomata. Sometimes they are limited by the amount of carbon dioxide they can absorb since the stomata are too small. Consider an experiment where trees are grown under 2 levels of carbon dioxide concentrations with 3 trees assigned to each experiment. Our question: if there is more carbon dioxide, is the area of the stomata greater?\\
+		
+		A normal model is a reasonable place to start. $y_i \sim N(\mu_i, \sigma^2)$ and
+		$$
+			\mu_i = \beta_0 + \beta_1 x_{1i} + \ldots + \beta_6 x_{6i}
+		$$
+		which is a simple linear regression. Let $\beta_1 x_{1i} = 1$ for high $CO_2$ and $0$ otherwise. Let $x_{ji} = 0/1$ be indicator variables for the trees, with comparison being first tree.
+		
+		A different way to write this model:
+		$$
+			\mu_i = \alpha_{j[i]} + \beta_{k[i]}
+		$$
+		where
+		\begin{itemize}
+			\item $\alpha_{j[i]}$ is the tree effect: the influence of the tree $j$ that effect $i$ was taken from
+			\item $\beta_{k[i]}$ is the $CO_2$ effect: the influence of the tree $j$ that effect $i$ was taken from
+		\end{itemize}
+	
+		In the linear model described earlier, the effect of tree number absorbs the effect of high $CO_2$. The $CO_2$ variable and tree numbers are highly related.\\
+		
+		We write
+		$
+		\mu_i = \alpha_{j[i]} + \beta_{k[i]}
+		$
+		and let tree effects be given by probability distribution $\alpha_j \sim N(\mu_\alpha, \sigma^2_\alpha)$.
+	\end{example}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+\end{document} 
