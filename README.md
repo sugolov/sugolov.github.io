@@ -1,3 +1,3 @@
-# My Webpage
+# sugolov.github.io
 
-Source for my personal webpage.
+Source for my webpage.
