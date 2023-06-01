@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Academics on Anton S.</title>
-    <link>http://example.org/tags/academics/</link>
+    <link>https://sugolov.github.io/tags/academics/</link>
     <description>Recent content in Academics on Anton S.</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>{year}</copyright>
-    <lastBuildDate>Thu, 01 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/tags/academics/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 01 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sugolov.github.io/tags/academics/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Courses</title>
-      <link>http://example.org/posts/courses/</link>
+      <link>https://sugolov.github.io/posts/courses/</link>
       <pubDate>Thu, 01 Jun 2023 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/posts/courses/</guid>
+      <guid>https://sugolov.github.io/posts/courses/</guid>
       <description>All the courses that I have taken, or am taking, during my time at U of T.</description>
     </item>
     
