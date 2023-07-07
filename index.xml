@@ -7,14 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>{year}</copyright>
-    <lastBuildDate>Thu, 01 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sugolov.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 30 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sugolov.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Courses</title>
-      <link>https://sugolov.github.io/posts/courses/</link>
-      <pubDate>Thu, 01 Jun 2023 00:00:00 +0000</pubDate>
+      <link>https://sugolov.github.io/courses/</link>
+      <pubDate>Thu, 06 Jul 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://sugolov.github.io/posts/courses/</guid>
-      <description>All the courses that I have taken, or am taking, during my time at U of T.</description>
+      <guid>https://sugolov.github.io/courses/</guid>
+      <description>Notes Notes to some courses. You might find mistakes, want the Latex source, or disagree: please e-mail me!</description>
+    </item>
+    
+    <item>
+      <title>IBM at U of T Conference</title>
+      <link>https://sugolov.github.io/posts/ibm-conference/</link>
+      <pubDate>Fri, 30 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://sugolov.github.io/posts/ibm-conference/</guid>
+      <description>On April 18, I had the chance to attend the U of T IBM Quantum Computing Conference along with other MSRG members.</description>
     </item>
     
     <item>

@@ -7,14 +7,14 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>{year}</copyright>
-    <lastBuildDate>Thu, 01 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sugolov.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 30 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sugolov.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Academics</title>
-      <link>https://sugolov.github.io/categories/academics/</link>
-      <pubDate>Thu, 01 Jun 2023 00:00:00 +0000</pubDate>
+      <title>Featured in</title>
+      <link>https://sugolov.github.io/categories/featured-in/</link>
+      <pubDate>Fri, 30 Jun 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://sugolov.github.io/categories/academics/</guid>
-      <description>University related posts.</description>
+      <guid>https://sugolov.github.io/categories/featured-in/</guid>
+      <description>Where to find me</description>
     </item>
     
     <item>
@@ -24,6 +24,15 @@
       
       <guid>https://sugolov.github.io/categories/other/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>Academic</title>
+      <link>https://sugolov.github.io/categories/academic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://sugolov.github.io/categories/academic/</guid>
+      <description>University related posts.</description>
     </item>
     
   </channel>

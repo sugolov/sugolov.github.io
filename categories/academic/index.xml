@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Academic on Anton S.</title>
+    <link>https://sugolov.github.io/categories/academic/</link>
+    <description>Recent content in Academic on Anton S.</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>{year}</copyright><atom:link href="https://sugolov.github.io/categories/academic/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

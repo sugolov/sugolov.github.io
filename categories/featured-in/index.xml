@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Featured in on Anton S.</title>
+    <link>https://sugolov.github.io/categories/featured-in/</link>
+    <description>Recent content in Featured in on Anton S.</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>{year}</copyright>
+    <lastBuildDate>Fri, 30 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sugolov.github.io/categories/featured-in/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>IBM at U of T Conference</title>
+      <link>https://sugolov.github.io/posts/ibm-conference/</link>
+      <pubDate>Fri, 30 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://sugolov.github.io/posts/ibm-conference/</guid>
+      <description>On April 18, I had the chance to attend the U of T IBM Quantum Computing Conference along with other MSRG members.</description>
+    </item>
+    
+  </channel>
+</rss>
