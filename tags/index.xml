@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Anton</title>
-    <link>https://sugolov.github.io/tags/</link>
-    <description>Recent content in Tags on Anton</description>
+    <title>Tags on Anton S.</title>
+    <link>sugolov.github.io/tags/</link>
+    <description>Recent content in Tags on Anton S.</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 10 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sugolov.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 10 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="sugolov.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Featured in</title>
-      <link>https://sugolov.github.io/tags/featured-in/</link>
+      <link>sugolov.github.io/tags/featured-in/</link>
       <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://sugolov.github.io/tags/featured-in/</guid>
+      <guid>sugolov.github.io/tags/featured-in/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Academic</title>
-      <link>https://sugolov.github.io/tags/academic/</link>
+      <link>sugolov.github.io/tags/academic/</link>
       <pubDate>Thu, 20 Jul 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://sugolov.github.io/tags/academic/</guid>
+      <guid>sugolov.github.io/tags/academic/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Other</title>
-      <link>https://sugolov.github.io/tags/other/</link>
+      <link>sugolov.github.io/tags/other/</link>
       <pubDate>Tue, 30 May 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://sugolov.github.io/tags/other/</guid>
+      <guid>sugolov.github.io/tags/other/</guid>
       <description></description>
     </item>
     
