@@ -2,35 +2,35 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Anton S.</title>
-    <link>http://sugolov.ca/categories/</link>
+    <link>sugolov.github.io/categories/</link>
     <description>Recent content in Categories on Anton S.</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 10 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://sugolov.ca/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 10 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="sugolov.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Featured in</title>
-      <link>http://sugolov.ca/categories/featured-in/</link>
+      <link>sugolov.github.io/categories/featured-in/</link>
       <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
       
-      <guid>http://sugolov.ca/categories/featured-in/</guid>
+      <guid>sugolov.github.io/categories/featured-in/</guid>
       <description>Where to find me</description>
     </item>
     
     <item>
       <title>Academic</title>
-      <link>http://sugolov.ca/categories/academic/</link>
+      <link>sugolov.github.io/categories/academic/</link>
       <pubDate>Thu, 20 Jul 2023 00:00:00 +0000</pubDate>
       
-      <guid>http://sugolov.ca/categories/academic/</guid>
+      <guid>sugolov.github.io/categories/academic/</guid>
       <description>University related posts.</description>
     </item>
     
     <item>
       <title>Other</title>
-      <link>http://sugolov.ca/categories/other/</link>
+      <link>sugolov.github.io/categories/other/</link>
       <pubDate>Tue, 30 May 2023 00:00:00 +0000</pubDate>
       
-      <guid>http://sugolov.ca/categories/other/</guid>
+      <guid>sugolov.github.io/categories/other/</guid>
       <description></description>
     </item>
     
