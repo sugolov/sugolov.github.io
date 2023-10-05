@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Academic on Anton</title>
-    <link>https://sugolov.github.io/categories/academic/</link>
-    <description>Recent content in Academic on Anton</description>
+    <title>Academic on Anton S.</title>
+    <link>https://sugolov.ca/categories/academic/</link>
+    <description>Recent content in Academic on Anton S.</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sugolov.github.io/categories/academic/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sugolov.ca/categories/academic/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>August 2023 Presentations</title>
-      <link>https://sugolov.github.io/posts/presentations/</link>
+      <title>Presentations August 2023</title>
+      <link>https://sugolov.ca/posts/presentations2023/</link>
       <pubDate>Thu, 20 Jul 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://sugolov.github.io/posts/presentations/</guid>
+      <guid>https://sugolov.ca/posts/presentations2023/</guid>
       <description>I will be presenting results from the project at MSRG in a few upcoming events.
 Data Sciences Institute Research Day - August 10th
 Format: Poster Location: Room 17020, 700 University Avenue, 17th Floor Undergraduate Engineering Research Day - August 16th
