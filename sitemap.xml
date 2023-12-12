@@ -3,92 +3,82 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
     
     <url>
-        <loc>https://sugolov.ca/</loc>
-        <lastmod>2023-09-19T00:00:00+00:00</lastmod>
-    </url>
-    
-    <url>
-        <loc>https://sugolov.ca/categories/</loc>
-        <lastmod>2023-09-19T00:00:00+00:00</lastmod>
-    </url>
-    
-    <url>
-        <loc>https://sugolov.ca/posts/ml-resources/</loc>
-        <lastmod>2023-09-19T00:00:00+00:00</lastmod>
-    </url>
-    
-    <url>
-        <loc>https://sugolov.ca/posts/</loc>
-        <lastmod>2023-09-19T00:00:00+00:00</lastmod>
-    </url>
-    
-    <url>
-        <loc>https://sugolov.ca/categories/resources/</loc>
-        <lastmod>2023-09-19T00:00:00+00:00</lastmod>
-    </url>
-    
-    <url>
-        <loc>https://sugolov.ca/projects/</loc>
+        <loc>https://sugolov.github.io/projects/</loc>
         <lastmod>2023-09-15T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://sugolov.ca/posts/suds2023/</loc>
+        <loc>https://sugolov.github.io/</loc>
         <lastmod>2023-08-10T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://sugolov.ca/tags/featured-in/</loc>
+        <loc>https://sugolov.github.io/categories/</loc>
         <lastmod>2023-08-10T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://sugolov.ca/categories/featured-in/</loc>
+        <loc>https://sugolov.github.io/posts/suds2023/</loc>
         <lastmod>2023-08-10T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://sugolov.ca/tags/</loc>
+        <loc>https://sugolov.github.io/tags/featured-in/</loc>
         <lastmod>2023-08-10T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://sugolov.ca/tags/academic/</loc>
+        <loc>https://sugolov.github.io/categories/featured-in/</loc>
+        <lastmod>2023-08-10T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>https://sugolov.github.io/posts/</loc>
+        <lastmod>2023-08-10T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>https://sugolov.github.io/tags/</loc>
+        <lastmod>2023-08-10T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>https://sugolov.github.io/tags/academic/</loc>
         <lastmod>2023-07-20T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://sugolov.ca/categories/academic/</loc>
+        <loc>https://sugolov.github.io/categories/academic/</loc>
         <lastmod>2023-07-20T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://sugolov.ca/posts/presentations2023/</loc>
+        <loc>https://sugolov.github.io/posts/presentations/</loc>
         <lastmod>2023-07-20T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://sugolov.ca/courses/</loc>
+        <loc>https://sugolov.github.io/courses/</loc>
         <lastmod>2023-07-06T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://sugolov.ca/posts/ibm-conference/</loc>
+        <loc>https://sugolov.github.io/posts/ibm-conference/</loc>
         <lastmod>2023-06-30T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://sugolov.ca/tags/other/</loc>
+        <loc>https://sugolov.github.io/tags/other/</loc>
         <lastmod>2023-05-30T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://sugolov.ca/categories/other/</loc>
+        <loc>https://sugolov.github.io/categories/other/</loc>
         <lastmod>2023-05-30T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://sugolov.ca/posts/the-webpage/</loc>
+        <loc>https://sugolov.github.io/posts/the-webpage/</loc>
         <lastmod>2023-05-30T00:00:00+00:00</lastmod>
     </url>
     
