@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Academic on Anton</title>
-    <link>https://sugolov.github.io/categories/academic/</link>
+    <link>https://sugolov.ca/categories/academic/</link>
     <description>Recent content in Academic on Anton</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="https://sugolov.github.io/categories/academic/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://sugolov.ca/categories/academic/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
