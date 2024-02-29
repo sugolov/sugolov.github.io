@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Resources on Anton</title>
+    <title>resources on Anton S.</title>
     <link>https://sugolov.ca/categories/resources/</link>
-    <description>Recent content in Resources on Anton</description>
+    <description>Recent content in resources on Anton S.</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Sep 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Feb 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://sugolov.ca/categories/resources/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Deep Learning Resources</title>
+      <title>Deep learning resources</title>
       <link>https://sugolov.ca/posts/dl-resources/</link>
-      <pubDate>Tue, 19 Sep 2023 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 29 Feb 2024 00:00:00 +0000</pubDate>
       <guid>https://sugolov.ca/posts/dl-resources/</guid>
-      <description>NYU Deep Learning (w/ Yann LeCun) Yann LeCun&amp;rsquo;s graduate level deep learning course. Interesting energy-based model approach and connections to representation learning. UvA Deep Learning Notebooks Great introduction to PyTorch, PyTorch Geometric. Implementation and explanation of many things discussed in NYU LeCun course. Attention, GNN message passing, energy based models, autoencoders, variational inference. UofT Deep Learning: Theory &amp;amp; Data Science Deep learning course at U of T by Vardan Papyan. Transformer Family Blog Post Blog post about the family of transformer based architectures.</description>
+      <description>References that I found interesting and helpful&#xA;Books Murphy, Probabilistic Machine Learning (intro) (advanced) Courses NYU Grad Deep Learning (2021) UvA Deep Learning Notebooks (link) UofT Deep Learning: Theory &amp;amp; Data Science (link) UofT Statistical Methods for Machine Learning II (2024), (2023) </description>
     </item>
   </channel>
 </rss>
