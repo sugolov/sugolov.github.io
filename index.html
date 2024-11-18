@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Website</title>
+    <!-- MathJax for LaTeX support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- Lucide Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$','$'], ['\\(','\\)']],
+                displayMath: [['$$','$$'], ['\\[','\\]']],
+                processEscapes: true
+            }
+        });
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+        }
+
+        .headshot {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .bio {
+            flex: 1;
+        }
+
+        .bio-header {
+            margin-bottom: 1rem;
+        }
+
+        .bio-header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #333;
+        }
+
+        .bio-header p {
+            margin: 0.5rem 0 1.5rem 0;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #555;
+        }
+
+        .contact-item a {
+            color: #555;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            color: #0066cc;
+        }
+
+        .section {
+            border-top: 1px solid #eee;
+            padding-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            margin-bottom: 1rem;
+        }
+
+        .posts ul, .publications ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .posts li, .publications li {
+            margin-bottom: 0.8rem;
+        }
+
+        .posts a, .publications a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .posts a:hover, .publications a:hover {
+            text-decoration: underline;
+        }
+
+        .date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+
+        .pdf-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.2rem 0;
+        }
+
+        .pdf-info {
+            color: #666;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+
+        /* Add subtle icons to different link types */
+        .publication-type {
+            font-size: 0.8rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            background-color: #f0f0f0;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="profile-section">
+            <img src="files/profile.png" alt="Your headshot" class="headshot">
+            <div class="bio">
+                <div class="bio-header">
+                    <h1>Anton Sugolov</h1>
+                    <p>Omnia mea mecum porto</p>
+                </div>
+                <h2>About Me</h2>
+                <p>Math MSc. Student at University of Toronto, supervised by Prof. Vardan Papyan. I enjoy thinking about why machines learn and applied math.</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i data-lucide="mail"></i>
+                        <a href="">asugolov[at]gmail[dot]com</a>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="github"></i>
+                        <a href="https://github.com/sugolov">GitHub</a>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="twitter"></i>
+                        <a href="https://twitter.com/suganton">Twitter</a>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="linkedin"></i>
+                        <a href="https://linkedin.com/in/anton-sugolov">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+</body>
+</html>

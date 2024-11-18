@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Website</title>
+    <!-- MathJax for LaTeX support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- Lucide Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$','$'], ['\\(','\\)']],
+                displayMath: [['$$','$$'], ['\\[','\\]']],
+                processEscapes: true
+            }
+        });
+    </script>
+    <style>
+        /* ... Previous styles remain the same ... */
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tab-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #666;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-button.active {
+            color: #0066cc;
+            border-bottom: 2px solid #0066cc;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .project-card {
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+
+        .project-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-links {
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        /* Keep all previous styles and add these new ones */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+        }
+
+        .headshot {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .section {
+            border-top: 1px solid #eee;
+            padding-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .posts a, .publications a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <!-- Previous sections remain the same until the blog/projects section -->
+    <main>
+        <section class="profile-section">
+            <img src="/api/placeholder/200/200" alt="Your headshot" class="headshot">
+            <div class="bio">
+                <div class="bio-header">
+                    <h1>Your Name</h1>
+                    <p>Short tagline about yourself</p>
+                </div>
+                <h2>About Me</h2>
+                <p>Write a brief introduction about yourself here. What you do, your interests, and what visitors can expect to find on your website.</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i data-lucide="mail"></i>
+                        <a href="mailto:your.email@example.com">your.email@example.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="github"></i>
+                        <a href="https://github.com/yourusername">@yourusername</a>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="twitter"></i>
+                        <a href="https://twitter.com/yourusername">@yourusername</a>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="linkedin"></i>
+                        <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section publications">
+            <h2>Publications & Documents</h2>
+            <ul>
+                <li>
+                    <a href="papers/example-paper.pdf" class="pdf-link">
+                        <i data-lucide="file-text"></i>
+                        Research Paper Title
+                    </a>
+                    <span class="publication-type">PDF</span>
+                    <span class="pdf-info">Conference Name, 2024</span>
+                </li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <div class="tabs">
+                <button class="tab-button active" onclick="showTab('projects')">Course Projects</button>
+                <button class="tab-button" onclick="showTab('blog')">Blog Posts</button>
+            </div>
+
+            <div id="projects" class="tab-content active">
+                <div class="project-card">
+                    <h3>Machine Learning for Time Series Analysis</h3>
+                    <div class="project-meta">
+                        <i data-lucide="book"></i> CS 534 - Machine Learning
+                        <span class="date">Fall 2024</span>
+                    </div>
+                    <p>Implemented LSTM and transformer models to predict stock market trends using Python and PyTorch. Achieved 85% accuracy on test data.</p>
+                    <div class="project-links">
+                        <a href="projects/ml-stocks/report.pdf">
+                            <i data-lucide="file-text"></i> Report
+                        </a>
+                        <a href="https://github.com/yourusername/ml-stocks">
+                            <i data-lucide="github"></i> Code
+                        </a>
+                        <a href="projects/ml-stocks/slides.pdf">
+                            <i data-lucide="presentation"></i> Slides
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Distributed Systems Framework</h3>
+                    <div class="project-meta">
+                        <i data-lucide="book"></i> CS 677 - Distributed Computing
+                        <span class="date">Spring 2024</span>
+                    </div>
+                    <p>Built a distributed key-value store using Raft consensus algorithm. Implemented leader election and log replication.</p>
+                    <div class="project-links">
+                        <a href="projects/distributed/paper.pdf">
+                            <i data-lucide="file-text"></i> Paper
+                        </a>
+                        <a href="https://github.com/yourusername/distributed-kv">
+                            <i data-lucide="github"></i> Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="blog" class="tab-content">
+                <ul>
+                    <li>
+                        <a href="posts/quadratic-formula.html">Understanding the Quadratic Formula</a>
+                        <span class="date">Nov 18, 2024</span>
+                    </li>
+                    <li>
+                        <a href="posts/markdown-guide.html">Getting Started with Markdown</a>
+                        <span class="date">Nov 17, 2024</span>
+                    </li>
+                    <li>
+                        <a href="posts/machine-learning.html">Recent Research in Machine Learning</a>
+                        <span class="date">Nov 16, 2024</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Tab switching functionality
+        function showTab(tabId) {
+            // Update button states
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            document.querySelector(`button[onclick="showTab('${tabId}')"]`).classList.add('active');
+
+            // Update content visibility
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
