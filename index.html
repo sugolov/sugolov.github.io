@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Website</title>
-    <!-- MathJax for LaTeX support -->
+    <!-- Previous scripts remain the same -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <!-- Lucide Icons -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
@@ -18,6 +17,7 @@
         });
     </script>
     <style>
+        /* Previous styles remain the same */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
@@ -89,28 +89,54 @@
         .section {
             border-top: 1px solid #eee;
             padding-top: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
             margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
         }
 
-        .section h2 {
-            margin-bottom: 1rem;
+        .tab-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #666;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
         }
 
-        .posts ul, .publications ul {
+        .tab-button.active {
+            color: #0066cc;
+            border-bottom: 2px solid #0066cc;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .posts ul, .documents ul {
             list-style-type: none;
             padding: 0;
         }
 
-        .posts li, .publications li {
+        .posts li, .documents li {
             margin-bottom: 0.8rem;
         }
 
-        .posts a, .publications a {
+        .posts a, .documents a {
             color: #0066cc;
             text-decoration: none;
         }
 
-        .posts a:hover, .publications a:hover {
+        .posts a:hover, .documents a:hover {
             text-decoration: underline;
         }
 
@@ -120,11 +146,34 @@
             margin-left: 0.5rem;
         }
 
-        .pdf-link {
-            display: inline-flex;
+        .project-card {
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            margin: 0 0 0.5rem 0;
+        }
+
+        .project-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-links {
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .document-item {
+            display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.2rem 0;
+            margin-bottom: 1rem;
         }
 
         .pdf-info {
@@ -133,7 +182,6 @@
             margin-left: 0.5rem;
         }
 
-        /* Add subtle icons to different link types */
         .publication-type {
             font-size: 0.8rem;
             padding: 0.2rem 0.5rem;
@@ -152,7 +200,7 @@
                     <h1>Anton Sugolov</h1>
                     <p>Omnia mea mecum porto</p>
                 </div>
-                <h2>About Me</h2>
+                <h2>About</h2>
                 <p>Math MSc. Student at University of Toronto, supervised by Prof. Vardan Papyan. I enjoy thinking about why machines learn and applied math.</p>
                 <div class="contact-info">
                     <div class="contact-item">
@@ -171,9 +219,193 @@
                         <i data-lucide="linkedin"></i>
                         <a href="https://linkedin.com/in/anton-sugolov">LinkedIn</a>
                     </div>
+                    <div class="contact-item">
+                        <i data-lucide="scholar"></i>
+                        <a href="https://scholar.google.com/citations?user=LSobBYoAAAAJ&hl=en">Scholar</a>
+                    </div>
                 </div>
             </div>
         </section>
 
-</body>
-</html>
+                <section class="section">
+                    <h2>Tabs and info</h2>
+                    <div class="tabs">
+                        <button class="tab-button active" onclick="showTab('blog')">Posts</button>
+                        <!-- <button class="tab-button" onclick="showTab('publications')">Publications</button> -->
+                        <button class="tab-button" onclick="showTab('projects')">Projects</button>
+                        <button class="tab-button" onclick="showTab('teaching')">Teaching</button>
+                        <button class="tab-button" onclick="showTab('documents')">Other</button>
+                    </div>
+        
+                    <div id="blog" class="tab-content active">
+                        <ul>
+                            <li class="document-item">
+                                <a href="posts/test/index.html">A blog post</a>
+                                <span class="date">Nov 17, 2024</span>
+                            </li>
+                        </ul>
+                    </div>
+        
+                    <!-- 
+                    <div id="publications" class="tab-content">
+                        <ul>
+                            <li class="document-item">
+                                <i data-lucide="file-text"></i>
+                                <div>
+                                    <a href="papers/research-paper.pdf">Novel Approaches to Deep Learning</a>
+                                    <span class="publication-type">PDF</span>
+                                    <span class="pdf-info">IEEE Conference, 2024</span>
+                                </div>
+                            </li>
+                            <li class="document-item">
+                                <i data-lucide="book"></i>
+                                <div>
+                                    <a href="papers/journal-paper.pdf">Machine Learning Applications</a>
+                                    <span class="publication-type">PDF</span>
+                                    <span class="pdf-info">Journal of AI, 2023</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    -->
+
+                    
+        
+                    <div id="projects" class="tab-content">
+                        <div class="project-card">
+                            <h3>Introduction to the Otto Calculus</h3>
+                            <div class="project-meta">
+                                <i data-lucide="book"></i> MAT1855: Mathematical Problems in Economics
+                                <span class="date">Spring 2024</span>
+                            </div>
+                            <p>Described the machinery and original development of the Otto calculus. Mentioned applications to stochastic processes and statistical inference.</p>
+                            <div class="project-links">
+                                <a href="files/mat1855.pdf">
+                                    <i data-lucide="file-text"></i> Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <h3>Clusters in Self-Attention Dynamics</h3>
+                            <div class="project-meta">
+                                <i data-lucide="book"></i> MAT1510: Deep Learning, Theory and Data Science
+                                <span class="date">Fall 2023</span>
+                            </div>
+                            <p>
+                                Topics course project on "<a href="https://arxiv.org/abs/2305.05465">The emergence of clusters in self-attention dynamics</a>" (2023) by Geshkovski et al. 
+                                Implemented additional tests for the case of multihead attention and presented a small result about attention head eigenvalue.
+                            </p>
+                            <div class="project-links">
+                                <a href="files/mat1510-writeup.pdf">
+                                    <i data-lucide="file-text"></i> Report
+                                </a>
+                                <a href="files/slides_10min.pdf">
+                                    <i data-lucide="presentation"></i> Slides
+                                </a>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="project-card">
+                            <h3>Distributed Systems Framework</h3>
+                            <div class="project-meta">
+                                <i data-lucide="book"></i> CS 677 - Distributed Computing
+                                <span class="date">Spring 2024</span>
+                            </div>
+                            <p>Built a distributed key-value store using Raft consensus algorithm. Implemented leader election and log replication.</p>
+                            <div class="project-links">
+                                <a href="projects/distributed/paper.pdf">
+                                    <i data-lucide="file-text"></i> Paper
+                                </a>
+                                <a href="https://github.com/yourusername/distributed-kv">
+                                    <i data-lucide="github"></i> Code
+                                </a>
+                            </div>
+                        </div>
+                    -->
+                    </div>
+
+                    <div id="teaching" class="tab-content">
+                        Tutorial notes posted
+                        <ul>
+                        <li class="document-item">
+                            <i data-lucide="file-text"></i>
+                            <div>
+                                <a>MAT133: Calculus and Linear Algebra for Commerce</a>
+                                <span class="pdf-info">Fall/Winter 2024-2025</span>
+                            </div>
+                        </li>
+                        <li class="document-item">
+                            <i data-lucide="file-text"></i>
+                            <div>
+                                <a>MAT187: Calculus II (Engineering)</a>
+                                <span class="pdf-info">Winter 2025</span>
+                            </div>
+                        </li>
+                        </ul>
+                    </div>
+        
+                    <div id="documents" class="tab-content">
+                        <!--
+                        <h3>Academics</h3>
+                        <ul>
+                            <li class="document-item">
+                                <i data-lucide="presentation"></i>
+                                <div>
+                                    <a href="documents/thesis-defense.pdf">Thesis Defense Presentation</a>
+                                    <span class="publication-type">PDF</span>
+                                    <span class="pdf-info">December 2024</span>
+                                </div>
+                            </li>
+                            <li class="document-item">
+                                <i data-lucide="file-text"></i>
+                                <div>
+                                    <a href="documents/cv.pdf">Curriculum Vitae</a>
+                                    <span class="publication-type">PDF</span>
+                                    <span class="pdf-info">Updated Nov 2024</span>
+                                </div>
+                            </li>
+                        </ul>
+                    -->
+                        <h3>Notes</h3>
+                        <p>
+                            Course notes taken while at U of T 
+                        </p>
+                        <li class="document-item">
+                            <i data-lucide="file-text"></i>
+                            <div>
+                                <a href="files/sta457.pdf">STA457</a>
+                                <span class="publication-type">PDF</span>
+                                <span class="pdf-info">Updated a while ago</span>
+                            </div>
+                        </li>
+                        <li class="document-item">
+                            <i data-lucide="file-text"></i>
+                            <div>
+                                <a href="files/sta302.pdf">STA302</a>
+                                <span class="publication-type">PDF</span>
+                                <span class="pdf-info">Updated a while ago</span>
+                            </div>
+                        </li>
+                    </div>
+                </section>
+            </main>
+        
+            <script>
+                // Initialize Lucide icons
+                lucide.createIcons();
+        
+                // Tab switching functionality
+                function showTab(tabId) {
+                    document.querySelectorAll('.tab-button').forEach(button => {
+                        button.classList.remove('active');
+                    });
+                    document.querySelector(`button[onclick="showTab('${tabId}')"]`).classList.add('active');
+        
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(tabId).classList.add('active');
+                }
+            </script>
+        </body>
+        </html>

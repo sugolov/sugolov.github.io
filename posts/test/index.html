@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Getting Started with Markdown - Anton Sugolov</title>
+        <style>
+            body {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 2rem;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                line-height: 1.6;
+                color: #333;
+            }
+            .nav-link {
+                color: #666;
+                text-decoration: none;
+                margin-bottom: 2rem;
+                display: block;
+            }
+            .nav-link:hover {
+                color: #333;
+            }
+            .date {
+                color: #666;
+                font-size: 0.9rem;
+            }
+            pre {
+                background: #f5f5f5;
+                padding: 1rem;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+            code {
+                font-family: monospace;
+            }
+            .example {
+                background: #f9f9f9;
+                padding: 1rem;
+                margin: 1rem 0;
+                border-radius: 4px;
+            }
+            .figure {
+                margin: 2rem -2rem;
+                width: calc(100% + 4rem);
+                text-align: center;
+            }
+            .figure svg {
+                max-width: 100%;
+                height: auto;
+            }
+            .figure img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+            .figure-caption {
+                color: #666;
+                font-size: 0.9rem;
+                margin-top: 0.5rem;
+            }
+        </style>
+    </head>
+<body>
+    <a href="../../index.html" class="nav-link">← Back to Home</a>
+
+    <main role="main">
+        <article>
+            <header>
+                <h1>A blog post</h1>
+                <span class="date">Nov 17, 2024</span>
+            </header>
+
+
+            <section>
+                
+                <p>
+                    Hello! This is a test blog post. 
+                </p>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"></script>
+                <p>
+                    While you're here, let me ask you, have you ever been suspicious of PCA in high dimensions ? 
+                    Check out the neat results of <a href="https://arxiv.org/abs/1806.08805">PCA of high dimensional random walks with comparison to neural network training</a>
+                    (2018) by J. Antognini and J. Sohl-Dickstein.
+                    <figure class="figure">
+                        <img src="lissajous.png" alt="lissajous" />
+                    </figure>
+                    The authors show that the \(k\)-th principal component of a random walk is (asymptotically, in dimension) the \(k\)-th Fourier mode.
+                </p>
+                <p>
+                    Thanks for stopping by!
+                </p>
+            </section>
+        </article>
+    </main>
+</body>
+</html>
