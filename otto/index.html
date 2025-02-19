@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to the Otto Calculus</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: normal;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            font-weight: normal;
+        }
+
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        .list-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        .list-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .date {
+            color: #666;
+            font-family: monospace;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            width: 100px;
+        }
+
+        .link {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .resources {
+            margin-top: 3rem;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+    <a href="index.html" class="nav-link">← Back to Home</a>
+    
+    <h1>Introduction to the Otto Calculus</h1>
+
+    <p>
+        In Fall 2024, I took Prof. Robert McCann's course on <a href="https://www.math.utoronto.ca/mccann/1855/" class="link">Mathematical Problems in Economics</a>. 
+        The course focused on developing optimal transport theory, beginning with stable matching, touching on developments in game theory, and ending with regularity of solutions for the monopolist's problem.
+        The monopolist's problem is pretty interesting from a classification perspective, since it can be interpreted as a type of clustering (but this is for another time).
+        <br><br>
+
+        My final paper for the course was on the Otto calculus; a way to define "gradients with respect to a functional" in the appropriate sense. 
+        If we consider the space of all (say \(L^p\) integrable) probability densities, and a particular "measurement" assigned to each density, the Otto calculus
+        tells us how to evolve a probability density to maximize the measurement. For example, the entropy-maximizing path is given by solving to the heat equation.
+        This might seem believable: in the 1D case, solving the heat equation is just convolving with the heat kernel, which is the Gaussian, and the Gaussian is the entropy maximizing probability distribution (for fixed mean and variance).
+        <br><br>
+
+        In this post, we'll discuss the development of Otto calculus, which taken from my final course project <a href="../files/mat1855.pdf" class="link">(PDF)</a>.
+    </p>
+
+    <h1>WORK IN PROGRESS:</h1>
+
+    <h2>0. Intro</h2>
+
+    <p>
+        In a series of papers, Felix C. Otto introduced a geometric perspective on the normalized solutions of certain PDEs as gradient flows on the space of probability densities. 
+        Given an energy functional, the Otto calculus produces a PDE such that the solutions can be interpreted as gradient flows of the functional in the appropriate sense. 
+        Rather strikingly, the heat equation can be derived from the Shannon-Boltzmann entropy using this construction.
+        In this post, we survey the necessary prerequisites to Otto's derivation and present Otto's initial results. 
+    </p>
+
+    <h2>1. Prerequisites</h2>
+    
+    <p>
+        To understand Otto's contributions, we need to develop several key concepts. We'll start with the continuity equation and its relationship to the Eulerian transport formulation, define the Wasserstein metric \(W_p\), explore the space of \(L^p\) probability densities, and describe the Benamou-Brenier representation for the distance \(W_p\).
+    </p>
+
+    <h3>The Continuity Equation</h3>
+
+    <p>
+        The continuity equation from physics describes the evolution of a quantity whose total mass is preserved:
+        \[
+            \frac{d}{dt} \rho_t + \text{div}(\rho_t v_t) = 0
+        \]
+    </p>
+
+    <p>
+        Here, \(\rho_t(x)\) is a measure that evolves in \(t\) by a time dependent vector field \(v_t(x)\) such that the total mass \(\int \rho_t = 1\) is conserved under flow by \(v_t\). The continuity equation is suited for transport in the Eulerian formalism, where the model is described through its density and velocity in time.
+    </p>
+
+    <p>
+        For an initial \(\rho_0\), we find the solution of the ODE given by:
+        \[
+            \begin{cases}
+                y_x'(t) &= v_t(y_x(t)) \\
+                y_x(0) &= x
+            \end{cases}
+        \]
+    </p>
+
+    <p>
+        This post is Part 1 of a series exploring Otto Calculus. In the next post, we'll dive deeper into the Wasserstein metric and its properties.
+    </p>
+
+    <div class="resources">
+        <h2>Resources</h2>
+        <ul class="list-items">
+            <li class="list-item">
+                <span class="date">2024/04/03</span>
+                <a href="files/mat1855.pdf" class="link">Full Project Write-up (PDF)</a>
+            </li>
+        </ul>
+    </div>
+
+</body>
+</html>
