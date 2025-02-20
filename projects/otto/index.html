@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to the Otto Calculus</title>
+    <style>
+        
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: normal;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            font-weight: normal;
+        }
+
+        .definition {
+            background-color: #f8f9fa;
+            border-left: 3px solid #007bff;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .definition-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .theorem {
+            background-color: #f8f9fa;
+            border-left: 3px solid #28a745;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .theorem-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .example {
+            background-color: #f8f9fa;
+            border-left: 3px solid #fd7e14;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        .list-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        .list-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .date {
+            color: #666;
+            font-family: monospace;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            width: 100px;
+        }
+
+        .link {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .resources {
+            margin-top: 3rem;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+    <a href="../.." class="nav-link">← home</a>
+    
+    <h1>Introduction to the Otto Calculus</h1>
+
+    <h2>0. Background</h2>
+    <p>
+        In Fall 2024, I took Prof. Robert McCann's course on <a href="https://www.math.utoronto.ca/mccann/1855/" class="link">Mathematical Problems in Economics</a>. 
+        The course focused on developing optimal transport theory, beginning with stable matching, touching on developments in game theory, and ending with regularity of solutions for the monopolist's problem.
+        The monopolist's problem is pretty interesting from a classification perspective, since it can be interpreted as a type of clustering (but this is for another time).
+        <br><br>
+
+        My final paper for the course was on the Otto calculus; a way to define "gradients with respect to a functional" in the appropriate sense. 
+        If we consider the space of all (say \(L^p\) integrable) probability densities, and a particular "measurement" assigned to each density, the Otto calculus
+        tells us how to evolve a probability density to maximize the measurement. For example, the entropy-maximizing path is given by solving to the heat equation.
+        This might seem believable: in the 1D case, solving the heat equation is just convolving with the heat kernel, which is the Gaussian, and the Gaussian is the entropy maximizing probability distribution (for fixed mean and variance).
+        <br><br>
+
+        In this post, we'll discuss the development of Otto calculus, which taken from my final course project <a href="../../files/mat1855.pdf" class="link">(PDF)</a>.
+        <br><br>
+
+        In a series of papers, Felix C. Otto introduced a geometric perspective on the normalized solutions of certain PDEs as gradient flows on the space of probability densities. 
+        Given an energy functional, the Otto calculus produces gives a way to produce a PDE, the solutions of which can be interpreted as maximizing flows of the functional in the appropriate sense. 
+        Rather strikingly, the heat equation can be derived from the Shannon-Boltzmann entropy using this construction.
+        In this post, we survey the necessary prerequisites to Otto's derivation and present Otto's initial results. 
+    </p>
+
+    <h2>1. Prerequisites</h2>
+    
+    <p>
+        We first develop the prerequisites to understand the contributions of Otto. We first provide an overview of the 
+        continuity equation and its relationship to the Eulerian transport formulation, define the Wasserstein metric \(W_p\), 
+        the space of \(L^p\) probability densities, and describe the Benamou-Brenier representation for the distance \(W_p\).
+    </p>
+
+    <h3>1.1 Continuity equation</h2>
+
+    <p>
+        This fluid mechanics setting for the \(L^2\) Monge-Kantorovich transport problem was originally discussed in the work of Benamou 
+        and Brenier, and motivated the dynamical perspective through the continuity equation. The continuity equation from physics 
+        describes the evolution of a quantity whose total mass is preserved:
+        \[
+            \frac{d}{dt} \rho_t + \text{div}(\rho_t v_t) = 0
+        \]
+    </p>
+
+    <p>
+        In the above, \(\rho_t(x)\) is a measure that evolves in \(t\) by a time dependent vector field \(v_t(x)\) such that the total mass 
+        \(\int \rho_t = 1\) is conserved under flow by \(v_t\). In simple language, the continuity equation ensures that \(\rho_t\)
+        remains a probability measure when pushed around by \(v_t\). The continuity equation is suited for transport in the Eulerian 
+        formalism, in which the transport model is described through its density and velocity in time. 
+        For an initial \(\rho_0\), the Eulerian formalism aims to describe  transport through the solution of the ODE given by
+        \[
+            \begin{cases}
+                y_x'(t) &= v_t(y_x(t)) \\
+                y_x(0) &= x
+            \end{cases}
+        \]
+
+    
+    </p>
+
+    <p>
+        Evolving individual points with \(Y_t(x) = y_x(t)\), the measure at time \(t\) is given by \(\rho_t = (Y_t)_\# \rho_0\). 
+        For this formalism to preserve mass, \(\rho_t\) and \(v_t\) must together solve the continuity equation.
+        <div class="definition">
+            <div class="definition-title">Definition 1: Solution to Continuity Equation</div>
+            <p>Consider \(\Omega \subset \mathbb{R}^d\) is a bounded domain or \(\Omega = \mathbb{R}^d\).
+            A family of pairs of measures and vector fields \((\rho_t, v_t)\) for \(t \in [0,1]\) satisfying \(v_t \in L^1(\rho_t; \mathbb{R}^d)\) and \(\int_0^T \|v_t\|_{L_1(\rho_t)} \, dt < \infty\) solves the continuity equation in the:</p>
+            <p><strong>distributional</strong> sense if for every test function \(\phi \in C_c^1([0,1] \times \overline{\Omega})\)
+            \[
+                \int_0^T \int_\Omega \frac{d}{dt} \phi\, d\rho_t\, dt + \int_0^T \int_\Omega \nabla \phi \cdot v_t\, d\rho_t\, dt = 0 
+            \]</p>
+            <p>and in the <strong>weak</strong> sense if for every \(\psi \in C_c^1(\overline{\Omega})\), \(t \mapsto \int \psi \, d\rho_t\) is abs. continuous in \(t\), and for a.e. \(t\),
+            \[
+                \frac{d}{dt} \int_\Omega \psi \, d\rho_t = \int_\Omega \nabla \psi \cdot v_t \, d\rho_t
+            \]</p>
+        </div>
+    </p>
+
+    <h3>1.2 Wasserstein metric \(W_p\) and the space \(\mathcal{P}_p(\mathbb{R}^d)\)</h2>
+
+    <p>
+        For the sake of summary, we focus on the case of \(\mathbb{R}^d\). 
+        Consider the transport problem for probability measures on \(\Omega\) with cost \(c_p(x,y) = |x-y|^p\) 
+        for \(p \in [1, \infty)\). We restrict our attention to the space of measures where the cost \(c_p\) is finite, 
+        which are those with finite \(L^p\) norm:
+        \[
+            \mathcal{P}_p(\Omega) = \left\{ \mu \in \mathcal{P}(\Omega) \, \Big| \, \int_\Omega |x|^p d\mu < \infty\right\}
+        \]
+    </p>
+
+    <p>
+        Note that \(p < q \implies \mathcal{P}_p(\Omega) \subset \mathcal{P}_q(\Omega)\). 
+        The Wasserstein distance \(W_p\) defines a metric on \(\mathcal{P}_p(\Omega)\) associated with the minimal transport cost with \(c_p\):
+        \[
+            W_p(\mu, \nu) = \min \left\{ \int_{\Omega \times \Omega} |x - y|^p \, d\gamma \, \Big| \, \gamma \in \Pi(\mu, \nu) \right\}^{1/p}
+        \]
+    </p>
+
+    <p>
+        <div class="definition">
+            <div class="definition-title">Definition 2: Wasserstein Space</div>
+            <p>The <strong>Wasserstein space</strong> of order \(p \in [1, \infty)\), is the metric space
+            \[
+                \mathbb{W}_p(\Omega) = (\mathcal{P}_p(\Omega),W_p)
+            \]</p>
+        </div>
+         A natural question is how it is related to the topology induced by weak convergence. Convergence in the Wasserstein metric turns out to be equivalent to weak convergence if \(\Omega\) is compact. In general:
+        \[
+            W_p(\mu_n, \mu) \to 0 \iff \mu_n \to \mu \text{ weakly},\, \int |x|^p \, d\mu_n \to \int |x|^p \, d\mu
+        \]
+    </p>
+
+    <h3>1.3 Absolute continuity in \(\mathbb{W}_p\)</h3>
+
+    <p>
+        In order to build towards the gradient flows of Otto calculus, we must first characterize the properties of paths in \(\mathbb{W}_p(\Omega)\). A curve in \(\mathbb{W}_p(\Omega)\) is defined as a mapping \(\mu_t: [0, 1] \to \mathcal{P}_p(\Omega)\). The curve \(\mu_t\) is absolutely continuous if there exists \(g \in L^1([0,1])\) such that:
+        \[
+            W_p(\mu_{t_0}, \mu_{t_1}) \leq \int_{t_0}^{t_1} g(s) \, ds
+        \]
+        for every \(0 \leq t_0 < t_1 \leq 1\). The metric derivative of the curve \(t \mapsto \mu_t\) at \(t\) is defined as:
+        \[
+            |\mu'|(t) = \lim_{h \to 0} \frac{W_p(\mu_{t+h}, \mu_t)}{h}
+        \]
+    </p>
+
+    <p>
+        The absolute continuity of \(\mu_t\) is equivalent to the existence of a vector field \(v_t\) so that \((\mu_t, v_t)_t\) 
+        solve the continuity equation. This is quite significant, since we can identify curves with certain properties as solutions to a 
+        PDE, which is what was noticed by Otto in his original construction. The equivalence of the two conditions is formally presented in the following theorem in generality, and is
+        originally due to L. Ambrosio.
+        <div class="theorem">
+        <div class="theorem-title">Theorem 1: Characterization of Gradient Flows</div>
+        <p>Let \((\mu_t)_{t \in [0,1]}\) be an absolutely continuous curve in \(\mathbb{W}_p(\Omega)\) for \(p>1\) and compact \(\Omega \subset \mathbb{R}^d\). For almost every \(t \in [0,1]\), there exists a vector field \(v_t \in L^p(\mu_t, \mathbb{R}^d)\) such that</p>
+        <ul>
+            <li>\((\mu_t, v_t), \, t \in [0,1]\) satisfy \(\frac{d}{dt} \mu_t + \text{div}(v_t\mu_t) = 0\) in the weak sense and</li>
+            <li>for almost every \(t\), \(\|v_t\|_{L^p(\mu_t)} \leq |\mu'|(t)\)</li>
+        </ul>
+        <p>Conversely, if \((\mu_t)_{t \in [0,1]}\) is a family of measures in \(\mathcal{P}_p(\Omega)\), and for each \(t\) there is \(v_t \in L^p(\mu_t, \mathbb{R}^d)\) with \(\int_0^1 \|v_t\|_{L^p(\mu_t)} \, dt < \infty\) satisfying \(\frac{d}{dt} \mu_t + \text{div}(v_t\mu_t) = 0\), then \(\mu_t\) is absolutely continuous and \(\|v_t\|_{L^p(\mu_t)} \leq |\mu'|(t)\).</p>
+    </div>
+
+    <h3>1.4 The Benamou-Brenier Formula</h3>
+
+    <p>
+        Consider \(\mathbb{W}_2\) (straying from general \(p\)) for the purpose of demonstration. 
+        Earlier we discussed the Eulerian transport perspective and the evolution of a measure by a vector field, 
+        which satisfies the continuity equation. The <strong>quadratic action</strong> for a measure 
+        \(\mu \in \mathcal{P}_2(\mathbb{R}^n)\) and a measurable vector field \(v : \mathbb{R}^n \to \mathbb{R}^n\) is defined as:
+        \[
+            \mathcal{A}(v, \mu) = \int_{\mathbb{R}^n} \|v\|^2 \, d\mu = \|v\|_{L^2(\mu)}
+        \]
+    </p>
+
+    <p>
+        The <strong>Benamou-Brenier Formula</strong> is a representation theorem, showing for \(\mu_0, \mu_1 \in \mathcal{P}_2(\mathbb{R}^n)\), the curves \(\mu_t\) minimizing the transport cost \(W_2(\mu_0, \mu_1)\) must be solutions to the continuity equation \((\mu_t, v_t)_t\):
+        \[
+            W_2^2(\mu_0, \mu_1) 
+            = \min \left\{ \int_0^1 \|v_t\|_{L^2(\mu_t)} \, dt \;\Big|\; \frac{d}{dt} \mu_t + \text{div}(v_t\mu_t) = 0 \text{ in } (0,1) \times \mathbb{R}^n \right\}
+        \]
+    </p>
+
+    <p>
+        The representation formula generalizes for \(W_p\), requiring the definition of another action functional, however the idea of the representation is the same. This formulation through the principle of least action is reminiscent of geodesics from Riemannian geometry: on a Riemannian manifold \((M, g)\), the geodesics \(\gamma(t)\) with \(t\in[0,1]\) minimize the energy functional:
+        \[
+            E(\gamma) = \frac{1}{2} \int_0^1 g_{\gamma(t)} (\dot \gamma(t), \dot \gamma(t)) \, dt
+        \]
+    </p>
+
+    <p>
+        This hints at the special geometric structure of \(\mathcal{P}_2(\Omega)\) induced by the Wasserstein metric, and provides a motivation for some of the methods of Otto calculus.
+    </p>
+
+    <h2>2. Otto's Derivation</h2>
+
+    <p>
+        In his 1998 paper "The geometry of dissipative evolution
+        equations: the porous medium equation", F. Otto constructs the weak solution of the porous medium equation as the 
+        gradient flow of a particular energy functional. The construction proceeds through identifying "tangent functions" 
+        on the space of probability densities, which are identified by solving the continuity equation.    
+    </p>
+
+    <h3>2.1 The Geometry of the Porous Medium Equation</h3>
+
+    <p>
+        The porous medium equation for \(m \geq 1\) is given by:
+        \[
+            \frac{\partial}{\partial t}\rho - \Delta \rho^m = 0
+        \]
+    </p>
+
+    <p>
+        The aim is to derive this equation in terms of an evolution of \(\rho\) given by the gradient flow of an energy functional. Given a Riemannian manifold \((M, g)\) and functional \(E\) on \(M\), the dynamical system given by:
+        \[
+            \frac{\partial}{\partial t}\rho = - \nabla E(\rho)
+        \]
+        is called the gradient flow on \(M\) generated by \(E\). Crucially, we can identify tangent vectors 
+        \(s \in T_\rho M\) with their co-tangent vectors through the metric tensor \(g\):
+        \[
+            g(\nabla E, s) = dE\, (s)
+        \]
+        Therefore the gradient flow can be represented dually through:
+        \[
+            g_\rho\left( \frac{\partial}{\partial t}\rho, s\right) + d_\rho\, E\, (s) = 0
+        \]
+    </p>
+
+    <p>
+        We work to extend this to the case of functions \(\rho : \mathbb{R}^d \to \mathbb{R}\) by considering:
+        \[
+            M = \left\{\rho \, \Big| \, \rho \geq 0, \, \int \rho = 1\right\}
+            \quad 
+            T_\rho M = \left\{s \, \Big| \, \int s = 0\right\}
+        \]
+    </p>
+
+    <p>
+        We define the metric tensor \(g_\rho\). First, identify tangent space of functions \(s\) with functions \(p\) coupled with \(\rho\) heuristically through the continuity equation:
+        \[
+            T_\rho M 
+            \cong \left\{ p : \mathbb{R}^d \to \mathbb{R} \, \Big| \,    - \text{div}(\rho\nabla p) = s        \right\}
+        \]
+    </p>
+
+    <p>
+        With this identification, define:
+        \[
+            g_\rho (s_1, s_2)
+            = \int \rho\,  \nabla p_1 \cdot \nabla p_2 
+            =\int s_1 p_2
+        \]
+        where the second equality holds after integrating by parts. The functional \(E\) associated with the 
+        porous medium equation is defined as:
+        \[
+            E(\rho)
+            =
+            \begin{cases}
+                \frac{1}{m-1} \int \rho^m & m \neq 1 \\
+                \int \rho \ln \rho & m = 1
+            \end{cases}
+        \]
+    </p>
+
+    <p>
+        Through the representation given by the metric tensor, we compute:
+        \[
+            d_\rho \, E\, (s)
+            = g_\rho (\nabla E, s)
+            =
+            \begin{cases}
+                \frac{m}{m-1} \int \rho^{m-1} s & m \neq 1 \\
+                \int (\ln \rho + 1)s & m = 1
+            \end{cases}
+        \]
+        We will specify the exact computation of the variational derivative in the next section.
+        Using the dual representation, we write \(-\text{div}(\rho \nabla p) = s\), and express:
+        \[
+            \begin{aligned}
+                0 = g_\rho(\rho_t, s) + d E_\rho(s)
+                &\implies
+                \begin{cases}
+                    0 = \int \frac{\partial}{\partial t}\rho\, p + \frac{m}{m-1} \int \rho^{m-1} s  & m \neq 1 \\
+                    0 = \int \frac{\partial}{\partial t}\rho\, p + \int (\ln \rho + 1)s  & m = 1
+                \end{cases}
+                \\
+                &\implies
+                \begin{cases}
+                    0 = \int \frac{\partial}{\partial t}\rho\, p - \frac{m}{m-1} \int \rho^{m-1} \text{div}(\rho \nabla p)  & m \neq 1 \\
+                    0 = \int \frac{\partial}{\partial t}\rho\, p - \int (\ln \rho + 1)\text{div}(\rho \nabla p)  & m = 1
+                \end{cases}
+            \end{aligned}
+        \]
+    </p>
+
+    <p>
+        Integrating by parts, we find in both cases:
+        \[
+            \int \left(\frac{\partial}{\partial t}\rho - \Delta \rho^m\right)p = 0
+        \]
+        for all \(p\), and under appropriate conditions, this would coincide with the notion of a weak solution we defined earlier. This construction introduces various interesting geometric relations, and in particular, the coupling to cotangent vectors through the continuity operator is related to the notion of absolutely continuous curves we discussed previously.
+    </p>
+
+    <h3>2.2 Wasserstein Gradient Flows</h3>
+
+    <p>
+        We now consider a general energy function \(E : \mathcal{P}_2(\mathbb{R}^d) \to (-\infty, \infty]\). Suppose \(\mu_t\) is a gradient flow. 
+        The key connection to the space \(\mathbb{W}_p\) is that this must be an absolutely continuous curve with metric derivative in \(L^2\). 
+        By our previous theorem, \(\mu_t\) satisfies the continuity equation:
+        \[
+            \frac{\partial}{\partial t} \mu_t + \text{div}(v_t \mu_t) = 0 
+        \]
+        for some \(\|v_t\|_{L^2(\mu_t)} \in L^1_\text{loc}(0,\infty)\). 
+        If it were possible to compute the gradient of \(E\) in the appropriate way, 
+        the gradient flow condition \(v_t = - \nabla^W E(\mu_t)\) would allow us to express the continuity equation as:
+        \[
+            \frac{\partial}{\partial t} \mu_t = \text{div}(\nabla^W E(\mu_t) \mu_t)
+        \]
+    </p>
+
+    <p>
+        As outlined in Otto's derivation, to represent this dually, for each \(\rho \in \mathcal{P}_2(\mathbb{R}^d)\) we must compute the action of \(d_\rho E\) on every \(s \in T_\rho \mathcal{P}_2(\mathbb{R}^d)\) through the derivative:
+        \[
+            \left.\frac{d}{dt}\right|_{t=0} E(\rho_t)
+        \]
+        where \(\rho_t\) is an absolutely continuous curve with \(\rho_0 = \rho\) and initial velocity \(s\).
+    </p>
+
+    <p>
+        Fixing arbitrary test function \(\varphi \in C_c^\infty(\mathbb{R}^n)\) with vector field \(\nabla \varphi = v\), we consider the curve \(\rho_t = (I + tv)_\# \rho\), which in effect turns the above differentiation into a Gateaux derivative. To identify gradients, consider a general energy functional given by:
+        \[
+            \mathcal{U}(\rho) = \int_{\mathbb{R}^d} U(\rho) \, dx
+        \]
+    </p>
+
+    <p>
+        Then:
+        \[
+            \begin{align*}
+                d_\rho\, \mathcal{U}(s)
+                &= \left.\frac{d}{dt}\right|_{t=0} \mathcal{U}(\rho_t)
+                = \left.\frac{d}{dt}\right|_{t=0} \int_{\mathbb{R}^d} U(\rho_t) \, dx \\
+                &= - \int_{\mathbb{R}^d} U'(\rho_t) \, \text{div}(\rho_t v)\, dx \\
+                &= \int_{\mathbb{R}^d} (\nabla U'(\rho_t) \cdot v ) \, \rho_t\, dx \tag{by parts}
+            \end{align*}
+        \]
+    </p>
+
+    <p>
+        Through identifying \(\nabla^W \mathcal{U}(\rho) = \nabla U'(\rho)\), we obtain a tangent vector \(v_t = \nabla U'(\rho_t)\) which gives a weak solution to the continuity equation. From this, we can show that the PDE generated by choosing \(E = \mathcal{U}\) becomes:
+        \[
+            \frac{\partial}{\partial t} \mu_t = \text{div}(\nabla U'(\mu_t)\, \mu_t)
+        \]
+    </p>
+
+    <p>
+        To summarize, we began with a general energy functional \(\mathcal{U}\), and identified its variational derivative with solutions \((\mu_t, \nabla^W \mathcal{U}(\mu_t))\) of the continuity equation. In particular, the curves \(\mu_t\) can be interpreted as a \(\mathcal{U}\)-maximizing flow in \(\mathcal{P}_2(\mathbb{R}^d)\). This has two surprising interpretations for solutions to several known PDEs.
+    </p>
+
+    <div class="example">
+        <div class="example-title">Example 1: Heat Equation from Entropy</div>
+        <p>Consider \(U(\rho) = \rho \log \rho\). The corresponding \(\mathcal{U}(\rho)\) is the Shannon-Boltzmann logarithmic entropy:
+        \[
+            S(\rho) = \int_{\mathbb{R}^d} \rho \log \rho \, dx
+        \]</p>
+        <p>We can compute \(\nabla U'(\rho) = \frac{1}{\rho} \nabla \rho\). Substituting into our previous equation, we recover the heat equation:
+        \[
+            \frac{\partial}{\partial t}\rho
+            = \text{div} \left( \left(\frac{1}{\rho} \nabla \rho\right) \rho \right)
+            = \text{div} \left( \nabla \rho \right)
+            = \Delta \rho
+        \]</p>
+        <p>As stated by C. Villani, this can be interpreted through the striking sentence: <em>"The gradient of Boltzmann's entropy is the Laplace operator"</em>. Solutions to the heat equation can be thought of as producing entropy-maximizing flows in \(\mathcal{P}_2(\mathbb{R}^d)\).</p>
+    </div>
+
+    <div class="example">
+        <div class="example-title">Example 2: Fokker-Planck Equation</div>
+        <p>Consider a potential \(V : \mathbb{R}^d \to \mathbb{R}\) such that \(\int e^{-V(x)} \, dx < \infty\). Define the functional:
+        \[
+            \mathcal{U}(\rho) = S(\rho) + \int_{\mathbb{R}^d} V(x) \rho(x) \, dx
+        \]
+        with corresponding \(U(\rho) = \rho \log \rho + V \rho\).</p>
+        <p>We can compute:
+        \[
+            \nabla U'(\rho) = \frac{1}{\rho} \nabla \rho + \nabla V
+        \]</p>
+        <p>Substituting into our equation, we recover the Fokker-Planck equation:
+        \[
+            \frac{\partial}{\partial t}\rho
+            = \text{div} \left( \left(\frac{1}{\rho} \nabla \rho + \nabla V\right) \rho \right)
+            = \Delta \rho + \text{div} \left((\nabla V)\rho \right)
+        \]</p>
+    </div>
+
+    <h3>2.3 Application: Stochastic Processes</h3>
+
+    <p>
+        The variational formulation we developed gives an interesting perspective on the evolution of laws of certain stochastic processes. Consider a particle at position \(X(t)\) evolving according to the Itô stochastic differential equation:
+        \[
+            dX(t) = -\nabla V(X(t)) + \sqrt{2\beta^{-1}} dW(t)
+        \]
+    </p>
+
+    <div class="note">
+        <p>The particle is acted upon by:</p>
+        <ul>
+            <li>A potential \(V\)</li>
+            <li>Random fluctuations introduced by the Wiener process \(W(t)\)</li>
+            <li>The parameter \(\beta^{-1} \propto T\) models the increased amount of noise \(W\) with greater temperature \(T\)</li>
+        </ul>
+    </div>
+
+    <p>
+        It is known that the probability law \(\rho(t, x)\) governing \(X(t)\) must satisfy the Fokker-Planck equation:
+        \[
+            \frac{\partial}{\partial t}\rho = \beta^{-1}\Delta \rho + \text{div}\left((\nabla V)\rho\right)
+        \]
+    </p>
+
+    <p>
+        The interpretation provided by our earlier discussion suggests that the laws \(\rho(x,t)\) are maximizing the free energy functional:
+        \[
+            \mathcal{U}(\rho) = \beta^{-1} S(\rho) + \int_{\mathbb{R}^d} V(x) \rho(x) \, dx
+        \]
+    </p>
+
+    <p>
+        The evolution of a particle \(X(t)\) can be thought of as its probability \(\rho(x,t)\) changing to maximize this functional. This gives us a geometric interpretation of the particle's movement: it follows paths in the space of probabilities that maximize a combination of entropy and potential energy.
+    </p>
+
+    <h3>2.4 Application: Statistical Learning</h3>
+
+    <p>
+        The applications of Otto calculus have given rise to recent interesting tools for the analysis of sampling algorithms in generative models. 
+        The flow of maximizing an information functional is a key interpretation for the evolution of points in a generative model. 
+        This is possible since many algorithms employ a discretized version of Langevin Monte Carlo, which parametrizes a potential function \(V\) over empirical data and samples with the dynamics outlined above.
+    </p>
+
+    <p>
+        To demonstrate this, we can examine the relationship to the KL-divergence with a target density. 
+        The KL-divergence is a statistical functional which measures the difference in information between two distributions, namely \(P, P^*\) with densities \(\rho, \rho^*\):
+        \[
+            D_\text{KL}(P \,\|\, P^*) = \int \rho \log \left(\frac{\rho}{\rho^*}\right)
+        \]
+    </p>
+
+    <p>
+        Let \(\rho^*\) be the target data density, given in the Gibbs form:
+        \[
+            \rho^*(x) = \exp(-V(x))
+        \]
+        We can therefore express:
+        \[
+            D_\text{KL}(P \,\|\, P^*) = \int \rho \log \rho + \int -\log(\rho^*) \rho = S(\rho) + \int V\rho
+        \]
+    </p>
+
+    <p>
+        In particular, we arrive at the Fokker-Planck form discussed earlier. 
+        The gradient flow structure of this equation suggests that sampling points through Langevin Monte Carlo maximizes the speed of convergence to an equilibrium. The tools of Otto calculus can be used to state and prove certain inequalities about the speed of convergence of sampling, in particular the exponential convergence of Langevin Monte Carlo.
+    </p>
+
+    <h2>3. Summary</h2>
+
+    <p>
+        In this project, we surveyed the development of Otto Calculus: a machine which converts maximizing flows of functionals into solutions of
+         PDEs using geometric ideas. We can deduce some properties about the solutions of PDEs with this interpretation of the functional. Additionally,
+         we can understand the structure of sampling algorithms and stochastic processes whose measures correspond to flows in some functional.
+         The line of work by Sinho Chewi (<a href="https://chewisinho.github.io/main.pdf" class="link">link to book</a>) makes Otto Calculus directly 
+         useful as a theoretical framework for modern diffusion and generative modeling. Overall, I think the connections between machine learning, optimal transport,
+         and calculus of variations are extremely interesting, especially in generative modeling. Can sampling algorithms be said to be optimal, due to implementing 
+         a quickly converging process? Can we design functionals to create a process of a particular kind? 
+    </p>
+
+    <div class="resources">
+        <h2>4. Resources</h2>
+        <p>
+            A detailed bibliography and further discussion is included in my full project write-up (below).
+            Core papers and textbooks that were key for  preparing this post are highlighted.
+        </p>
+        <ul class="list-items">
+            <li class="list-item">
+                <span class="date">2024/04/03</span>
+                <a href="../../files/mat1855.pdf" class="link">Full Project Write-up (PDF)</a>
+            </li>
+        </ul>
+
+        <h3>Core Papers</h3>
+        <ul class="list-items">
+            <li class="list-item">
+                <span class="date">2001</span>
+                <span>Otto, F. - <em>The geometry of dissipative evolution equations: the porous medium equation</em></span>
+            </li>
+            <li class="list-item">
+                <span class="date">1998</span>
+                <span>Jordan, R., Kinderlehrer, D., Otto, F. - <em>The variational formulation of the Fokker-Planck equation</em></span>
+            </li>
+            <li class="list-item">
+                <span class="date">2000</span>
+                <span>Benamou, J.D., Brenier, Y. - <em>A computational fluid mechanics solution to the Monge-Kantorovich mass transfer problem</em></span>
+            </li>
+        </ul>
+
+        <h3>Key Texts</h3>
+        <ul class="list-items">
+            <li class="list-item">
+                <span class="date">2015</span>
+                <span>Santambrogio, F. - <em>Optimal Transport for Applied Mathematicians</em> (Chapters 4, 5)</span>
+            </li>
+            <li class="list-item">
+                <span class="date">2021</span>
+                <span>Ambrosio, L. et al. - <em>Gradient Flows in Metric Spaces</em> (Chapters 11, 17, 18)</span>
+            </li>
+        </ul>
+    </div>
+
+
+
+</body>
+</html>
