@@ -1,0 +1,210 @@
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    color: #333;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 3rem;
+    gap: 2rem;
+}
+
+.content {
+    flex: 1;
+}
+
+.headshot {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-weight: normal;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    font-weight: normal;
+}
+
+.contact-links {
+    margin-bottom: 2rem;
+}
+
+.contact-links a {
+    color: #0000CC;
+    text-decoration: none;
+    margin-right: 1.5rem;
+}
+
+.contact-links a:hover {
+    text-decoration: underline;
+}
+
+.list-items {
+    list-style: none;
+    padding: 0;
+}
+
+.list-item {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: baseline;
+}
+
+.date {
+    color: #666;
+    font-family: monospace;
+    margin-right: 1rem;
+    flex-shrink: 0;
+    width: 100px;
+}
+
+.link {
+    color: #0000CC;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.email {
+    font-family: monospace;
+    color: #333;
+}
+
+.section {
+    margin-bottom: 1rem;
+}
+
+/* Definition, Theorem, Example environments */
+.definition {
+    background-color: #f8f9fa;
+    border-left: 3px solid #007bff;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.definition-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.theorem {
+    background-color: #f8f9fa;
+    border-left: 3px solid #28a745;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.theorem-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.example {
+    background-color: #f8f9fa;
+    border-left: 3px solid #fd7e14;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.example-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.resources {
+    margin-top: 3rem;
+}
+
+/* Blog specific styles */
+.nav-link {
+    color: #333;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 2rem;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+.post-list {
+    list-style: none;
+    padding: 0;
+}
+
+.post-item {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: baseline;
+}
+
+.post-date {
+    color: #666;
+    font-family: monospace;
+    margin-right: 1rem;
+    flex-shrink: 0;
+    width: 100px;
+}
+
+.post-link {
+    color: #0000CC;
+    text-decoration: none;
+}
+
+.post-link:hover {
+    text-decoration: underline;
+}
+
+/* Post specific styles */
+pre {
+    background: #f5f5f5;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+code {
+    font-family: monospace;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin: 2rem 0;
+}
+
+a {
+    color: #0000CC;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    .headshot {
+        margin-bottom: 1rem;
+    }
+}

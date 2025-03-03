@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformer Block Coupling</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"></script>
+    <style>
+    .project-links {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin: 0rem 0;
+    }
+    .project-links a {      
+        text-decoration: none;
+        background-color: #b0c4de;
+        color: #333;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        text-align: center;
+        min-width: 80px;
+    }
+    .footnote {
+        text-align: left;
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: -0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    </style>
+</head>
+<body>
+    <a href="../.." class="nav-link">← home</a>
+    
+    <h1>Transformer Block Coupling<br>& its Correlation with Generalization in LLMs</h1>
+    <h2>
+        Murdock Aubry<sup>1</sup>, Haoming Meng<sup>1</sup>, Anton Sugolov<sup>1</sup>, Vardan Papyan
+    </h2>
+    <p class="footnote">
+        <sup>1</sup><em>Equal contribution</em>
+    </p>
+    <div style="display: flex; justify-content: center;">
+        <div class="project-links">
+          <a href="https://arxiv.org/abs/2407.07810"><b>arXiv</b></a>
+          <a href="poster.pdf"><b>Poster</b></a>
+          <!-- <a href="https://github.com/sugolov/coupling"><b>GitHub</b></a> -->
+          <a href="https://iclr.cc/virtual/2025/poster/28555"><b>ICLR 2025</b></a>
+        </div>
+      </div>
+
+    <p>
+        <br><br><br>
+        We trace the trajectories of individual tokens as they pass through LLM layers 
+        and linearize the transformer blocks through their Jacobian matrices. 
+        By examining the relationships between these Jacobians, we uncover the <b>transformer block coupling</b> 
+        phenomenon in a variety of LLMs, characterized by the coupling of their top singular vectors across 
+        tokens and depth. Our findings reveal that coupling <b>positively correlates</b> with model performance, 
+        and that this relationship is stronger than with other hyperparameters, namely parameter budget, 
+        model depth, and embedding dimension.
+        <p style="text-align: center; width: 75%; margin: 0 auto;">
+            <img src="figs/generalization.png" alt="lissajous" style="width: 100%;">
+            Fig. 1: Coupling correlation with HuggingFace LLM Leaderboard
+        </p>
+    </p>
+    <p>
+        <br><br><br><br>
+    </p>
+
+    <div style="display: flex; justify-content: center;">
+    <h2><em>More details coming soon... </em></h2>
+    </div>
+
+    <p>
+        <br><br><br><br>
+    </p>
+    <p>
+        <br><br><br><br>
+    </p>
+
+</body>
+</html>
