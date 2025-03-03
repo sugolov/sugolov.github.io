@@ -64,6 +64,8 @@ h2 {
     align-items: baseline;
 }
 
+
+
 .date {
     color: #666;
     font-family: monospace;
@@ -74,6 +76,11 @@ h2 {
 
 .link {
     color: #0000CC;
+    text-decoration: none;
+}
+
+.paper-link {
+    color: #000000;
     text-decoration: none;
 }
 
