@@ -1,3 +1,1 @@
-# sugolov.github.io
-
-personal site source
+# [sugolov.github.io](https://sugolov.github.io/)
