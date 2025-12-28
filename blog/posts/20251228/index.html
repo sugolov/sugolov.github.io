@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="anton" />
+  <meta name="dcterms.date" content="2025-12-28" />
+  <title>Making a blog with Pandoc</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../../../styles.css" />
+</head>
+<body>
+<a href="../../index.html" class="nav-link">← blog</a>
+<header id="title-block-header">
+<h1 class="title">Making a blog with Pandoc</h1>
+<p class="author">anton</p>
+<p class="date">2025-12-28</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#a-blog-using-pandoc" id="toc-a-blog-using-pandoc"><span
+class="toc-section-number">1</span> A blog using Pandoc</a>
+<ul>
+<li><a href="#markdown-to-html" id="toc-markdown-to-html"><span
+class="toc-section-number">1.1</span> Markdown to HTML</a></li>
+<li><a href="#latex-to-html" id="toc-latex-to-html"><span
+class="toc-section-number">1.2</span> LaTeX to HTML</a></li>
+<li><a href="#managing-an-index-of-.md-posts"
+id="toc-managing-an-index-of-.md-posts"><span
+class="toc-section-number">1.3</span> Managing an index of
+<code>.md</code> posts</a>
+<ul>
+<li><a href="#build.sh" id="toc-build.sh"><span
+class="toc-section-number">1.3.1</span> <code>build.sh</code></a></li>
+<li><a href="#make.py" id="toc-make.py"><span
+class="toc-section-number">1.3.2</span> <code>make.py</code></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#takeaways" id="toc-takeaways"><span
+class="toc-section-number">2</span> Takeaways</a>
+<ul>
+<li><a href="#other-tools" id="toc-other-tools"><span
+class="toc-section-number">2.1</span> Other tools</a></li>
+</ul></li>
+</ul>
+</nav>
+<ul>
+<li><strong>TODO</strong> add git repo for small example</li>
+<li><strong>TODO</strong> renaming a file in orgmode link</li>
+</ul>
+<p>A blog is a great way to communicate, though it can only be good if
+it has posts. With my current tools I find it difficult to effortlessly
+post. I mostly use Obsidian for quick Markdown notes (on papers, TODOs,
+API tokens, social insurance number, etc.) and other tools for more
+involved LaTeX writeups. An easy way to make these writeups postable is
+to simply use <code>pandoc</code> to convert to HTML. For those
+unfamiliar, <code>pandoc</code> is a free and open source converter
+between different typesetting languages with a lot of features: this
+blog does a quick demo. Spiritually, I somewhat recreated a bare bones
+<code>org-mode</code> with <code>pandoc</code> and Python. This avoids
+the emacs learning curve, keeps the HTML in other places super
+customizable (I can vibecode an Ising on my homepage no problem), and
+does not require Ruby or GO dependencies like other static site
+generators. I’m a fan of this approach because of how minimal it is.</p>
+<h2 data-number="1" id="a-blog-using-pandoc"><span
+class="header-section-number">1</span> A blog using Pandoc</h2>
+<p>At its core <code>pandoc</code> takes a document typeset in one
+format and convert it to another format. As a simple example you can
+convert from <code>.md</code> to <code>.html</code> with</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pandoc</span> post.md <span class="at">-s</span> <span class="at">-o</span> post.html</span></code></pre></div>
+<p>With this and some CSS you can already map Obsidian notes to a
+readable webpage. You can do something very similar for
+<code>.tex</code> to <code>.html</code> with</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pandoc</span> notes.tex <span class="at">-s</span> <span class="at">-o</span> post.html</span></code></pre></div>
+<p>Most of the below commands were easy to do with just by reading
+<code>man pandoc</code></p>
+<h3 data-number="1.1" id="markdown-to-html"><span
+class="header-section-number">1.1</span> Markdown to HTML</h3>
+<p>Below is a command for blog post creation directly from my Obsidian
+vault.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pandoc</span> ~/Documents/obsidian/blog/new.md <span class="at">-s</span> <span class="dt">\ </span>  <span class="co"># target md file, standalone</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">--mathjax</span> <span class="dt">\ </span>                         <span class="co"># MathJAX for LaTeX</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">--css=../../../styles.css</span> <span class="dt">\ </span>         <span class="co"># relative path to css</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">--toc</span> <span class="at">-N</span> <span class="dt">\ </span>                          <span class="co"># table of contents, -N for Numbering</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-B</span> template/nav.html <span class="dt">\ </span>              <span class="co"># bar that is appended to top of &lt;body&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-o</span> blog/posts/new/index.html         <span class="co"># location</span></span></code></pre></div>
+<p>The table of contents (<code>--toc</code>) flag with automatic
+numbering (<code>-N</code>) is quite nice, and I liked that you can just
+append a custom navigation menu (<code>-B</code>). I just used this for
+a button to return to the blog index. The title, post date, author is
+automatically rendered if there’s a <code>.yaml</code> header at the top
+of the file:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>title: new</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>author: anton</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>date: <span class="dv">2025</span><span class="op">-</span><span class="dv">12</span><span class="op">-</span><span class="dv">28</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span></code></pre></div>
+<h3 data-number="1.2" id="latex-to-html"><span
+class="header-section-number">1.2</span> LaTeX to HTML</h3>
+<p>This comand creates a webpage from a course project in my
+Master’s</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pandoc</span> ~/msc/2024f/mat1850/project/mat1850.tex <span class="at">-s</span> <span class="dt">\ </span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">--mathjax</span> <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--css</span><span class="op">=</span>../../../styles.css <span class="dt">\ </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-B</span> template/mathjax-config.html <span class="dt">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--shift-heading-level-by</span><span class="op">=</span>-1 <span class="dt">\</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">-o</span> blog/posts/latex/index.html</span></code></pre></div>
+<p>The header (<code>-B</code>) now includes my custom LaTeX shortcuts
+so <code>--mathjax</code> can directly render from my notes. What’s nice
+is the ability to make <code>\section{}</code> align with
+<code>&lt;h2&gt;</code> in the CSS with
+<code>--shift-heading-level-by=-1</code>. Straightforward, convenient,
+and can be as complicated as you choose to make it</p>
+<h3 data-number="1.3" id="managing-an-index-of-.md-posts"><span
+class="header-section-number">1.3</span> Managing an index of
+<code>.md</code> posts</h3>
+<p>Check out this Git repo to test out the below example!</p>
+<p>The bigger question is managing an index of <code>.md</code> posts,
+which is typically handled by a static site generator. Say we have
+something a collection in <code>blog/md</code></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>md</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>├── BERT_denoiser.md</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>├── new.md</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>├── pandoc_blog.md</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>└── placeholder</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    └── new.md</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> directories, <span class="dv">4</span> files</span></code></pre></div>
+<h4 data-number="1.3.1" id="build.sh"><span
+class="header-section-number">1.3.1</span> <code>build.sh</code></h4>
+<p>We typically want to:</p>
+<ol type="1">
+<li>Export all the <code>blog/md/*.md</code> files to a public directory
+of <code>html</code> files like <code>blog/posts</code>.
+<ul>
+<li>I typically index by date</li>
+</ul></li>
+<li>Create <code>blog/index.html</code> that sees all of
+<code>blog/posts</code>, and other features we might want to see in
+<code>blog/</code></li>
+</ol>
+<p>We can do this with the below <code>build.sh</code> in the blog
+directory by</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: call Pandoc to convert to Markdown</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> md/<span class="pp">*</span>.md<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">date</span><span class="op">=</span><span class="va">$(</span><span class="fu">head</span> <span class="at">-n</span> 6 <span class="va">$f</span> <span class="kw">|</span> <span class="fu">grep</span> date <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&quot;s/\-//g&quot;</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-o</span> <span class="st">&quot;[0-9]\+&quot;</span><span class="va">)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">pandoc</span> <span class="st">&quot;</span><span class="va">$f</span><span class="st">&quot;</span> <span class="at">-s</span> <span class="at">--css</span><span class="op">=</span>../../styles.css <span class="at">--toc</span> <span class="at">-N</span> <span class="at">--toc-depth</span> 4 <span class="at">-B</span> template/nav.html <span class="at">--mathjax</span> <span class="at">-o</span> <span class="st">&quot;posts/</span><span class="va">$date</span><span class="st">/index.html&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: build the list of posts</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> make.py</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> index_header.html index_list.html index_footer.html <span class="op">&gt;</span> index.html</span></code></pre></div>
+<p>After <code>chmod +x build.sh &amp;&amp; ./build.sh</code> (and
+adding some files) our <code>blog</code> directory now looks like</p>
+<pre><code>├── build.sh
+├── index_footer.html
+├── index_header.html
+├── index_list.html
+├── index.html
+├── make.py
+├── md
+│   ├── BERT_denoiser.md
+│   ├── new.md
+│   ├── pandoc_blog.md
+│   └── placeholder
+│       └── new.md
+├── posts
+│   ├── 20240101
+│   │   └── index.html
+│   ├── 20250114
+│   │   └── index.html
+│   ├── 20250115
+│   │   └── index.html
+│   └── 20250215
+│       └── index.html
+├── styles.css
+└── template
+    ├── macros.html
+    ├── mathjax-config.html
+    └── nav.html
+</code></pre>
+<h4 data-number="1.3.2" id="make.py"><span
+class="header-section-number">1.3.2</span> <code>make.py</code></h4>
+<p>The Python script just sums strings to create a list of posts in
+<code>index_list.html</code></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>posts <span class="op">=</span> []</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>md_dir <span class="op">=</span> Path(<span class="st">&quot;md&quot;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>placeholder_dir <span class="op">=</span> Path(<span class="st">&quot;md/placeholder&quot;</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> format_date(date):</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    out, L <span class="op">=</span> <span class="st">&quot;&quot;</span>, date.split(<span class="st">&quot;-&quot;</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> s <span class="kw">in</span> L: out <span class="op">=</span> out <span class="op">+</span> <span class="bu">str</span>(s)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>md_files <span class="op">=</span> <span class="bu">list</span>(md_dir.glob(<span class="st">&quot;*.md&quot;</span>)) <span class="op">+</span> <span class="bu">list</span>(placeholder_dir.glob(<span class="st">&quot;*.md&quot;</span>))</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> md_files:</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> f.read_text()</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract YAML frontmatter</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    match <span class="op">=</span> re.match(<span class="vs">r&#39;</span><span class="dv">^</span><span class="vs">---</span><span class="dv">\s</span><span class="op">*</span><span class="ch">\n</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="ch">\n</span><span class="vs">---&#39;</span>, content, re.DOTALL)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> match:</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    frontmatter <span class="op">=</span> match.group(<span class="dv">1</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> re.search(<span class="vs">r&#39;</span><span class="dv">^</span><span class="vs">title:</span><span class="dv">\s</span><span class="op">*</span><span class="kw">(</span><span class="dv">.</span><span class="op">+</span><span class="kw">)</span><span class="dv">$</span><span class="vs">&#39;</span>, frontmatter, re.MULTILINE)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    date <span class="op">=</span> re.search(<span class="vs">r&#39;</span><span class="dv">^</span><span class="vs">date:</span><span class="dv">\s</span><span class="op">*</span><span class="kw">(</span><span class="dv">.</span><span class="op">+</span><span class="kw">)</span><span class="dv">$</span><span class="vs">&#39;</span>, frontmatter, re.MULTILINE)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> title <span class="kw">and</span> date:</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> title.group(<span class="dv">1</span>).strip()</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> date.group(<span class="dv">1</span>).strip()</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    posts.append({</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;title&#39;</span>: t,</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;date&#39;</span>: d,</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>        <span class="co"># &#39;file&#39;: f.stem + &#39;/index.html&#39;</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;file&#39;</span>: format_date(d) <span class="op">+</span> <span class="st">&#39;/index.html&#39;</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort by date, newest first</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>posts.sort(key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">&#39;date&#39;</span>], reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>html <span class="op">=</span> <span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;body&gt;</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;h2&gt;posts&lt;/h2&gt;</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;ul class=&quot;post-list&quot;&gt;</span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> posts:</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>    html <span class="op">+=</span> <span class="ss">f&#39; &lt;li class=&quot;post-item&quot;&gt;&lt;span class=&quot;post-date&quot;&gt;</span><span class="sc">{</span>p[<span class="st">&quot;date&quot;</span>]<span class="sc">}</span><span class="ss"> </span><span class="op">\</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="ss">        &lt;/span&gt;&lt;a class=&quot;post-link&quot; href=&quot;posts/</span><span class="sc">{</span>p[<span class="st">&quot;file&quot;</span>]<span class="sc">}</span><span class="ss">&quot;&gt;</span><span class="sc">{</span>p[<span class="st">&quot;title&quot;</span>]<span class="sc">}</span><span class="ss">&lt;/a&gt;&lt;/li&gt;</span><span class="ch">\n</span><span class="ss">&#39;</span></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>html <span class="op">+=</span> <span class="st">&quot;&quot;&quot; &lt;/ul&gt;</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/body&gt;</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;&quot;&quot;&quot;</span></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>Path(<span class="st">&quot;index_list.html&quot;</span>).write_text(html)</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Output markdown</span></span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> posts:</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;- [</span><span class="sc">{</span>p[<span class="st">&#39;date&#39;</span>]<span class="sc">}</span><span class="ss">] [</span><span class="sc">{</span>p[<span class="st">&#39;title&#39;</span>]<span class="sc">}</span><span class="ss">](posts/</span><span class="sc">{</span>p[<span class="st">&#39;file&#39;</span>]<span class="sc">}</span><span class="ss">)&quot;</span>)</span></code></pre></div>
+<p>A few issues with this script:</p>
+<ol type="1">
+<li>the <code>&lt;ul&gt;</code> divs are hardcoded to my
+<code>styles.css</code></li>
+<li>It introduces placeholders: it’s a hacky way to index a post in
+<code>blog/posts</code> so that it doesn’t have to be remade by
+<code>pandoc</code> in <code>build.sh</code>
+<ul>
+<li>A concrete example is a LaTeX project. We still want the post to
+show up in <code>blog/index.html</code>, but we don’t want
+<code>build.sh</code> to make it each time</li>
+<li>We can hack around this by creating an empty
+<code>md/placeholders/new.md</code> file with a matching post date as
+our LaTeX project. After, we can export the latex project as in the
+previous section to the matching <code>date/index.html</code></li>
+</ul></li>
+<li>blog posts made on the same date have a conflict</li>
+</ol>
+<h2 data-number="2" id="takeaways"><span
+class="header-section-number">2</span> Takeaways</h2>
+<p>It’s hacky but it works. My workflow is</p>
+<pre><code>obsidian -&gt; copy paste -&gt; ./build.sh -&gt; commit and push</code></pre>
+<p>Great, but maybe the issues above need to be polished, might be an
+interesting project for later if I want more complicated layouts / tags
+/ nested pages etc.</p>
+<h3 data-number="2.1" id="other-tools"><span
+class="header-section-number">2.1</span> Other tools</h3>
+<p>Other than using raw HTML, I’ve experimented with static site
+generators, emacs<code>org-mode</code>. Maybe some. Ranked in terms of
+experience:</p>
+<ol type="1">
+<li><strong>Hugo</strong>. Overall, Hugo was straightforward and easy to
+set up when starting from a template. The one clunky thing was editing
+the CSS / formatting for custom pages. Making a small change to the home
+page requires understanding how the author set up the site
+structure</li>
+<li><strong>Jekyll.</strong> This seems like it has the same issues as
+Hugo except with more Ruby dependencies and sometimes heavy React
+features. It’s fine but I like more minimal webpages</li>
+<li><strong>Org-mode</strong>. Generally, I think it’s pretty cool.
+Though it has an unpleasant learning curve, and too many macros just to
+do 1 simple thing. Here’s a funny stack exchange post about renaming a
+file while in the buffer that made me rethink using orgmode:
+<ul>
+<li>I remember a Linux YouTuber saying that people’s OS becomes a
+bootloader for Emacs if you use it enough. I definitely see that
+now</li>
+</ul></li>
+<li><strong>Raw HTML.</strong> Not great but you can go a long way with
+Claude</li>
+</ol>
+</body>
+</html>
