@@ -223,7 +223,7 @@ Great, but maybe the issues above need to be polished, might be an interesting p
 
 ### Other tools
 
-Other than using raw HTML, I've experimented with static site generators, emacs`org-mode`. Maybe some. Ranked in terms of experience:
+Other than using raw HTML, I've experimented with static site generators and `org-mode`. Ranked in terms of experience:
 
 1. **Hugo**. Overall, Hugo was straightforward and easy to set up when starting from a template. The one clunky thing was editing the CSS / formatting for custom pages. Making a small change to the home page requires understanding how the author set up the site structure
 2. **Jekyll.** This seems like it has the same issues as Hugo except with more Ruby dependencies and sometimes heavy React features. It's fine but I like more minimal webpages
