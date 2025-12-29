@@ -35,7 +35,7 @@ for f in md_files:
             'title': t,
             'date': d,
             # 'file': f.stem + '/index.html'
-            'file': format_date(d) + '/index.html'
+            'file': format_date(d)
         })
 
 # Sort by date, newest first
