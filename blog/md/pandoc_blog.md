@@ -4,10 +4,9 @@ author: anton
 date: 2025-12-28
 ---
 
-- **TODO** add git repo for small example
-- **TODO** renaming a file in orgmode link
 
-A blog is a great way to communicate, though it can only be good if it has posts. With my current tools I find it difficult to effortlessly post. I mostly use Obsidian for quick Markdown notes (on papers, TODOs, API tokens, social insurance number, etc.) and other tools for more involved LaTeX writeups. An easy way to make these writeups postable is to simply use `pandoc` to convert to HTML. For those unfamiliar, `pandoc` is a free and open source converter between different typesetting languages with a lot of features: this blog does a quick demo.  Spiritually, I somewhat recreated a bare bones `org-mode` with `pandoc` and Python. This avoids the emacs learning curve, keeps the HTML in other places super customizable (I can vibecode an Ising on my homepage no problem), and does not require Ruby or GO dependencies like other static site generators. I'm a fan of this approach because of how minimal it is.
+
+A blog is a great way to communicate, though it can only be good if it has posts. With my daily tools I find it difficult to effectively post with minimal changes to my workflow. I mostly use Obsidian for quick Markdown notes (on papers, TODOs, API tokens, social insurance number, etc.) and other tools for more involved LaTeX writeups. An easy way to make these writeups postable is to simply use `pandoc` to convert to HTML. For those unfamiliar, `pandoc` is a free and open source converter between different typesetting languages with a lot of features: this blog does a quick demo.  Spiritually, I somewhat recreated a bare bones `org-mode` with `pandoc` and Python. This avoids the emacs learning curve, keeps the HTML in other places super customizable (I can vibecode an Ising on my homepage no problem), and does not require Ruby or GO dependencies like other static site generators. I'm a fan of this approach because of how minimal it is.
 
 ## A blog using Pandoc 
 
@@ -67,7 +66,7 @@ The header (`-B`) now includes my custom LaTeX shortcuts so `--mathjax` can dire
 
 ### Managing an index of `.md ` posts
 
-Check out this Git repo to test out the below example!
+**Check out [sugolov/pandoc-blog](https://github.com/sugolov/pandoc-blog) to run the example below.**
 
 The bigger question is managing an index of `.md` posts, which is typically handled by a static site generator. Say we have something a collection in `blog/md` 
 
@@ -228,6 +227,6 @@ Other than using raw HTML, I've experimented with static site generators, emacs`
 
 1. **Hugo**. Overall, Hugo was straightforward and easy to set up when starting from a template. The one clunky thing was editing the CSS / formatting for custom pages. Making a small change to the home page requires understanding how the author set up the site structure
 2. **Jekyll.** This seems like it has the same issues as Hugo except with more Ruby dependencies and sometimes heavy React features. It's fine but I like more minimal webpages
-3. **Org-mode**. Generally, I think it's pretty cool. Though it has an unpleasant learning curve, and too many macros just to do 1 simple thing. Here's a funny stack exchange post about renaming a file while in the buffer that made me rethink using orgmode:
+3. **Org-mode**. Generally, I think it's pretty cool. Though it has an unpleasant learning curve, and too many macros just to do 1 simple thing. There's also a funny [stack exchange post](https://stackoverflow.com/questions/384284/how-do-i-rename-an-open-file-in-emacs) about renaming a file while in the buffer that made me rethink using emacs.
 	- I remember a Linux YouTuber saying that people's OS becomes a bootloader for Emacs if you use it enough. I definitely see that now
 4. **Raw HTML.** Not great but you can go a long way with Claude

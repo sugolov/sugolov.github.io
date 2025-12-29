@@ -128,24 +128,21 @@ class="toc-section-number">2.1</span> Other tools</a></li>
 </ul></li>
 </ul>
 </nav>
-<ul>
-<li><strong>TODO</strong> add git repo for small example</li>
-<li><strong>TODO</strong> renaming a file in orgmode link</li>
-</ul>
 <p>A blog is a great way to communicate, though it can only be good if
-it has posts. With my current tools I find it difficult to effortlessly
-post. I mostly use Obsidian for quick Markdown notes (on papers, TODOs,
-API tokens, social insurance number, etc.) and other tools for more
-involved LaTeX writeups. An easy way to make these writeups postable is
-to simply use <code>pandoc</code> to convert to HTML. For those
-unfamiliar, <code>pandoc</code> is a free and open source converter
-between different typesetting languages with a lot of features: this
-blog does a quick demo. Spiritually, I somewhat recreated a bare bones
-<code>org-mode</code> with <code>pandoc</code> and Python. This avoids
-the emacs learning curve, keeps the HTML in other places super
-customizable (I can vibecode an Ising on my homepage no problem), and
-does not require Ruby or GO dependencies like other static site
-generators. I’m a fan of this approach because of how minimal it is.</p>
+it has posts. With my daily tools I find it difficult to effectively
+post with minimal changes to my workflow. I mostly use Obsidian for
+quick Markdown notes (on papers, TODOs, API tokens, social insurance
+number, etc.) and other tools for more involved LaTeX writeups. An easy
+way to make these writeups postable is to simply use <code>pandoc</code>
+to convert to HTML. For those unfamiliar, <code>pandoc</code> is a free
+and open source converter between different typesetting languages with a
+lot of features: this blog does a quick demo. Spiritually, I somewhat
+recreated a bare bones <code>org-mode</code> with <code>pandoc</code>
+and Python. This avoids the emacs learning curve, keeps the HTML in
+other places super customizable (I can vibecode an Ising on my homepage
+no problem), and does not require Ruby or GO dependencies like other
+static site generators. I’m a fan of this approach because of how
+minimal it is.</p>
 <h2 data-number="1" id="a-blog-using-pandoc"><span
 class="header-section-number">1</span> A blog using Pandoc</h2>
 <p>At its core <code>pandoc</code> takes a document typeset in one
@@ -203,7 +200,9 @@ and can be as complicated as you choose to make it</p>
 <h3 data-number="1.3" id="managing-an-index-of-.md-posts"><span
 class="header-section-number">1.3</span> Managing an index of
 <code>.md</code> posts</h3>
-<p>Check out this Git repo to test out the below example!</p>
+<p><strong>Check out <a
+href="https://github.com/sugolov/pandoc-blog">sugolov/pandoc-blog</a> to
+run the example below.</strong></p>
 <p>The bigger question is managing an index of <code>.md</code> posts,
 which is typically handled by a static site generator. Say we have
 something a collection in <code>blog/md</code></p>
@@ -375,8 +374,10 @@ Hugo except with more Ruby dependencies and sometimes heavy React
 features. It’s fine but I like more minimal webpages</li>
 <li><strong>Org-mode</strong>. Generally, I think it’s pretty cool.
 Though it has an unpleasant learning curve, and too many macros just to
-do 1 simple thing. Here’s a funny stack exchange post about renaming a
-file while in the buffer that made me rethink using orgmode:
+do 1 simple thing. There’s also a funny <a
+href="https://stackoverflow.com/questions/384284/how-do-i-rename-an-open-file-in-emacs">stack
+exchange post</a> about renaming a file while in the buffer that made me
+rethink using emacs.
 <ul>
 <li>I remember a Linux YouTuber saying that people’s OS becomes a
 bootloader for Emacs if you use it enough. I definitely see that
