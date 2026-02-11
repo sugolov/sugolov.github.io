@@ -16,7 +16,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helveti
 }
 
 .content {
-    text-align: center; /* Centers the text within the content div */
+    text-align: center;
 }
 
 .headshot {
@@ -95,7 +95,7 @@ h3 {
 }
 
 .list-item {
-    margin-bottom: -0.5rem;
+    margin-bottom: 0.5rem;
     display: flex;
     align-items: baseline;
 }
@@ -129,9 +129,119 @@ h3 {
     color: #333;
 }
 
+.location {
+    font-size: 0.9rem;
+    color: #888;
+}
+
 .section {
     margin-top: 0.5rem;
     margin-bottom: 0.0rem;
+}
+
+/* Project Cards */
+.project-card {
+    display: flex;
+    gap: 1.4rem;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    background: #eeeeee;
+    border-radius: 6px;
+    align-items: stretch;
+}
+
+.project-thumb {
+    flex-shrink: 0;
+    width: 200px;
+}
+
+.project-thumb img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin: 0;
+    display: block;
+    transition: opacity 0.15s ease;
+}
+
+.project-thumb img:hover {
+    opacity: 0.8;
+}
+
+.project-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-decoration: none;
+    line-height: 1.35;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.project-title:hover {
+    color: #0000CC;
+    text-decoration: underline;
+}
+
+.project-authors {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 0.15rem;
+    line-height: 1.4;
+}
+
+.project-venue {
+    font-size: 0.85rem;
+    color: #888;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+
+.project-desc {
+    font-size: 0.88rem;
+    color: #444;
+    line-height: 1.55;
+    margin-bottom: 0.5rem;
+    flex: 1;
+}
+
+.project-links {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+}
+
+.project-links a {
+    font-size: 0.82rem;
+    color: #0000CC;
+    text-decoration: none;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.project-links a:hover {
+    background: #eee;
+    border-color: #999;
+    text-decoration: none;
+}
+
+.project-card-compact {
+    padding: 1rem 1.2rem;
+}
+
+.project-card-compact .project-body {
+    min-height: auto;
 }
 
 /* Definition, Theorem, Example environments */
@@ -250,5 +360,18 @@ a:hover {
 
     .headshot {
         margin-bottom: 1.0rem;
+    }
+
+    .project-card {
+        flex-direction: column;
+    }
+
+    .project-thumb {
+        width: 100%;
+    }
+
+    .project-thumb img {
+        width: 100%;
+        height: 200px;
     }
 }

@@ -47,6 +47,7 @@ for p in posts:
 
 html = """
 <body>
+  <br><br>
   <h2>posts</h2>
   <ul class="post-list">
 """

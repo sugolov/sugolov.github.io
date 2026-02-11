@@ -13,58 +13,6 @@ gtag('config', 'G-G6RZ52LK6H');
 <title>sugolov.github.io</title>
 <link rel="stylesheet" href="styles.css">
 <style>
-.ising-container {
-    margin: 2em 0;
-    padding: 1.5em;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: #f8f9fa;
-}
-
-.ising-canvas {
-    display: block;
-    margin: 0 auto 1em auto;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.ising-controls {
-    text-align: center;
-    margin-bottom: 1em;
-}
-
-.ising-controls label {
-    display: inline-block;
-    margin: 0 1em;
-    font-size: 0.9em;
-}
-
-.ising-controls input[type="range"] {
-    width: 100px;
-    margin-left: 0.5em;
-}
-
-.ising-controls button {
-    margin: 0 0.5em;
-    padding: 0.3em 1em;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.ising-controls button:hover {
-    background: #0056b3;
-}
-
-.ising-info {
-    font-size: 0.8em;
-    color: #666;
-    text-align: center;
-    margin-top: 1em;
-}
 </style>
 </head>
 <body>
@@ -89,199 +37,67 @@ gtag('config', 'G-G6RZ52LK6H');
 <br>
 <h2>about</h2>
 <p>
- Currently a <b>research engineer</b> at Extropic.
- Before, I was a <b>Math Master's</b> student at University of Toronto, supervised by Prof. Vardan Papyan and Prof. Adrian Nachman.
- I like to think about all things <b>applied math</b>, <b>probability</b>, and <b>machine learning</b>.
+ Currently a <b>research engineer</b> at Extropic working on probabilistic ML and numerical methods for Markov chain simulation.
+<br>
+ Previously, I was a <b>Math Master's</b> student at University of Toronto, supervised by Vardan Papyan and Adrian Nachman.
+  <br>
+  I'm broadly interested in representation learning and mathematical methods for <b>understanding empirical deep learning</b>. 
+  I like to think about all things <b>applied math</b>, <b>probability</b>, and machine learning.
 </p>
 <br>
 </div>
 </div>
 
-
-<div class="section">
 <h2>projects</h2>
+<div class="project-card">
+  <div class="project-thumb">
+    <a href="coupling/">
+      <img src="coupling/figs/llama2_13b.png" alt="Transformer Block Coupling">
+    </a>
+  </div>
+  <div class="project-body">
+    <a href="coupling/" class="project-title">Transformer Block Coupling and its Correlation with Generalization in LLMs</a>
+    <div class="project-authors">Murdock Aubry*, Haoming Meng*, <b>Anton Sugolov</b>*, Vardan Papyan</div>
+    <div class="project-venue">ICLR 2025</div>
+    <p class="project-desc">We empirically find that the Jacobians of transformer blocks in pre-trained LLMs have highly similar singular vectors.</p>
+    <div class="project-links">
+      <a href="https://arxiv.org/abs/2407.07810">paper</a>
+      <a href="coupling/">project page</a>
+      <a href="https://github.com/sugolov/coupling">code</a>
+      <a href="coupling/poster.pdf">poster</a>
+    </div>
+  </div>
+</div>
+
+
+<div class="project-card">
+<div class="project-thumb">
+<a href="https://github.com/sugolov/jepax">
+<img src="coupling/figs/jepax.png" alt="jepax">
+</a>
+</div>
+<div class="project-body">
+<a href="https://github.com/sugolov/jepax" class="project-title">jepax: A JAX library for JEPA research</a>
+<div class="project-authors"><a href="https://lockwo.github.io">Owen Lockwood</a>*, Anton Sugolov*</div>
+<p class="project-desc">A <a href="https://github.com/google/jax">JAX</a>/<a href="https://github.com/patrick-kidger/equinox">Equinox</a> implementation of Joint-Embedding Predictive Architecture (JEPA) models and related self-supervised learning methods.</p>
+<div class="project-links">
+<a href="https://github.com/sugolov/jepax">repo</a>
+</div>
+</div>
+</div>
+
+
+<h2>notes</h2>
 <ul class="list-items">
 <li class="list-item">
-<span class="date">2025-02-28</span>
-<a href="coupling/" class="link">ICLR 2025: Transformer Block Coupling</a>
+<span class="date">2025-04</span>
+<a href="files/mat1850.pdf" class="link">Multiscale Matrix Decompositions</a>
+</li>
+<li class="list-item">
+<span class="date">2025-04</span>
+<a href="files/mat1525.pdf" class="link">Geometry Adaptive Representations in Diffusion Models</a>
 </li>
 </ul>
 
-<br>
-<h2>ising animation</h2>
-<div class="section ising-container">
-<canvas id="isingCanvas" class="ising-canvas" width="700" height="400"></canvas>
-<div class="ising-controls">
-    <label>Temperature: <input type="range" id="tempSlider" min="0.25" max="5.0" step="0.1" value="2.3"></label>
-    <label>Field: <input type="range" id="fieldSlider" min="-1.0" max="1.0" step="0.1" value="0.0"></label>
-    <label>Speed: <input type="range" id="speedSlider" min="0.01" max="0.5" step="0.01" value="0.05"></label>
-    <!--
-    <button onclick="resetSimulation()">Reset</button>
-    <button onclick="toggleSimulation()" id="toggleBtn">Pause</button>
-    -->
-</div>
-    Inspired by <a href="https://mattbierbaum.github.io/ising.js/">Matt Bierbaum</a>
-</div>
-
-<script>
-class IsingModel {
-    constructor(size) {
-        this.size = size;
-        this.lattice = [];
-        this.temperature = 2.3;
-        this.magneticField = 0.0;
-        this.running = true;
-        this.speed = 0.05;
-        
-        // Initialize random lattice
-        this.reset();
-        
-        this.canvas = document.getElementById('isingCanvas');
-        this.ctx = this.canvas.getContext('2d');
-        this.pixelSize = this.canvas.width / this.size;
-        
-        // Add click handler
-        this.canvas.addEventListener('click', (e) => this.handleClick(e));
-    }
-    
-    reset() {
-        this.lattice = [];
-        for (let i = 0; i < this.size; i++) {
-            this.lattice[i] = [];
-            for (let j = 0; j < this.size; j++) {
-                this.lattice[i][j] = Math.random() < 0.5 ? -1 : 1;
-            }
-        }
-    }
-    
-    getNeighborSum(i, j) {
-        const up = this.lattice[(i - 1 + this.size) % this.size][j];
-        const down = this.lattice[(i + 1) % this.size][j];
-        const left = this.lattice[i][(j - 1 + this.size) % this.size];
-        const right = this.lattice[i][(j + 1) % this.size];
-        return up + down + left + right;
-    }
-    
-    metropolisStep() {
-        for (let step = 0; step < this.size * this.size; step++) {
-            const i = Math.floor(Math.random() * this.size);
-            const j = Math.floor(Math.random() * this.size);
-            
-            const currentSpin = this.lattice[i][j];
-            const neighborSum = this.getNeighborSum(i, j);
-            const deltaE = 2 * currentSpin * (neighborSum + this.magneticField);
-            
-            if (deltaE <= 0 || Math.random() < Math.exp(-deltaE / this.temperature)) {
-                this.lattice[i][j] = -currentSpin;
-            }
-        }
-    }
-    
-    draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        for (let i = 0; i < this.size; i++) {
-            for (let j = 0; j < this.size; j++) {
-                const spin = this.lattice[i][j];
-                this.ctx.fillStyle = spin === 1 ? '#2c3e50' : '#ecf0f1';
-                this.ctx.fillRect(j * this.pixelSize, i * this.pixelSize, this.pixelSize, this.pixelSize);
-            }
-        }
-    }
-    
-    handleClick(event) {
-        const rect = this.canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        
-        const i = Math.floor(y / this.pixelSize);
-        const j = Math.floor(x / this.pixelSize);
-        
-        if (i >= 0 && i < this.size && j >= 0 && j < this.size) {
-            this.lattice[i][j] = -this.lattice[i][j];
-        }
-    }
-    
-    update() {
-        if (this.running) {
-            const stepsPerFrame = Math.max(1, Math.round(this.speed * this.size * this.size / 1000));
-            for (let i = 0; i < stepsPerFrame; i++) {
-                this.metropolisStep();
-            }
-        }
-        this.draw();
-    }
-}
-
-// Initialize simulation
-const ising = new IsingModel(100);
-
-// Control functions
-function resetSimulation() {
-    ising.reset();
-}
-
-function toggleSimulation() {
-    ising.running = !ising.running;
-    document.getElementById('toggleBtn').textContent = ising.running ? 'Pause' : 'Play';
-}
-
-// Update controls
-document.getElementById('tempSlider').addEventListener('input', (e) => {
-    ising.temperature = parseFloat(e.target.value);
-});
-
-document.getElementById('fieldSlider').addEventListener('input', (e) => {
-    ising.magneticField = parseFloat(e.target.value);
-});
-
-document.getElementById('speedSlider').addEventListener('input', (e) => {
-    ising.speed = parseFloat(e.target.value);
-});
-
-// Animation loop with slower frame rate
-let lastTime = 0;
-const frameDelay = 33; // milliseconds between frames (30 fps)
-
-function animate(currentTime) {
-    if (currentTime - lastTime >= frameDelay) {
-        ising.update();
-        lastTime = currentTime;
-    }
-    requestAnimationFrame(animate);
-}
-
-// Start animation
-animate(0);
-</script>
-
-<!--
- <div class="section">
- <h2>papers</h2>
- <ul class="list-items">
- <li class="list-item">
- <span class="date">2025</span>
- <p>
- <a href="coupling/" class="paper-link">
- Transformer Block Coupling and its Correlation with Generalization in LLMs
- </a> <br>
- Aubry, M.<sup>*</sup> Meng, H.<sup>*</sup> Sugolov, A.<sup>*</sup> Papyan, V. <br>
- ICLR 2025. <sup>*</sup><em>Equal contribution</em>
- </p>
- </li>
- <li class="list-item">
- <span class="date">2023</span>
- <p>
- <a href="https://link.springer.com/article/10.1007/s12561-023-09375-9" class="paper-link">
- Statistical learning of large-scale genetic data:
- How to run a genome-wide association study of gene-expression data using the 1000 Genomes Project
- </a> <br>
- Sugolov, A.<sup>*</sup> Emmenegger, E.<sup>*</sup> Paterson, A.D. Sun, L. <br>
- Statistics in Biosciences. <sup>*</sup><em>Equal contribution</em>
- </p>
- </li>
- </ul>
- </div>
--->
 </body>
 </html>
