@@ -65,6 +65,11 @@ h2 {
     padding-bottom: 0.3rem;
 }
 
+h1, h2 {
+  transform: scaleY(1.15);
+  transform-origin: bottom;
+}
+
 h3 {
     font-size: 1.3rem;
     margin-top: 0.0rem;
