@@ -151,19 +151,23 @@ id="toc-jaxequinox-enabled-optimizations"><span
 class="toc-section-number">5</span> JAX/Equinox enabled
 optimizations</a>
 <ul>
+<li><a href="#data-parallelization" id="toc-data-parallelization"><span
+class="toc-section-number">5.1</span> Data parallelization</a></li>
+<li><a href="#checkpointing" id="toc-checkpointing"><span
+class="toc-section-number">5.2</span> Checkpointing</a></li>
 <li><a href="#further-work" id="toc-further-work"><span
-class="toc-section-number">5.1</span> Further work</a>
+class="toc-section-number">5.3</span> Further work</a>
 <ul>
 <li><a href="#bucketing" id="toc-bucketing"><span
-class="toc-section-number">5.1.1</span> Bucketing</a></li>
+class="toc-section-number">5.3.1</span> Bucketing</a></li>
 <li><a href="#model-parallelization"
 id="toc-model-parallelization"><span
-class="toc-section-number">5.1.2</span> Model parallelization</a></li>
+class="toc-section-number">5.3.2</span> Model parallelization</a></li>
 <li><a href="#bf16-mixed-precision" id="toc-bf16-mixed-precision"><span
-class="toc-section-number">5.1.3</span> bf16, mixed precision</a></li>
+class="toc-section-number">5.3.3</span> bf16, mixed precision</a></li>
 <li><a href="#systematic-wall-clock-benchmarking"
 id="toc-systematic-wall-clock-benchmarking"><span
-class="toc-section-number">5.1.4</span> Systematic wall clock
+class="toc-section-number">5.3.4</span> Systematic wall clock
 benchmarking</a></li>
 </ul></li>
 </ul></li>
@@ -572,7 +576,9 @@ optimizations</h2>
 in JAX/Equinox for most self-supervised approaches. This made jepax an
 impactful way to experiment with some of the optimizations provided by
 the JAX ecosystem. Optimizing turns out to be very easy because of how
-things are handled by the XLA compiler. ### Data parallelization</p>
+things are handled by the XLA compiler.</p>
+<h3 data-number="5.1" id="data-parallelization"><span
+class="header-section-number">5.1</span> Data parallelization</h3>
 <p>Distributed data parallelization in JAX requires creating a mesh
 along the batch axis which will be applied to data tensors with a
 sharding config. All that’s required is the number of devices for the
@@ -605,8 +611,10 @@ with <code>shard_map</code>. It requires specifying the in / out
 <code>PartitionSpec</code> and implementing a reduction operation across
 the sharded axis within the function. Model sharding is something we are
 looking to implement in the near future, since potentially splitting
-encoders and predictors across devices could make things more scalable.
-### Checkpointing</p>
+encoders and predictors across devices could make things more
+scalable.</p>
+<h3 data-number="5.2" id="checkpointing"><span
+class="header-section-number">5.2</span> Checkpointing</h3>
 <p>Another optimization that’s straightforward to add in jax is gradient
 checkpointing. In our transformer implementation:</p>
 <div class="sourceCode" id="cb6"><pre
@@ -655,11 +663,11 @@ requires rematerializing all activations:
 <code>policy=jax.checkpoint_policies.nothing_saveable</code>. In a more
 fine-grained implementation, this gives a simple way to plug in
 different checkpointing configurations.</p>
-<h3 data-number="5.1" id="further-work"><span
-class="header-section-number">5.1</span> Further work</h3>
+<h3 data-number="5.3" id="further-work"><span
+class="header-section-number">5.3</span> Further work</h3>
 <p>Feel free to open a PR if you address any of these!</p>
-<h4 data-number="5.1.1" id="bucketing"><span
-class="header-section-number">5.1.1</span> Bucketing</h4>
+<h4 data-number="5.3.1" id="bucketing"><span
+class="header-section-number">5.3.1</span> Bucketing</h4>
 <p>IJEPA training requires variable token lengths, which does not mesh
 well with XLA compilation times without further optimizations. At the
 current scale of training, it might make sense to “eat” a lot of the
@@ -669,15 +677,15 @@ training run. A more systematic thing to do would be to pad tokens in
 the forward pass, use attention masks, and bucket shape compilation
 across the number of pad tokens. This would save time at scale but
 benchmarking / weighing this approach is for further work</p>
-<h4 data-number="5.1.2" id="model-parallelization"><span
-class="header-section-number">5.1.2</span> Model parallelization</h4>
+<h4 data-number="5.3.2" id="model-parallelization"><span
+class="header-section-number">5.3.2</span> Model parallelization</h4>
 <p>It could be more optimal to shard the IJEPA context and target
 encoders across different devices: large batch sizes seem very
 beneficial in self-supervised training. In general, having dynamic
 sharding based on GPU configurations seems like an interesting thing to
 implement.</p>
-<h4 data-number="5.1.3" id="bf16-mixed-precision"><span
-class="header-section-number">5.1.3</span> bf16, mixed precision</h4>
+<h4 data-number="5.3.3" id="bf16-mixed-precision"><span
+class="header-section-number">5.3.3</span> bf16, mixed precision</h4>
 <p>There is currently a bf16 implementation that casts all model arrays
 to lower precision for training. There might be more principled
 approaches to doing so with a library like <a
@@ -685,8 +693,8 @@ href="https://github.com/Data-Science-in-Mechanical-Engineering/mixed_precision_
 In general, the question of numerical stability in lower precisions
 seems interesting and underexplored in JEPAs and SSL: maybe there could
 be some good experiments here.</p>
-<h4 data-number="5.1.4" id="systematic-wall-clock-benchmarking"><span
-class="header-section-number">5.1.4</span> Systematic wall clock
+<h4 data-number="5.3.4" id="systematic-wall-clock-benchmarking"><span
+class="header-section-number">5.3.4</span> Systematic wall clock
 benchmarking</h4>
 <p>We estimate that our training time takes the same amount of GPU hours
 as the torch implementation. Systematically verifying this and

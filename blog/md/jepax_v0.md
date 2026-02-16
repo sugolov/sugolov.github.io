@@ -174,7 +174,9 @@ Overall, harmonizing representation norms, gradients, and EMA updates seems to b
 ## JAX/Equinox enabled optimizations
 
 As far as we are aware, there are few other large-scale replications in JAX/Equinox for most self-supervised approaches. This made jepax an impactful way to experiment with some of the optimizations provided by the JAX ecosystem. Optimizing turns out to be very easy because of how things are handled by the XLA compiler. 
+
 ### Data parallelization 
+
 
 Distributed data parallelization in JAX requires creating a mesh along the batch axis which will be applied to data tensors with a sharding config. All that's required is the number of devices for the mesh and a data sharding:
 
@@ -208,7 +210,9 @@ if model_sharding is not None:
 ```
 
 Since equinox represents models as PyTrees, this is essentially a wrapper for `jax.lax.with_sharding_constraint` just for the arrays in the model. More fine-grained control is usually implemented with `shard_map`. It requires specifying the in / out `PartitionSpec` and implementing a reduction operation across the sharded axis within the function. Model sharding is something we are looking to implement in the near future, since potentially splitting encoders and predictors across devices could make things more scalable.
+
 ### Checkpointing 
+
 
 Another optimization that's straightforward to add in jax is gradient checkpointing. In our transformer implementation:
 
@@ -254,7 +258,9 @@ The flow to the above is that we:
 
 The **key component** is that this allows us to wrap `jax.checkpoint`, with a custom policy that prevents saving / requires rematerializing all activations: `policy=jax.checkpoint_policies.nothing_saveable`. In a more fine-grained implementation, this gives a simple way to plug in different checkpointing configurations.
 
+
 ### Further work
+
 
 Feel free to open a PR if you address any of these!
 
