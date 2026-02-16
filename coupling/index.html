@@ -107,6 +107,7 @@
             line-height: 1.5;
         }
 
+
         /* Code */
         .post-content pre {
             background: #f5f5f5;
@@ -133,10 +134,18 @@
                 font-size: 1.5rem;
             }
         }
+
+        h2 {
+            margin-top: 3.5rem;
+        }
+
+        h3 {
+            margin-top: 2.0rem;
+        }
     </style>
 </head>
 <body>
-
+    <br><br>
     <header class="post-header">
         <h1>Transformer Block Coupling<br>& its Correlation with Generalization in LLMs</h1>
         <div class="authors">
@@ -150,9 +159,29 @@
             <a href="https://iclr.cc/virtual/2025/poster/28555">ICLR 2025</a>
         </div>
     </header>
+    <br>
+
+
 
     <main class="post-content">
         <div class="section">
+            <h2>Summary</h2>
+            We empirically find that the Jacobians of transformer blocks in pre-trained LLMs have <b>highly similar singular vectors</b>, a property we call <b>transformer block coupling</b>. 
+Transformer blocks contribute to the residual of token embeddings with \(X^{l+1} = X^l + f^{l+1}(X^l)\). 
+We linearize each block \(f^l\) via its Jacobian
+\[J^l = U^l S^l (V^l)^T\]
+and find that <b>across 30+ pretrained LLMs</b>, the top singular vectors \(U^l, V^l\) are highly consistent across layers and 
+tokens. Coupling is measured by norms on the off-diagonal of the co-diagonalization 
+\[(U^j)^T U^i S^i (V^i)^T V^j\] between layers \(i\) and \(j\).
+            <figure class="figure">
+                <img src="figs/llama_8b_full.png" alt="Llama-3 8B coupling analysis">
+                <figcaption>
+                    <b>Figure 1:</b> In Llama-3 8B, we view the co-diagonalization \((U^j)^T U^i S^i (V^i)^T V^j\) for layers \(9 \leq i, j \leq 16\). The Jacobian is computed for the last token in the prompt "What is the capital of France? The capital is" across layers.
+                </figcaption>
+            </figure>
+            
+
+
             <h2>Abstract</h2>
             <p>
                 Large Language Models (LLMs) have made significant strides in natural language processing, and a precise understanding of the internal mechanisms driving their success is essential. We analyze the trajectories of token embeddings in LLMs as they pass through transformer blocks, linearizing the system along these trajectories through their Jacobian matrices. For two such Jacobians \(J_1, J_2\), and their singular value decompositions \(J_1 = U_1 S_1 V_1^T\), \(J_2 = U_2 S_2 V_2^T\) we measure the agreement of \(U_1, U_2\) and \(V_1, V_2\). We broadly uncover the <b>transformer block coupling</b> phenomenon in a variety of pretrained LLMs, characterized by the coupling of their top singular vectors across tokens and depth. Our findings reveal that coupling positively correlates with model performance, and that this relationship is stronger than with other hyperparameters such as parameter count, model depth, and embedding dimension.
@@ -161,7 +190,7 @@
             <figure class="figure">
                 <img src="figs/mega.png" alt="Pythia 12-B coupling analysis">
                 <figcaption>
-                    <b>Figure 1:</b>
+                    <b>Figure 2:</b>
                     <b>(a)</b> Correlation with HuggingFace Open LLM Leaderboard
                     <b>(b)</b> Measurements on Pythia 6.9B, 12B training checkpoints
                     <b>(c)</b> Coupling between Pythia 12B transformer blocks at varying depths during training
@@ -189,7 +218,7 @@
             <figure class="figure">
                 <img src="figs/diagram.png" alt="Coupling measurement diagram">
                 <figcaption>
-                    <b>Figure 2:</b> Measuring coupling through multiple token interactions throughout the transformer block
+                    <b>Figure 3:</b> Measuring coupling through multiple token interactions throughout the transformer block
                 </figcaption>
             </figure>
 
@@ -210,6 +239,31 @@
                 </li>
             </ol>
         </div>
+
+    <div class="section">
+        <h2>Results</h2>
+        <p>
+            <b>Depth-wise.</b> In trained LLMs, we observe coupling of the top singular vectors of the Jacobians across depth, evident in the low off-diagonal values with a visible diagonal present in the matrix subplots. This is consistently observed across various LLMs considered. In untrained models, there is no coupling of Jacobians across different depths, and singular vectors are uncorrelated.
+        </p>
+
+        <figure class="figure">
+            <img src="figs/coupling_additional.png" alt="Additional coupling across depth">
+            <figcaption>
+                <b>Figure 4:</b> Plots of co-diagonalization matrices \(A^{l, l+1}_n\) demonstrating coupling across depth. Coupling is measured for Jacobians across transformer blocks 9 to 16.
+            </figcaption>
+        </figure>
+        <p>
+             <b>Token-wise.</b> We analyze the coupling of singular vectors of Jacobians across tokens. For input and output tokens that are the same (\(J_{tt}^l\) and \(J_{t't'}^{l'}\)), we observe strong coupling, indicating that a token's interactions along its trajectory are coupled with others. For context tokens, coupling is examined by fixing the input token (\(J_{t_1t_2}^l\) and \(J_{t_1t_2'}^{l'}\)) or the output token (\(J_{t_1t_2}^l\) and \(J_{t_1't_2}^{l'}\)). While context coupling exists, its strength varies across token pairs. Untrained models show no such coupling.
+        </p>
+        <figure class="figure">
+            <img src="figs/coupling_tokens.png" alt="Additional coupling across tokens">
+            <figcaption>
+                <b>Figure 5:</b> Plots of co-diagonalization matrices \(A^{l, l+1}_{i,j}\) demonstrating coupling across tokens. Input and output tokens \(i, j\) are fixed across measurements and depth is varied from layers 9 to 16.             </figcaption>
+        </figure>
+        <p>
+            <b>Across training.</b> Coupling emerges through training for the evaluated LLMs, including coupling across depth and across tokens. Evaluating layer-wise coupling at intermediate training checkpoints of Pythia 6.9B and 12B (Figure 2b), we observe that coupling is generally low at initialization and increases persistently throughout training.
+        </p>
+    </div>
 
         <div class="section">
             <h2>Implementation</h2>
