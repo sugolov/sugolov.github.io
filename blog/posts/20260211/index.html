@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="author" content="Owen L., Anton S." />
+  <meta name="author" content="Contributors: Owen L., Anton S." />
   <meta name="dcterms.date" content="2026-02-11" />
-  <title>jepax v0: an implementation of IJEPA-B training in JAX/Equinox</title>
+  <title>jepax v0: an implementation of IJEPA training in JAX/Equinox</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,8 +25,74 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../../../styles.css" />
+  <link rel="stylesheet" href="../../blog.css" />
   <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
@@ -34,53 +100,607 @@
 <body>
 <a href="../.." class="nav-link">← blog</a>
 <header id="title-block-header">
-<h1 class="title">jepax v0: an implementation of IJEPA-B training in
+<h1 class="title">jepax v0: an implementation of IJEPA training in
 JAX/Equinox</h1>
-<p class="author"><a href="https://lockwo.github.io/">Owen L</a>., Anton
-S.</p>
+<p class="author">Contributors: <a href="https://lockwo.github.io/">Owen
+L</a>., <a href="https://sugolov.github.io/">Anton S</a>.</p>
 <p class="date">2026-02-11</p>
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#links" id="toc-links">Links</a></li>
-<li><a href="#overview" id="toc-overview">Overview</a></li>
+<li><a href="#links" id="toc-links"><span
+class="toc-section-number">1</span> Links</a></li>
+<li><a href="#overview" id="toc-overview"><span
+class="toc-section-number">2</span> Overview</a></li>
+<li><a href="#background-on-jepa-and-ijepa"
+id="toc-background-on-jepa-and-ijepa"><span
+class="toc-section-number">3</span> Background on JEPA and IJEPA</a>
+<ul>
+<li><a href="#ijepa-training" id="toc-ijepa-training"><span
+class="toc-section-number">3.1</span> IJEPA training</a>
+<ul>
+<li><a href="#masking" id="toc-masking"><span
+class="toc-section-number">3.1.1</span> Masking</a></li>
+<li><a href="#forward-pass" id="toc-forward-pass"><span
+class="toc-section-number">3.1.2</span> Forward pass</a></li>
+<li><a href="#updating-parameters" id="toc-updating-parameters"><span
+class="toc-section-number">3.1.3</span> Updating parameters</a></li>
+</ul></li>
+<li><a href="#probing-the-main-eval.-for-ijepa"
+id="toc-probing-the-main-eval.-for-ijepa"><span
+class="toc-section-number">3.2</span> Probing: the main eval. for
+IJEPA</a></li>
+</ul></li>
+<li><a href="#failure-modes" id="toc-failure-modes"><span
+class="toc-section-number">4</span> Failure modes</a>
+<ul>
+<li><a href="#encoder-drift-and-gradient-norms"
+id="toc-encoder-drift-and-gradient-norms"><span
+class="toc-section-number">4.1</span> Encoder drift and gradient
+norms</a></li>
+<li><a href="#smooth-l_1-loss-and-unnormalized-l_2"
+id="toc-smooth-l_1-loss-and-unnormalized-l_2"><span
+class="toc-section-number">4.2</span> Smooth <span
+class="math inline">\(L_1\)</span> loss and unnormalized <span
+class="math inline">\(L_2\)</span></a></li>
+<li><a href="#target-normalization" id="toc-target-normalization"><span
+class="toc-section-number">4.3</span> Target normalization</a></li>
+</ul></li>
+<li><a href="#jaxequinox-enabled-optimizations"
+id="toc-jaxequinox-enabled-optimizations"><span
+class="toc-section-number">5</span> JAX/Equinox enabled
+optimizations</a>
+<ul>
+<li><a href="#further-work" id="toc-further-work"><span
+class="toc-section-number">5.1</span> Further work</a>
+<ul>
+<li><a href="#bucketing" id="toc-bucketing"><span
+class="toc-section-number">5.1.1</span> Bucketing</a></li>
+<li><a href="#model-parallelization"
+id="toc-model-parallelization"><span
+class="toc-section-number">5.1.2</span> Model parallelization</a></li>
+<li><a href="#bf16-mixed-precision" id="toc-bf16-mixed-precision"><span
+class="toc-section-number">5.1.3</span> bf16, mixed precision</a></li>
+<li><a href="#systematic-wall-clock-benchmarking"
+id="toc-systematic-wall-clock-benchmarking"><span
+class="toc-section-number">5.1.4</span> Systematic wall clock
+benchmarking</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#end-note" id="toc-end-note"><span
+class="toc-section-number">6</span> End note</a></li>
 </ul>
 </nav>
-<p><em>This post is a work in progress!</em></p>
-<h2 id="links">Links</h2>
+<h2 data-number="1" id="links"><span
+class="header-section-number">1</span> Links</h2>
 <p><strong>Repository:</strong> <a
 href="https://github.com/sugolov/jepax">github.com/sugolov/jepax</a></p>
-<h2 id="overview">Overview</h2>
+<p><strong>LLM usage statement:</strong> LLMs were used for refactoring
+the source code: no large features or core implementation used LLMs. No
+LLMs were used for the text in this blog post.</p>
+<h2 data-number="2" id="overview"><span
+class="header-section-number">2</span> Overview</h2>
 <p>A little while ago, Owen and I got interested in JEPAs and the
 self-supervised approach to learning good latent representations. One
 theme in ongoing JEPA work are new loss regularizers: the training
 setups are similar but with small augmentations to the loss that improve
-stability or representation properties. We set out to make
-<code>jepax</code> a <a href="https://github.com/google/jax">JAX</a>/<a
+stability or representations. We set out to make <code>jepax</code> a <a
+href="https://github.com/google/jax">JAX</a>/<a
 href="https://github.com/patrick-kidger/equinox">Equinox</a>
 implementation of the self-supervised method, with the goal of a simple
 and modifiable codebase that enables fast iteration.</p>
 <img src="images/ijepa_b.png" />
 <p align="center">
-<em><b>Figure:</b> Training loss and linear probe accuracy for IJEPA-B
-trained for 300 epochs on 8xA100.</em>
+<b>Figure: 1</b> Training loss and linear probe accuracy for IJEPA-B
+trained for 300 epochs on 8xA100.
 </p>
-<p>For this first release, <code>jepax v0</code>, we focused on (1)
-1-to-1 configs, losses, and logging with the original PyTorch
-implementation and (2) a reproduction of IJEPA-B with data
-parallelization on 8xA100. I think we collected a lot of interesting
-insights about JEPA training, which I want to describe in this blog.
-Some of the themes to discuss:</p>
+<p>For this first release, <code>jepax v0</code>, we focused on</p>
 <ol type="1">
-<li>Background on JEPA and IJEPA</li>
-<li>Interesting failure modes
-<ol type="1">
-<li>Smooth <span class="math inline">\(L_1\)</span> loss and
-unnormalized <span class="math inline">\(L_2\)</span></li>
-<li>Target normalization</li>
-</ol></li>
-<li>JAX specific considerations</li>
+<li>1-to-1 configs, losses, and logging with the original PyTorch
+implementation and</li>
+<li>a 300 epoch reproduction of IJEPA-B with data parallelization on
+8xA100 80gb</li>
+<li>gradient checkpointing for IJEPA-L/H</li>
 </ol>
-<p>Stay tuned!</p>
+<p>We collected a lot of interesting insights about JEPA training, which
+I want to describe in this blog, and pose some questions for further
+discussion/work.</p>
+<p><strong>For readers familiar with JEPAs</strong>: feel free to skip
+until <a href="#failure-modes">Failure Modes</a> or <a
+href="#jaxequinox-enabled-optimizations">JAX/Equinox
+optimizations</a>.</p>
+<h2 data-number="3" id="background-on-jepa-and-ijepa"><span
+class="header-section-number">3</span> Background on JEPA and IJEPA</h2>
+<p>JEPAs are <em>Joint-Embedding Predictive Architectures</em>, a class
+of self-supervised models that learn semantic latent representations. A
+JEPA typically has (1) an encoder that creates latent representations
+and (2) a predictor working in latent space. <em>Embeddings</em> are
+<em>joint</em>, since features from the same input pass through an
+<em>encoder</em> together (eg. image patches). JEPAs are trained by
+using the encoder to generate latents based on partial features, then
+recovering other features corresponding to the same input with the
+predictor (eg. predicting latents of other image patches from a subset).
+This differs from the past line of work on non-contrastive
+Joint-Embedding Architectures like BYOL (<a
+href="https://arxiv.org/abs/2006.07733">Grill et al. (2020)</a>) which
+introduced the EMA target network and latent-space predictor, but
+replaces augmentation-based views with a masking strategy.
+Fundamentally, the predictor learns <em>correlations within latent
+information</em>: the core principle behind this approach to
+self-supervised training. This idea forms the general roadmap of JEPA
+research: generating good latents through creating learnable
+correlations, and the regularizers that improve these correlations (<a
+href="https://arxiv.org/abs/2511.08544">Balestriero &amp; LeCun, LeJEPA.
+(2025)</a>, <a href="https://arxiv.org/abs/2602.01456">Rectified Lp
+JEPA, Kuang. (2026)</a>). Fundamentally, the JEPA approach operates in
+latent space rather than pixel space, since downstream structure is more
+learnable with good latents (and possibly corresponds to more semantic
+relationships).</p>
+<img src="images/ssl.png" />
+<p align="center">
+<b>Figure 2:</b> Taxonomy of latent representation learning models by
+<a href="https://www.techrxiv.org/users/866579/articles/1365143/master/file/data/JEPA_Tutorial%20(3)/JEPA_Tutorial%20(3).pdf?inline=true">Monemi
+et al.</a> JEPAs are non-generative semantic self-supervised methods for
+learning good latents. <i>(Some may disagree with certain features of
+the taxonomy).</i>
+</p>
+<p>In this initial release, we focused on IJEPA, the original JEPA model
+for images (<a href="https://arxiv.org/abs/2301.08243">Assran et
+al. (2023)</a>). Fundamentally, this model maps patches to good latents
+and is trained by recovering the latent representations of other patches
+in the same image. We first overview IJEPA loss and training and probe
+evaluation.</p>
+<h3 data-number="3.1" id="ijepa-training"><span
+class="header-section-number">3.1</span> IJEPA training</h3>
+<p>IJEPA training proceeds by first masking an image, leaving only
+partial context. The encoder <span
+class="math inline">\(f_\theta\)</span> produces representations <span
+class="math inline">\(s_x\)</span> from a subset of unmasked patches,
+the target encoder <span class="math inline">\(f_{\overline
+\theta}\)</span> produces the representations from the masked patches
+<span class="math inline">\(s_y\)</span>, while the predictor <span
+class="math inline">\(g_\phi\)</span> predicts <span
+class="math inline">\(\hat s_y\)</span> from <span
+class="math inline">\(s_x\)</span> and trains with MSE loss. Below is a
+highly informative figure on how to fit these pieces together during
+training:</p>
+<img src="images/ijepa_train.png" />
+<p align="center">
+<b>Figure 3:</b> IJEPA training procedure from the original paper
+(<a href="https://arxiv.org/abs/2301.08243">Assran et al. (2023)</a>).
+The predictor <span class="math inline">\(g_\phi\)</span> predicts
+target patches given by <span class="math inline">\(f_{\overline
+\theta}\)</span> using the context from <span
+class="math inline">\(f_\theta\)</span>.
+</p>
+<h4 data-number="3.1.1" id="masking"><span
+class="header-section-number">3.1.1</span> Masking</h4>
+<p>IJEPA training begins with a masking strategy in order to create the
+context and prediction patches. Some patches are kept for context, used
+to predict the latents of other patches.</p>
+<ol type="1">
+<li>sample <span class="math inline">\(M\)</span> prediction masks <span
+class="math inline">\(\{B_i\}_{i=1}^M\)</span> each of which is <span
+class="math inline">\(n_\text{patch} \times n_\text{patch}\)</span>. In
+our implementation, the entry is <code>True</code> if the encoder will
+predict the latent feature for that patch</li>
+<li>sample 1 context masks <span class="math inline">\(\{B_C\}\)</span>
+which is <span class="math inline">\(n_\text{patch} \times
+n_\text{patch}\)</span>. This mask is larger and typically reduces the
+amount of context to enhance the difficulty of the task for the
+predictor <span class="math inline">\(g_\phi\)</span>.</li>
+<li>For some input <span class="math inline">\(x\)</span>, set <span
+class="math display">\[B_x = B_C \cap \bigcap_{i=1}^M \textasciitilde
+B_i\]</span>that is, all patches in <span
+class="math inline">\(B_C\)</span> that are not prediction masks.</li>
+</ol>
+<p>These provide the positional patch masks for training.</p>
+<h4 data-number="3.1.2" id="forward-pass"><span
+class="header-section-number">3.1.2</span> Forward pass</h4>
+<p>For an input <span class="math inline">\(x\)</span>, we use the
+masking strategy with <span class="math inline">\(B_i, B_x\)</span> to
+compute our loss. During training, we chain together the steps as in
+Figure 3. The necessary ingredients to compute the loss come from an
+input <span class="math inline">\(x\)</span> and the masks <span
+class="math inline">\(B_i, B_x\)</span>:</p>
+<ol type="1">
+<li>The context encoder <span class="math inline">\(f_\theta\)</span>
+receives input <span class="math inline">\(x\)</span> and context mask
+<span class="math inline">\(B_x\)</span> to produce latent tokens <span
+class="math display">\[s_x = \{s_{x_j}\}_{j \in B_x} = f_\theta(x,
+B_x)\]</span></li>
+<li>The target encoder <span class="math inline">\(f_{\overline
+\theta}\)</span> receives <span class="math inline">\(x\)</span> and no
+masks to produce latents for all patches <span
+class="math display">\[s_y = \{s_{y_j}\}_{1 \leq j \leq
+n_\text{patch}^2} = f_{\overline \theta}(x, -)\]</span>we denote <span
+class="math inline">\(s_y^{(i)} = \{s_{x_j}\}_{j \in B_i}\)</span> as
+the tokens within prediction mask <span
+class="math inline">\(i\)</span>. This encoder has the exact same
+functional form as the context encoder, but the parameters are updated
+through EMA</li>
+<li>The predictor <span class="math inline">\(g_\phi\)</span> receives
+latents <span class="math inline">\(s_x\)</span> and predicts the
+non-overlapping tokens in mask <span class="math inline">\(B_i\)</span>
+<span class="math display">\[\hat s_y^{(i)} = g_\phi(x,
+B_i)\]</span></li>
+</ol>
+<h4 data-number="3.1.3" id="updating-parameters"><span
+class="header-section-number">3.1.3</span> Updating parameters</h4>
+<p>The theoretical loss is a simple MSE between predicted and target
+<span class="math inline">\(\hat s_y^{(i)}, s_y^{(i)}\)</span> and
+updates the context <span class="math inline">\(\theta\)</span> and
+predictor <span class="math inline">\(\phi\)</span> with gradients.
+<span class="math display">\[
+    L_\text{paper}(\theta, \phi) = \frac1M \sum_{i=1}^M\| s_y^{(i)}  -
+\hat s_y^{(i)} \|_2^2
+\]</span> In training, however, the more stable version is <em>smooth
+<span class="math inline">\(L_1\)</span> loss</em>: formulated as <span
+class="math inline">\(L_1\)</span> above some norm threshhold <span
+class="math inline">\(\beta\)</span> and then switching to <span
+class="math inline">\(L_2\)</span>. The above becomes <span
+class="math display">\[
+    L_\text{stable}(\theta, \phi) = \frac1M \sum_{i=1}^M
+\ell_\beta(s_y^{(i)}  - \hat s_y^{(i)})
+\]</span> where the new <span class="math inline">\(\ell_\beta\)</span>
+is <em>component-wise</em> given by <span class="math display">\[
+\ell_\beta(x_i) = \begin{cases}\dfrac{(x)^2}{2\beta} ,&amp; |x| &lt;
+\beta \\ |x| - \dfrac{\beta}{2} ,&amp; |x| \geq \beta\end{cases}
+\]</span> After updating <span class="math inline">\(\theta_t,
+\phi_t\)</span> at train step <span class="math inline">\(t\)</span>
+with AdamW through backprop, the <em>target encoder</em> parameters are
+updated with an exponential moving average with the context encoder
+through <span class="math display">\[
+\overline \theta_t = \gamma_t \overline \theta_{t-1} +
+(1-\gamma_t)\theta_t
+\]</span> Typically <span class="math inline">\(\gamma_t\)</span>
+follows a linear schedule from <span
+class="math inline">\(0.996\)</span> to <span
+class="math inline">\(1.0\)</span> until the end of training. This
+schedule is crucial for training stability.</p>
+<p>These give a recipe to create good latent representations on a large
+dataset like Imagenet1k. None of these approaches use complicated data
+augmentations of multiple views, and are typically more compute
+efficient in terms of GPU hours than DINOv2 or other methods (<a
+href="https://arxiv.org/abs/2301.08243">Assran et al. (2023)</a> ). Some
+training instabilities and caveats for IJEPA are in order, and we
+describe them in the section on failure modes. Next we give a quick
+overview of one downstream task that good self-supervised
+representations let us do relatively easily.</p>
+<h3 data-number="3.2" id="probing-the-main-eval.-for-ijepa"><span
+class="header-section-number">3.2</span> Probing: the main eval. for
+IJEPA</h3>
+<p>Self-supervised learning is aimed at enabling downstream tasks that
+use latent structure. One perspective is that good latents enable
+previous tasks to be done more with much simpler models. Training a
+linear classifier (probing) is a standard measure of linear separability
+of the latents in these types of architectures.</p>
+<p>To train an IJEPA probe after training, the authors take the encoder
+representations <span class="math inline">\(s_{x} = f_\theta(x,
+-)\)</span> and sum tokens to produce the probe representation <span
+class="math display">\[z = \sum_{i=1}^{n_\text{patch}^2}
+s_{x_i}\]</span> at the final layer. They additionally consider a
+concatenation <span class="math inline">\(\tilde z =
+\text{concat}(z^{L}, \ldots z^{L-3})\)</span> of the last 4 layer
+features, <span class="math inline">\(z^l =
+\sum_{i=1}^{n_\text{patch}^2} s_{x_i}^l\)</span>, where <span
+class="math inline">\(l\)</span> indexes the output after the <span
+class="math inline">\(l\)</span>-th transformer block of <span
+class="math inline">\(f_\theta\)</span>.</p>
+<p>To train the probe, the authors sweep over several options,
+architectures, and hyperparameters for probing representations across
+all of Imagenet1k:</p>
+<ol type="1">
+<li>the features <span class="math inline">\(z, \tilde z\)</span>
+described above</li>
+<li>the standard linear head or linear head + batchnorm</li>
+<li>LARS optimizer @ batch 16384 on all of Imagenet1k for 50 epochs
+<ol type="1">
+<li>learning rate divided by 10 every 15 epochs</li>
+<li>sweeps across learning rates <span class="math inline">\(\{ 0.01,
+0.05, 0.001\}\)</span></li>
+<li>two weight decay values <span class="math inline">\(\{0.0005,
+0.0\}\)</span></li>
+</ol></li>
+</ol>
+<p>The best top1 and top5 results across all hyper parameters are
+reported.</p>
+<p>In our replication of IJEPA-B at 300 epochs, we reach 34.27% top-1
+and 59.24% top-5 with concat-4 + batchnorm. We are likely undertraining,
+since the original follows 600 epochs for IJEPA-B, differing from 300
+for the other model sizes IJEPA-H/L.</p>
+<p>Among our probing results, we generally feel that concat-4 performs
+better than using last layer representations. This raises the
+possibility of results being confounded by dimension scaling, since
+linear classifiability improves in higher dimensions. In addition, if
+the goal is to learn good output latent representations, then the
+concat-4 approach may be unmotivated since these features are trained
+only implicitly instead of informed by the predictor <span
+class="math inline">\(g_\phi\)</span>. A potentially interesting idea is
+to predict intermediate latents in addition to the last layer (if it
+trains, of course). A kind of multilayer IJEPA.</p>
+<p>IJEPA generates good latents since they can be easily decoded by a
+generative model to generate pixel-space features (below). This follows
+the idea that good latents enable previous tasks with simpler models:
+maybe benchmarks like “number of params for <span
+class="math inline">\(x\)</span> FID score” or some other measure of
+learnability/scale/feasibility on a downstream task could be interesting
+evaluations (<a href="">Gui et al. (2025)</a>, <a
+href="https://arxiv.org/abs/2312.03701v4">Li et al. (2024)</a>).</p>
+<img src="images/ijepa_visual.png" />
+<p align="center">
+<b>Figure 4:</b> Visualization of IJEPA predictor representations from
+the original paper (<a href="https://arxiv.org/abs/2301.08243">Assran et
+al. (2023)</a>).
+</p>
+<h2 data-number="4" id="failure-modes"><span
+class="header-section-number">4</span> Failure modes</h2>
+<p>We encountered some features of IJEPA training which can be unstable.
+The largest known failure mode is representation collapse: a feedback
+loop where the target encoder and predictor network output
+data-independent representations, leading to eventual constant outputs
+with low loss. Another failure mode is the opposite, where
+representations may diverge due to unstable EMA updates and large drift
+in the target encoder. Some of these features seem sensitive and
+predictable from gradient norm, which is reasonably expected by large
+updates having large EMA effects.</p>
+<h3 data-number="4.1" id="encoder-drift-and-gradient-norms"><span
+class="header-section-number">4.1</span> Encoder drift and gradient
+norms</h3>
+<p>Encoder drift occurs when EMA updates cause the target encoder
+parameters <span class="math inline">\(\overline \theta_t\)</span> to
+quickly diverge from what the encoder <span
+class="math inline">\(g_\phi\)</span> expects. Typically this occurs due
+to a bad update, other times by a slowly decaying EMA schedule that
+compounds divergences <span class="math inline">\(\overline
+\theta_t\)</span>. While experimenting with fixing <span
+class="math inline">\(\gamma_t = 0.996\)</span> (which is already quite
+low), we found some noticeable loss spikes during training. At other
+times, like testing the standard <span
+class="math inline">\(L_2\)</span> loss from the paper, we found that
+fixed EMA decay lead to unrecoverable suboptimal spikes during training.
+We discuss the stable loss in the Torch implementation in the next
+section</p>
+<img src="images/collapse.png" />
+<p align="center">
+<b>Figure 5:</b> Observation of gradient norm and loss instability in a
+suboptimal IJEPA-H run.
+</p>
+<p>Converse to a bad update destabilizing the loss, it might be the case
+that an accumulation of small updates leads to collapse. In the above
+figure, a major drop in loss (characteristic of representation collapse)
+occurs after a period of general decrease in gradient norms. Possibly an
+accumulation of small updates in the target encoder may lead to
+suboptimal updates in the predictor. A possible feedback loop:</p>
+<pre><code>lower grad norms 
+--&gt; lower ema update 
+--&gt; target encoder prediction changes less
+--&gt; more target similarity 
+--&gt; (recurse into lower grad norms)
+...
+--&gt; loss collapse</code></pre>
+<p>The magnitude of updates (both small and large) greatly affects the
+stability of the target encoder, and therefore the training trajectory.
+It seems that the central challenge of IJEPA training is to keep
+gradients in a range that avoids collapse but does not over-update the
+EMA target encoder. Some further runs could:</p>
+<ol type="1">
+<li>Augment gradients based on norm to steer training</li>
+</ol>
+<h3 data-number="4.2" id="smooth-l_1-loss-and-unnormalized-l_2"><span
+class="header-section-number">4.2</span> Smooth <span
+class="math inline">\(L_1\)</span> loss and unnormalized <span
+class="math inline">\(L_2\)</span></h3>
+<p>The first and most direct instability we noticed was a switch for
+<span class="math inline">\(L_2\)</span> loss in the paper to the smooth
+<span class="math inline">\(L_1\)</span> formulation between predicted
+patches. When just using simple <span
+class="math inline">\(L_2\)</span>, we saw large jumps in the gradient
+norms and loss early in training, likely due to large differences
+between vectors at initialization swaying EMA updates and giving bad
+targets for the encoder. Following the torch implementation with smooth
+<span class="math inline">\(L_1\)</span>, training is much more stable
+for straightforward reasons.</p>
+<p>The theoretical loss is a simple MSE between predicted and target
+<span class="math inline">\(\hat s_y^{(i)}, s_y^{(i)}\)</span>: <span
+class="math display">\[
+    L_\text{paper}(\theta, \phi) = \frac1M \sum_{i=1}^M\| s_y^{(i)}  -
+\hat s_y^{(i)} \|_2^2
+\]</span> The torch implementation differs and uses the more stable
+version: <span class="math inline">\(L_2\)</span> until some absolute
+value threshhold <span class="math inline">\(\beta\)</span> then
+switching to <span class="math inline">\(L_1\)</span>. The above becomes
+<span class="math display">\[
+    L_\text{stable}(\theta, \phi) = \frac1M \sum_{i=1}^M
+\ell_\beta(s_y^{(i)}  - \hat s_y^{(i)})
+\]</span> where the new <span class="math inline">\(\ell_\beta\)</span>
+is <em>component-wise</em> given by <span class="math display">\[
+\ell_\beta(x_i) = \begin{cases}\dfrac{(x)^2}{2\beta} ,&amp; |x| &lt;
+\beta \\ |x| - \dfrac{\beta}{2} ,&amp; |x| \geq \beta\end{cases}
+\]</span> A probable explanation for why this is beneficial is that the
+gradient of the MSE becomes clipped by component: <span
+class="math display">\[
+\frac{d\ell_\beta}{dx}(x) =  \begin{cases}
+\dfrac{x}{\beta} ,&amp; |x| &lt; \beta \\
+\text{sgn}(x) ,&amp; |x| \geq \beta
+\end{cases}
+\]</span> So the gradient is clipped to <span class="math inline">\([-1,
+1]\)</span> with input generally rescaled by <span
+class="math inline">\(\beta\)</span>. In IJEPA training, <span
+class="math inline">\(\beta=1\)</span>, so we can simply view this as a
+form of component-wise gradient clipping <em>just at the output
+objective</em>, which makes sense as an augmentation that improves
+stability.</p>
+<p>We additionally noticed that the authors do not use a form of
+gradient clipping, only this regularization. During training, we noticed
+that spikes are seriously influential to the training trajectory and
+huge spikes permanently alter the training trajectory. Some further runs
+could test:</p>
+<ol type="1">
+<li>The effectiveness of gradient clipping + <span
+class="math inline">\(L_2\)</span></li>
+<li>The interaction between gradient clipping + smooth <span
+class="math inline">\(L_1\)</span></li>
+<li>General ablations of gradient norms and training instability</li>
+</ol>
+<h3 data-number="4.3" id="target-normalization"><span
+class="header-section-number">4.3</span> Target normalization</h3>
+<p>One way to prevent representational collapse is through target
+normalization: adding a LayerNorm at the end of the context and target
+encoder <span class="math inline">\(f_\theta, f_{\overline
+\theta}\)</span> , in addition to the predictor <span
+class="math inline">\(g_\phi\)</span>. Without target normalization, a
+failure mode is for the the target encoder and predictor to output
+arbitrary low norm representations, giving very low <span
+class="math inline">\(L^2\)</span> loss but nothing of use. The
+placement of the norm seems to matter. LayerNorm at the target encoder
+is always optimal. For <span class="math inline">\(g_\phi\)</span> only
+one of (1) trainable LayerNorm on <span
+class="math inline">\(g_\phi\)</span> output <span
+class="math inline">\(\hat s_y\)</span> or (2) a <span
+class="math inline">\((0, 1)\)</span> LayerNorm after unnormalized <span
+class="math inline">\(\hat s_y\)</span> works. Applying a <span
+class="math inline">\((0,1)\)</span> LayerNorm to a normalized <span
+class="math inline">\(\hat s_y\)</span> destabilizes training.</p>
+<p>Overall, harmonizing representation norms, gradients, and EMA updates
+seems to be the trifecta of IJEPA training, and possibly for the general
+JEPA approach.</p>
+<h2 data-number="5" id="jaxequinox-enabled-optimizations"><span
+class="header-section-number">5</span> JAX/Equinox enabled
+optimizations</h2>
+<p>As far as we are aware, there are few other large-scale replications
+in JAX/Equinox for most self-supervised approaches. This made jepax an
+impactful way to experiment with some of the optimizations provided by
+the JAX ecosystem. Optimizing turns out to be very easy because of how
+things are handled by the XLA compiler. ### Data parallelization</p>
+<p>Distributed data parallelization in JAX requires creating a mesh
+along the batch axis which will be applied to data tensors with a
+sharding config. All that’s required is the number of devices for the
+mesh and a data sharding:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> shard <span class="kw">and</span> num_devices <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    mesh <span class="op">=</span> jax.make_mesh((num_devices,), (<span class="st">&quot;batch&quot;</span>,))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    data_sharding <span class="op">=</span> jshard.NamedSharding(mesh, jshard.PartitionSpec(<span class="st">&quot;batch&quot;</span>))</span></code></pre></div>
+<p>The data parallelization is handled by the XLA compiler in the
+training loop. We can typically write it as if there were no sharding
+and just apply the config:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> jax.device_put(x, data_sharding)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mask_ctx <span class="op">=</span> jax.device_put(mask_ctx, data_sharding)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>mask_pred <span class="op">=</span> jax.device_put(mask_pred, data_sharding)</span></code></pre></div>
+<p>In this version we are not doing model parallelization, so we can
+similarly define an empty sharding and apply it to the model.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model_sharding <span class="op">=</span> jshard.NamedSharding(mesh, jshard.PartitionSpec())</span></code></pre></div>
+<p>Then later in the code:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> model_sharding <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    model, ema_encoder, opt_state <span class="op">=</span> eqx.filter_shard(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        (model, ema_encoder, opt_state), model_sharding</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<p>Since equinox represents models as PyTrees, this is essentially a
+wrapper for <code>jax.lax.with_sharding_constraint</code> just for the
+arrays in the model. More fine-grained control is usually implemented
+with <code>shard_map</code>. It requires specifying the in / out
+<code>PartitionSpec</code> and implementing a reduction operation across
+the sharded axis within the function. Model sharding is something we are
+looking to implement in the near future, since potentially splitting
+encoders and predictors across devices could make things more scalable.
+### Checkpointing</p>
+<p>Another optimization that’s straightforward to add in jax is gradient
+checkpointing. In our transformer implementation:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">self</span>.gradient_checkpointing <span class="kw">and</span> <span class="kw">not</span> get_intermediates:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>._forward_scan(x, key, train, attn_mask)</span></code></pre></div>
+<p>We implement the forward pass with a scan, which avoids unrolling a
+for-loop at compilation time. The implementation looks something
+like:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _forward_scan(<span class="va">self</span>, x, key, train, attn_mask):</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(<span class="va">self</span>.blocks)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    dynamics, static_template <span class="op">=</span> [], <span class="va">None</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> b <span class="kw">in</span> <span class="va">self</span>.blocks:</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        dyn, static <span class="op">=</span> eqx.partition(b, eqx.is_array)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        dynamics.append(dyn)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        static_template <span class="op">=</span> static</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    stacked_dyn <span class="op">=</span> jax.tree.<span class="bu">map</span>(<span class="kw">lambda</span> <span class="op">*</span>xs: jnp.stack(xs), <span class="op">*</span>dynamics)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> key <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        scan_keys <span class="op">=</span> jax.random.split(key, n)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        scan_keys <span class="op">=</span> jnp.zeros((n, <span class="dv">2</span>), dtype<span class="op">=</span>jnp.uint32)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">@partial</span>(jax.checkpoint, policy<span class="op">=</span>jax.checkpoint_policies.nothing_saveable)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> body(carry, inputs):</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        block_dyn, k <span class="op">=</span> inputs</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        block <span class="op">=</span> eqx.combine(block_dyn, static_template)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> block(carry, key<span class="op">=</span>k, train<span class="op">=</span>train, attn_mask<span class="op">=</span>attn_mask), <span class="va">None</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    x, _ <span class="op">=</span> jax.lax.scan(body, x, (stacked_dyn, scan_keys))</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span></code></pre></div>
+<p>The flow to the above is that we: 1. decompose the dynamic arrays in
+each transformer block from the total PyTree 2. stack the dynamic arrays
+in a new PyTree: instead of <span class="math inline">\(n\)</span>
+identical PyTrees with <span class="math inline">\(1\)</span> array, we
+get <span class="math inline">\(1\)</span> PyTree with the <span
+class="math inline">\(n\)</span> stacked arrays 3. Implement a
+<code>scan</code> over the stacked PyTree, which combines the parameters
+with the transformer block structure and does a forward pass</p>
+<p>The <strong>key component</strong> is that this allows us to wrap
+<code>jax.checkpoint</code>, with a custom policy that prevents saving /
+requires rematerializing all activations:
+<code>policy=jax.checkpoint_policies.nothing_saveable</code>. In a more
+fine-grained implementation, this gives a simple way to plug in
+different checkpointing configurations.</p>
+<h3 data-number="5.1" id="further-work"><span
+class="header-section-number">5.1</span> Further work</h3>
+<p>Feel free to open a PR if you address any of these!</p>
+<h4 data-number="5.1.1" id="bucketing"><span
+class="header-section-number">5.1.1</span> Bucketing</h4>
+<p>IJEPA training requires variable token lengths, which does not mesh
+well with XLA compilation times without further optimizations. At the
+current scale of training, it might make sense to “eat” a lot of the
+compilation time, since there are not intractably many different
+input/output shapes, and each takes ~1.5 mins to compile for a multi day
+training run. A more systematic thing to do would be to pad tokens in
+the forward pass, use attention masks, and bucket shape compilation
+across the number of pad tokens. This would save time at scale but
+benchmarking / weighing this approach is for further work</p>
+<h4 data-number="5.1.2" id="model-parallelization"><span
+class="header-section-number">5.1.2</span> Model parallelization</h4>
+<p>It could be more optimal to shard the IJEPA context and target
+encoders across different devices: large batch sizes seem very
+beneficial in self-supervised training. In general, having dynamic
+sharding based on GPU configurations seems like an interesting thing to
+implement.</p>
+<h4 data-number="5.1.3" id="bf16-mixed-precision"><span
+class="header-section-number">5.1.3</span> bf16, mixed precision</h4>
+<p>There is currently a bf16 implementation that casts all model arrays
+to lower precision for training. There might be more principled
+approaches to doing so with a library like <a
+href="https://github.com/Data-Science-in-Mechanical-Engineering/mixed_precision_for_JAX">MPX</a>.
+In general, the question of numerical stability in lower precisions
+seems interesting and underexplored in JEPAs and SSL: maybe there could
+be some good experiments here.</p>
+<h4 data-number="5.1.4" id="systematic-wall-clock-benchmarking"><span
+class="header-section-number">5.1.4</span> Systematic wall clock
+benchmarking</h4>
+<p>We estimate that our training time takes the same amount of GPU hours
+as the torch implementation. Systematically verifying this and
+benchmarking the effect of different optimizations is for further
+releases.</p>
+<h2 data-number="6" id="end-note"><span
+class="header-section-number">6</span> End note</h2>
+<p>If you have read this far, I hope it was informative or useful!</p>
+<p>Feel free to let us know about experiments, open PRs for any fitting
+self-supervised learning method, or loan some GPU hours (compute is
+lovely 🙏). If you would like to discuss further, have any insights
+about the failure modes, or would just <strong>like to
+chat/collaborate</strong> e-mail <a
+href="https://sugolov.github.io/">me</a> or <a
+href="https://lockwo.github.io/">Owen</a>!</p>
 </body>
 </html>
