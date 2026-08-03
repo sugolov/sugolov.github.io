@@ -27,15 +27,16 @@ for f in md_files:
     frontmatter = match.group(1)
     title = re.search(r'^title:\s*(.+)$', frontmatter, re.MULTILINE)
     date = re.search(r'^date:\s*(.+)$', frontmatter, re.MULTILINE)
+    blog_tag = re.search(r'^blog-tag:\s*(.+)$', frontmatter, re.MULTILINE)
     
-    if title and date:
-        t = title.group(1).strip()
+    if title and date and blog_tag:
+        t = title.group(1).strip().strip('"').strip("'")
         d = date.group(1).strip()
+        tag = blog_tag.group(1).strip().strip('"').strip("'")
         posts.append({
             'title': t,
             'date': d,
-            # 'file': f.stem + '/index.html'
-            'file': format_date(d)
+            'file': tag
         })
 
 # Sort by date, newest first
@@ -45,17 +46,14 @@ posts.sort(key=lambda x: x['date'], reverse=True)
 for p in posts:
     print(f"- [{p['date']}] [{p['title']}](posts/{p['file']})")
 
-html = """
-<body>
-  <br><br>
-  <h2>posts</h2>
-  <ul class="post-list">
+html = """<div class="blog-section">
+<h2>posts</h2>
+<ul class="post-list">
 """
 for p in posts:
-    html += f'    <li class="post-item"><span class="date">{p["date"]}</span><a class="post-link" href="posts/{p["file"]}">{p["title"]}</a></li>\n'
+    html += f'  <li class="post-item"><span class="date">{p["date"]}</span><a class="post-link" href="posts/{p["file"]}">{p["title"]}</a></li>\n'
 
-html += """  </ul>
-</body>
-</html>"""
+html += """</ul>
+</div>"""
 
-Path("index_list.html").write_text(html)
+Path("index_list.html").write_text(html + "\n")
