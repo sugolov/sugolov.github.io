@@ -1,6 +1,7 @@
 ---
 title: "jepax v0: an implementation of IJEPA training in JAX/Equinox"
 date: 2026-02-11
+blog-tag: jepax
 author: "Contributors: [Owen L](https://lockwo.github.io/)., [Anton S](https://sugolov.github.io/)."
 ---
 
