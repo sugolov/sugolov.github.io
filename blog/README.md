@@ -1,35 +1,19 @@
 # blog
 
-Directory structure should be something like
-```
-blog
-├── build.sh
-├── index_footer.html
-├── index_header.html
-├── index_list.html
-├── index.html
-├── make.py
-├── md
-├── posts
-└── styles.css
+## Workflow
+
+Add or edit posts in `blog/md/`, then rebuild from `blog/`:
+
+```sh
+cp ~/Documents/obsidian/blog/doc.md md/
+./build.sh
 ```
 
-Update the blog withp
+That regenerates:
 
-```
-cp ~/Documents/obsidian/blog/doc.md md/ && ./build.sh
-```
+- `posts/<blog-tag>/index.html` for each Markdown post
+- `index_list.html` from the posts in `md/`
+- `index.html` from `index_header.html`, `index_list.html`, and `index_footer.html`
+- the homepage Blog dropdown from `index_list.html` and `index_footer.html`
 
-## Building details
-1. Copy paste new posts into `md`
-2. `chmod +x build.sh && ./build.sh`
-    - `md/placeholders/` can be used to index posts not directly in `md`
-    - `build.sh` also refreshes the homepage Blog dropdown from `index_list.html` and `index_footer.html`
-
-`make.py`
-- builds `index_list.html` based on contents of `md`
-
-`build.sh`
-- converts `md` to `html` with pandoc
-- creates `blog/index.html` with `cat index_header.html index_list.html index_footer.html > index.html`
-- injects the generated blog fragments into the homepage dropdown with `../scripts/build_home_blog.py`
+Use `md/placeholder/` for items that should appear in the index without generating a full post page.
