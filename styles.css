@@ -112,6 +112,87 @@ code {
     color: #333;
 }
 
+/* Homepage section toggle */
+.home-section-toggle {
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.home-toggle {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #999;
+    cursor: pointer;
+    font: inherit;
+    font-size: 1.5rem;
+    line-height: 1.35;
+}
+
+.home-toggle.is-active {
+    color: #333;
+}
+
+.home-toggle:hover,
+.home-toggle:focus-visible {
+    color: #0000CC;
+}
+
+.home-toggle:focus-visible {
+    outline: 2px solid #0000CC;
+    outline-offset: 3px;
+}
+
+.home-panel[hidden] {
+    display: none;
+}
+
+#home-blog {
+    padding: 0.8rem 0 0.95rem;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.home-blog-section {
+    margin-top: 1.4rem;
+}
+
+.home-blog-section:first-child {
+    margin-top: 0;
+}
+
+#home-blog .home-blog-section h2 {
+    margin-bottom: 0.25rem;
+    color: #444;
+    font-size: 1.15rem;
+}
+
+.home-blog-section .post-list,
+.home-blog-section .list-items {
+    margin: 0;
+}
+
+.home-blog-section .post-item,
+.home-blog-section .list-item {
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0.6rem 0;
+}
+
+.home-blog-section .date {
+    width: 7rem;
+    margin-right: 0;
+    font-size: 0.88rem;
+}
+
+.home-blog-section .post-link,
+.home-blog-section .link {
+    line-height: 1.35;
+}
+
 /* Date + link lists */
 .list-items,
 .post-list {

@@ -37,7 +37,6 @@ Currently a research engineer at Extropic. Before that, I did a Math Master's at
   Let's chat about anything, email me!
 </p>
 <ul>
-  <li><a href="blog">Blog</a></li>
   <li><a href="https://github.com/sugolov">Github</a></li>
   <li><a href="https://twitter.com/suganton">Twitter</a></li>
   <li><a href="https://scholar.google.com/citations?user=LSobBYoAAAAJ">Google Scholar</a></li>
@@ -45,7 +44,12 @@ Currently a research engineer at Extropic. Before that, I did a Math Master's at
 </div>
 </div>
 
-<h2>Recent projects</h2>
+<div class="home-section-toggle" aria-label="Homepage sections">
+  <button class="home-toggle is-active" type="button" data-panel="projects" aria-controls="home-projects" aria-expanded="true">Projects</button>
+  <button class="home-toggle" type="button" data-panel="blog" aria-controls="home-blog" aria-expanded="false">Blog</button>
+</div>
+
+<section id="home-projects" class="home-panel is-active">
 <div class="project-card">
   <div class="project-thumb">
     <a href="https://arxiv.org/abs/2606.30813">
@@ -102,7 +106,52 @@ Improved Optimization</a>
     </div>
   </div>
 </div>
+</section>
 
+<section id="home-blog" class="home-panel" hidden>
+  <div class="blog-section home-blog-section">
+    <h2>posts</h2>
+    <ul class="post-list">
+      <li class="post-item"><span class="date">2026-02-11</span><a class="post-link" href="blog/posts/jepax">jepax v0: an implementation of IJEPA training in JAX/Equinox</a></li>
+    </ul>
+  </div>
+  <div class="blog-section home-blog-section">
+    <h2>notes</h2>
+    <ul class="list-items">
+      <li class="list-item">
+        <span class="date">2025-04</span>
+        <a href="files/mat1850.pdf" class="link">Multiscale Matrix Decompositions</a>
+      </li>
+      <li class="list-item">
+        <span class="date">2025-04</span>
+        <a href="files/mat1525.pdf" class="link">Geometry Adaptive Representations in Diffusion Models</a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<script>
+const homeToggles = document.querySelectorAll('.home-toggle');
+const homePanels = document.querySelectorAll('.home-panel');
+
+homeToggles.forEach((toggle) => {
+  toggle.addEventListener('click', () => {
+    const target = toggle.dataset.panel;
+
+    homeToggles.forEach((button) => {
+      const isActive = button.dataset.panel === target;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-expanded', String(isActive));
+    });
+
+    homePanels.forEach((panel) => {
+      const isActive = panel.id === `home-${target}`;
+      panel.classList.toggle('is-active', isActive);
+      panel.hidden = !isActive;
+    });
+  });
+});
+</script>
 
 </body>
 </html>
