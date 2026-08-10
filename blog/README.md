@@ -24,6 +24,7 @@ cp ~/Documents/obsidian/blog/doc.md md/ && ./build.sh
 1. Copy paste new posts into `md`
 2. `chmod +x build.sh && ./build.sh`
     - `md/placeholders/` can be used to index posts not directly in `md`
+    - `build.sh` also refreshes the homepage Blog dropdown from `index_list.html` and `index_footer.html`
 
 `make.py`
 - builds `index_list.html` based on contents of `md`
@@ -31,3 +32,4 @@ cp ~/Documents/obsidian/blog/doc.md md/ && ./build.sh
 `build.sh`
 - converts `md` to `html` with pandoc
 - creates `blog/index.html` with `cat index_header.html index_list.html index_footer.html > index.html`
+- injects the generated blog fragments into the homepage dropdown with `../scripts/build_home_blog.py`

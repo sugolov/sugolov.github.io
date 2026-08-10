@@ -14,3 +14,4 @@ done
 # Step 2: built the list of posts
 python3 make.py
 cat index_header.html index_list.html index_footer.html > index.html
+python3 ../scripts/build_home_blog.py
